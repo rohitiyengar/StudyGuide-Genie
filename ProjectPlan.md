@@ -14,7 +14,7 @@
 ## Apache Lucene
 	No question on this.
 
-#Individual Tasks
+# Individual Tasks
 ## Abhishek (The architecture guy)
 	1. Create a private repo on gitlab or bitbucket.
 	2. Setup the SpringMVC environment with Maven.
