@@ -1,11 +1,11 @@
-Text book for our Genie:
-Primary : 
-Introduction to Programming Using Java, Seventh Edition
-http://math.hws.edu/javanotes/
-This website is more elaborate than wiki, So I think this should be the course textbook. Moreover, they have also given zip files of their website. But, we still need to crawl the content so as to split the content at much finer level.
-Recommended Reading:
-Java programming wiki that we used in Assignment 2. 
-We can provide links from this wiki as recommended links for the student when he/she is entering notes for a particular chapter/section eg: Arrays, LinkedList.
+#Text book for our Genie:
+##Primary : 
+	Introduction to Programming Using Java, Seventh Edition
+	http://math.hws.edu/javanotes/
+	This website is more elaborate than wiki, So I think this should be the course textbook. Moreover, they have also given zip files of their website. But, we still need to crawl the content so as to split the content at much finer level.
+##Recommended Reading:
+	Java programming wiki that we used in Assignment 2. 
+	We can provide links from this wiki as recommended links for the student when he/she is entering notes for a particular chapter/section eg: Arrays, LinkedList.
 
 Technology
 Spring MVC
