@@ -27,7 +27,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#">
+            <a href="registerUser.html">
               <span class="glyphicon glyphicon-user"></span> Sign Up</a>
           </li>
         </ul>
