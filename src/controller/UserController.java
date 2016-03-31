@@ -77,7 +77,6 @@ public class UserController {
 				student.setStudentId(user.getUserName());
 				student.setFname(user.getFirstName());
 				student.setLname(user.getLastName());
-				student.setRegistered(false);
 				//Hibernate call to save the student object in DB.
 				studentBo.save(student);
 			}
