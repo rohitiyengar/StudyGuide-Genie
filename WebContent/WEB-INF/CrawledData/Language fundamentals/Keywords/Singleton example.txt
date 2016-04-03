@@ -1,1 +1,0 @@
-As an example, we can show a thread-safe version of a singleton:

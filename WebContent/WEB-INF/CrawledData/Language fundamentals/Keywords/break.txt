@@ -1,4 +1,0 @@
-break is a Java keyword.
-Jumps (breaks) out from a loop. Also used at switch statement.
-For example:
-See also:

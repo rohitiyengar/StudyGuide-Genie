@@ -1,3 +1,0 @@
-The if block may optionally be followed by an else block which will execute if that boolean expression is false. The structure of an if block is as follows:
-} else {
-}

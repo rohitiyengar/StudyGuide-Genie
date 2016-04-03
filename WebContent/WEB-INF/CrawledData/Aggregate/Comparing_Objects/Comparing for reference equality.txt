@@ -1,1 +1,0 @@
-The == operator can be used to check if two object references point to the same object.
