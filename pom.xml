@@ -100,6 +100,7 @@
 		</dependency>
 	</dependencies>
 	<build>
+		<finalName>ROOT</finalName>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -118,15 +119,13 @@
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
-			<plugin>
-		        <groupId>com.heroku.sdk</groupId>
-		        <artifactId>heroku-maven-plugin</artifactId>
-		        <version>1.0.0</version>
-		        <configuration>
-                    <appName>studygenieweb</appName>
-				</configuration>
-		    </plugin>
 		</plugins>
+		<resources>
+    		<resource>
+		      <directory>resources</directory>
+		      <filtering>true</filtering>
+		    </resource>
+    	</resources>
 	</build>
 	<groupId>StudyGuideGenie</groupId>
 </project>

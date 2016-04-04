@@ -8,9 +8,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,7 +38,6 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneIndexHelper {
 	
 	private String application_path;
-	
 	private String CORPUS_ROOT_FOLDER = "CrawledData";
 	private String LUCENE_INDEX_FOLDER = "LuceneIndex";
 	private String AUTOSUGGEST_DATASTRUCTURE_DIR = "LuceneIndexLookup";
@@ -48,12 +49,14 @@ public class LuceneIndexHelper {
 	private StandardAnalyzer analyzer = new StandardAnalyzer();
 	private AnalyzingSuggester suggester = new AnalyzingSuggester(analyzer);
 	
-	public void initialize(String path) throws IOException {
-		this.application_path = path;
-		CORPUS_ROOT_FOLDER = application_path+"/WEB-INF/CrawledData";
-		LUCENE_INDEX_FOLDER = application_path+"/WEB-INF/LuceneIndex";
-		AUTOSUGGEST_DATASTRUCTURE_DIR = application_path+"/WEB-INF/LuceneIndexLookup";
-		AUTOSUGGEST_DATASTRUCTURE_FILE = application_path+"/WEB-INF/LuceneIndexLookup/LookupFile";
+	public void initialize() throws IOException {
+		this.application_path = this.getClass().getResource("/luceneindex").getPath();
+		//File f = new File (ClassLoader.getSystemResource("CrawledData").getPath());
+		//System.out.println(f.exists());
+		CORPUS_ROOT_FOLDER = application_path+"CrawledData";
+		LUCENE_INDEX_FOLDER = application_path+"LuceneIndex";
+		AUTOSUGGEST_DATASTRUCTURE_DIR = application_path+"LuceneIndexLookup";
+		AUTOSUGGEST_DATASTRUCTURE_FILE = application_path+"LuceneIndexLookup/LookupFile";
 		start();
 	}
 	
@@ -117,6 +120,7 @@ public class LuceneIndexHelper {
 		File dataDir = new File(CORPUS_ROOT_FOLDER); //my sample file folder path
 		// Check whether the directory to be indexed exists
 		if (!dataDir.exists() || !dataDir.isDirectory()) {
+			System.out.println("Couldn't find the CrawledData directory at "+CORPUS_ROOT_FOLDER);
 			throw new IOException(
 					dataDir + " does not exist or is not a directory");
 		}

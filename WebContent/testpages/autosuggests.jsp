@@ -10,7 +10,7 @@
 <body>
 <%
 	try {
-		autosuggesthelper.initialize(application.getRealPath("/"));
+		autosuggesthelper.initialize();
 		int top = Integer.parseInt(request.getParameter("top"));
 		Set<String> result = autosuggesthelper.getAutoSuggests(request.getParameter("q"), top);
 		for (String s : result) {
