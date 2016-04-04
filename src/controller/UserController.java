@@ -52,7 +52,7 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping(value="registerUser", method=RequestMethod.GET)
+	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView loadForm()
 	{
 		ModelAndView mv = new ModelAndView("registerUser");
@@ -60,7 +60,7 @@ public class UserController {
 		return mv;
 	}
 	
-	@RequestMapping(value="registerUser", method=RequestMethod.POST)
+	@RequestMapping(value="/", method=RequestMethod.POST)
 	public ModelAndView registerUser(@ModelAttribute("registerUser") User user, BindingResult result)
 	{
 		ModelAndView mv = new ModelAndView("registerUser");

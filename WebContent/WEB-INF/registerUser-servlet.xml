@@ -11,7 +11,8 @@
 	<!-- Auto scan the components -->
 	<mvc:annotation-driven />
 	<context:component-scan base-package="controller, bo, bo.implementaton, dao, dao.implementation, model, util" />
-
+	<mvc:default-servlet-handler/>
+	<!-- <mvc:view-controller path="/" view-name="registerUser"/> -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="viewClass"

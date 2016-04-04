@@ -3,49 +3,163 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register User</title>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="navbar.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="css/navbar.css">
 </head>
+
 <body>
-	<div id="container">
-		<h2>Register</h2>
-		<c:if test="${not empty message }">
-			<div class="green">${message }</div>
-		</c:if>
-		<form:form modelAttribute="registerUser" method="POST">
-			<label for="userName">Username</label>
-			<form:input path="userName" id="userName" type="text"/>
-			</br>
-			
-			<label for="firstName">First Name</label>
-			<form:input path="firstName" id="firstName" type="text"/>
-			</br>
-			
-			<label for="lastName">Last Name</label>
-			<form:input path="lastName" id="lastName" type="text"/>
-			</br>
-			
-			
-			<label for="password">Password</label>
-			<form:password path="password" id="password"/>
-			</br>
-			
-			<label for="Email">Email</label>
-			<form:input path="email" id="Email"/>
-			</br>
-			<input type="submit" value="Submit" />
-			
-			<label for="role">Role</label>
-			<form:select path="role" id="role">
-			<form:option value="SELECT">SELECT</form:option>
-			<c:forEach items="${roleTypes}"
-			 var="roleIter">
-				<form:option value="${roleIter}">${roleIter}</form:option>
-			</c:forEach>
-			</form:select>
-		</form:form>
-	</div>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <b>Study Guide |</b>
+        </a>
+      </div>
+      <div>
+        <ul class="nav navbar-nav">
+          <li><a href="#">About Us</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a href="#">
+              <span class="glyphicon glyphicon-user"></span> Sign Up</a>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7">
+        <center>
+          <img src="images/frontpage.png" height="95%" width="95%" />
+          <br>
+          <br>
+          <font size="30" color="#1D9269" style="font-family: 'Tahoma', Geneva, sans-serif;">Login</font>
+          <div class="well" style="width:50%">
+            <form role="form">
+              <div class="form-group">
+                <label for="email" style="float:left">Email:</label>
+
+                <input type="email" class="form-control" id="email" placeholder="Email">
+              </div>
+              <div class="form-group">
+                <label for="pwd" style="float:left">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Password">
+              </div>
+              <div class="checkbox">
+                <label style="float:left">
+                  <input type="checkbox"> Remember me</label>
+              </div>
+              <br>
+              <br>
+              <button type="submit" class="btn btn-success">Login</button>
+            </form>
+          </div>
+          </center>
+      </div>
+
+      <div class="col-md-5">
+        <center>
+
+              <br>
+              <br>
+              <div id="container" class="well">
+                <font size="30" color="#1D9269" style="font-family: 'Tahoma', Geneva, sans-serif;">Signup</font>
+                <br>
+                
+                <c:if test="${not empty message }">
+                  <div class="green">${message }</div>
+                </c:if>
+                <br>
+                <form:form modelAttribute="registerUser" method="POST">
+                  <table>
+                    <tr>
+                      <td>
+                        <label for="userName">Username:</label>&nbsp;&nbsp;
+                      </td>
+                      <td>
+                        <form:input path="userName" id="userName" type="text" class="control form-control" />
+                        <br>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="firstName">First Name:</label>&nbsp;&nbsp;
+                      </td>
+                      <td>
+                        <form:input path="firstName" id="firstName" type="text" class="control form-control" />
+                        <br>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="lastName">Last Name:</label>&nbsp;&nbsp;
+                      </td>
+                      <td>
+                        <form:input path="lastName" id="lastName" type="text" class="control form-control" />
+                        <br>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="password">Password:</label>&nbsp;&nbsp;
+                      </td>
+                      <td>
+                        <form:password path="password" id="password" class="control form-control" />
+                        <br>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <label for="Email">Email:</label>&nbsp;&nbsp;
+                      </td>
+                      <td>
+                        <form:input path="email" id="Email" class="control form-control" />
+                        <br>
+                      </td>
+
+                    </tr>
+                    <tr>
+                    <td><label for="role">Role:</label></td>
+                  
+                  <td><form:select path="role" id="role" class="control form-control">
+                    <form:option value="SELECT">Select</form:option>
+                    <c:forEach items="${roleTypes}" var="roleIter">
+                      <form:option value="${roleIter}">${roleIter}</form:option>
+                    </c:forEach>
+                  </form:select><br></td>
+                  </tr>
+                  </table>
+                  <br>
+                  <br>
+                  <input type="submit" value="Submit" class="btn btn-info" />
+                  <br>
+                  <br>
+                  
+
+                </form:form>
+              </div>
+            </center>
+
+      </div>
+    </div>
+
+  </div>
+
 </body>
+
 </html>
