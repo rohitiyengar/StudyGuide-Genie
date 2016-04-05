@@ -1,0 +1,63 @@
+<html>
+<link href="../css/jquery.textcomplete.css" rel="stylesheet">
+<link href="../css/autocomplete-body.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="../scripts/jquery.textcomplete.js"></script>
+<script>
+var suggests;
+$(document).ready(function() {
+	$('#notes').keyup(function() {
+		var str = $(this).val();
+		if (str.length > 0) {
+			var t = str.split(" ");
+			var query = t[t.length-1];
+			query = query.trim();
+			if (query != "") {
+				$.ajax({url: "autosuggests.jsp?q="+query+"&top=5", dataType: "xml", success: function(result){
+					$xml = $(result);
+					var output = $xml.find("text");
+					var len = output.length;
+					if (len > 0) {
+						suggests = new Array();
+						for (var i = 0; i < len; i++) {
+							suggests.push($(output[i]).text());
+						}
+						if (suggests && suggests.length > 0) {
+							$('#notes').textcomplete([
+							{ // tech companies
+						        id: 'notesarea',
+						        match: /\b(\w{2,})$/,
+						        search: function (term, callback) {
+						        	term = term.toLowerCase();
+						        	callback($.map(suggests, function (word) {
+						            	  return word.indexOf(term) === 0 ? word : null;
+						            }));
+						        },
+						        index: 1,
+						        replace: function (word) {
+						            return word + ' ';
+						        },
+						        maxCount: 5
+						    }, {
+						        onKeydown: function (e, commands) {
+						            if (e.ctrlKey && e.keyCode === 74) { // CTRL-J
+						                return commands.KEY_ENTER;
+						            }
+						        }
+						    }]);
+						}
+						else {
+							console.log("suggests is empty");
+						}
+					}
+				}});
+			}
+		}
+	});
+});
+</script>
+<body>
+<textarea id="notes" class="dropdown" rows=10 cols=50>
+</textarea>
+</body>
+</html>
