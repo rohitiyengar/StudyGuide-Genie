@@ -98,6 +98,11 @@
 			<artifactId>postgresql</artifactId>
 			<version>9.4-1201-jdbc41</version>
 		</dependency>
+		<dependency>
+			<groupId>info.debatty</groupId>
+			<artifactId>java-string-similarity</artifactId>
+			<version>RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>ROOT</finalName>
@@ -121,11 +126,11 @@
 			</plugin>
 		</plugins>
 		<resources>
-    		<resource>
-		      <directory>resources</directory>
-		      <filtering>true</filtering>
-		    </resource>
-    	</resources>
+			<resource>
+				<directory>resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 	<groupId>StudyGuideGenie</groupId>
 </project>
