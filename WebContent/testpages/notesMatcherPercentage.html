@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<script>
+	$(document).ready(function() {
+		$("#notesArea").on('keydown', function(e) {
+			var bullet = '\u2022';
+			var notes = $(this);
+			if (notes.val() != bullet && notes.val.length > 0) {
+				var sentences = notes.val().split(bullet);
+				var words = sentences[sentences.length - 1].split(" ");
+				var currentWord = words[words.length - 1];
+				currentWord = currentWord.trim();
+				if (currentWord != "") 
+				{
+					// Autocomplete for the current word	
+				}
+				switch (e.which) {
+				//If Enter(13) is pressed then go to a newline and create a Bullet point
+				case 13:
+					notes.val(notes.val() + '\n' + '\u2022');
+					return false;
+					break;
+				// If a Tab(9) is pressed then move to the code area and calculate the match percentage
+				case 9:
+					var res = "";
+					for (i = 0; i < sentences.length; i++) 
+					{
+						var empty = sentences[i].trim();
+						if(empty != "")
+						{
+							res = res + sentences[i] + '\n';
+						}		
+					}
+					//topic will be the filename without the .txt suffix.
+					$.ajax({url: "notesMatcherPercentage.jsp?topic=1&notes="+res, dataType: "xml", success: function(result){
+						$xml = $(result);
+						var output = $xml.find("score").text();
+						if (output.trim() != "") {
+							$("#matchPercentageArea").val("Match percentage is "+output);
+						}
+					}});
+					alert("Moving to the Code section");
+					if ($("#notesArea").focus()) {
+						$("#codeArea").focus();
+					}
+					break;
+				
+			}
+		}
+	}	);
+	});
+</script>
+
+<body>
+	<div>
+		<p>
+			This is the area where you can type notes.
+			<ul>
+			<li>Press ENTER key to goto the next line and create a bullet point</li>
+			<li>Press TAB To move to the code area and know your match percentage</li>
+			</ul>
+	</div>
+	<h1>Notes area</h1>
+	<div>
+		<textarea rows="25" cols="50" id="notesArea">&#x2022;</textarea>
+	</div>
+	<h1>Match area</h1>
+	<div>
+		<textarea rows="10" cols="10" id="matchPercentageArea"></textarea>
+	</div>
+	<h1>Code area</h1>
+	<div>
+		<textarea rows="25" cols="50" id="codeArea"></textarea>
+	</div>
+</body>
+</html>

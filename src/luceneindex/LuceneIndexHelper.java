@@ -173,4 +173,6 @@ public class LuceneIndexHelper {
 		}
 		return result;
 	}
+	
+	
 }
