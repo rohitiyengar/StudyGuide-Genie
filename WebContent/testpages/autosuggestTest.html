@@ -1,0 +1,49 @@
+<html>
+<link rel="stylesheet" href="../css/prism.css" />
+<link rel="stylesheet" href="../css/awesomplete.css" />
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="../scripts/awesomplete.js"></script>
+<script>
+
+$().ready(function() {
+	var suggests = [];
+	var input = document.getElementById("myinput");
+	var autocomplete = new Awesomplete(input);
+	$('#myinput').keyup(function(event) {
+		if (event.keyCode == 32) {
+			//space
+        	autocomplete.list = [];
+        	return;
+        }
+		var c= String.fromCharCode(event.keyCode);
+        var isWordCharacter = c.match(/\w/);
+        var isBackspaceOrDelete = (event.keyCode == 8 || event.keyCode == 46);
+        
+		var str = $(this).val();
+		if ((isWordCharacter || isBackspaceOrDelete) && str.length > 0) {
+			var t = str.split(" ");
+			var query = t[t.length-1];
+			query = query.trim();
+			if (query != "") {
+				$.ajax({url: "autosuggests.jsp?q="+query+"&top=5", dataType: "xml", success: function(result){
+					$xml = $(result);
+					var output = $xml.find("text");
+					var len = output.length;
+					if (len > 0) {
+						suggests = new Array();
+						for (var i = 0; i < len; i++) {
+							suggests.push($(output[i]).text());
+						}
+						autocomplete.list = suggests;						
+					}					
+				}});
+			}
+		}
+	});
+	
+});
+</script>
+<body>
+<textarea id="myinput" rows="10" cols="50" style="font-family:Tahoma;font-size:large"></textarea>
+</body>
+</html>
