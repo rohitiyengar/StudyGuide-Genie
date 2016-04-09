@@ -1,5 +1,8 @@
 package luceneindex;
 
+import info.debatty.java.stringsimilarity.KShingling;
+import info.debatty.java.stringsimilarity.StringProfile;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -8,11 +11,9 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +25,12 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.search.spell.LuceneDictionary;
 import org.apache.lucene.search.suggest.Lookup.LookupResult;
 import org.apache.lucene.search.suggest.analyzing.AnalyzingSuggester;
@@ -49,15 +56,21 @@ public class LuceneIndexHelper {
 	private StandardAnalyzer analyzer = new StandardAnalyzer();
 	private AnalyzingSuggester suggester = new AnalyzingSuggester(analyzer);
 	
-	public void initialize() throws IOException {
-		this.application_path = this.getClass().getResource("/luceneindex").getPath();
-		//File f = new File (ClassLoader.getSystemResource("CrawledData").getPath());
-		//System.out.println(f.exists());
+	public LuceneIndexHelper() throws IOException {
+		String osname = System.getProperty("os.name");
+		this.application_path = this.getClass().getResource("/luceneindex").getPath();		
+		if (!osname.toLowerCase().contains("mac")) {
+			this.application_path = application_path.substring(1);
+		}
 		CORPUS_ROOT_FOLDER = application_path+"CrawledData";
 		LUCENE_INDEX_FOLDER = application_path+"LuceneIndex";
 		AUTOSUGGEST_DATASTRUCTURE_DIR = application_path+"LuceneIndexLookup";
 		AUTOSUGGEST_DATASTRUCTURE_FILE = application_path+"LuceneIndexLookup/LookupFile";
 		start();
+		/*File f = new File(AUTOSUGGEST_DATASTRUCTURE_FILE);
+		if (!f.exists()) {
+			start();
+		}*/		
 	}
 	
 	/*
@@ -149,7 +162,7 @@ public class LuceneIndexHelper {
 	    
 		System.out.println("Lucene index successfully built and lookup suggests have been persisted");
 	}
-		
+	
 	private void createLuceneIndexFolder() throws IOException {
 		File indexDirectory = new File(LUCENE_INDEX_FOLDER);
 		Path path = Paths.get(LUCENE_INDEX_FOLDER);
@@ -174,5 +187,30 @@ public class LuceneIndexHelper {
 		return result;
 	}
 	
+	public Document findTopDocument(IndexReader reader, String topicName) throws ParseException, IOException
+	{
+		QueryParser q = new QueryParser(FILENAME_FIELD_NAME , analyzer);
+		Query query = q.parse(QueryParser.escape(topicName));
+		IndexSearcher searcher = null;
+		int hitsPerPage = 1;
+		TopScoreDocCollector collector = null;
+		searcher = new IndexSearcher(reader);
+		collector = TopScoreDocCollector.create(hitsPerPage);
+		searcher.search(query, collector);
+		ScoreDoc[] hits = collector.topDocs().scoreDocs;
+		//System.out.println(searcher.doc(hits[0].doc).get(FILENAME_FIELD_NAME));
+		//System.out.println(searcher.doc(hits[0].doc).get(CONTENTS_FIELD_NAME));
+		return searcher.doc(hits[0].doc);
+	}
+	
+	public double getScore(String topicName, String noteSentence) throws Exception
+	{
+		Directory indexDir = FSDirectory.open(Paths.get(LUCENE_INDEX_FOLDER));
+		IndexReader reader = DirectoryReader.open(indexDir);
+		KShingling ks = new KShingling(9);// number of characters to be grouped together to build a profile.
+		StringProfile p1 = ks.getProfile(noteSentence);
+		StringProfile p2 = ks.getProfile(findTopDocument(reader, topicName+".txt").get("contents"));
+		return p1.cosineSimilarity(p2)*100;
+	}
 	
 }

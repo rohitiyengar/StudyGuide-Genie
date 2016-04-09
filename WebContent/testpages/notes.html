@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Student Notes</title>
+<link rel="stylesheet" href="../css/prism.css" />
+<link rel="stylesheet" href="../css/awesomplete.css" />
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="../scripts/awesomplete.js"></script>
+<style>
+.ta5 {
+	border: 2px solid #765942;
+	border-radius: 10px;
+	height: 160px;
+	width: 430px;
+	font-family:Tahoma;
+	font-size:large;
+}
+</style>
+</head>
+<script>
+var bullet = '\u2022';
+$().ready(function() {
+	var suggests = [];
+	var input = document.getElementById("mynotes");
+	var autocomplete = new Awesomplete(input,{autoFirst: true});
+	$("#mynotes").keyup(function(e) {
+		if (e.keyCode == 32) {
+			//space
+        	autocomplete.list = [];
+        	return;
+        }
+		
+		var c = String.fromCharCode(e.keyCode);
+    	var isWordCharacter = c.match(/\w/);
+    	var isBackspaceOrDelete = (e.keyCode == 8 || e.keyCode == 46);
+    	var str = $(this).val();
+		if (!((isWordCharacter || isBackspaceOrDelete) && str.length > 0)) {
+			return;
+		}
+		var notes = $(this);
+		if (notes.val() != bullet && notes.val.length > 0) {
+			var words = notes.val().split(" ");
+			var currentWord = words[words.length - 1];
+			currentWord = currentWord.trim();
+			$.ajax({url: "autosuggests.jsp?q="+currentWord+"&top=5", dataType: "xml", success: function(result){
+						$xml = $(result);
+						var output = $xml.find("text");
+						var len = output.length;
+						if (len > 0) {
+							suggests = new Array();
+							for (var i = 0; i < len; i++) {
+								suggests.push($(output[i]).text());
+							}
+							autocomplete.list = suggests;						
+						}					
+			}});		        
+		}
+	});
+	
+	$("#btnSave").click(function(e) {
+		var res = $("#mynotes").val().trim();
+		console.log("clicked "+res);
+		if (res != "") {
+			$.ajax({url: "notesMatcherPercentage.jsp?topic=1&notes="+res, dataType: "xml", success: function(result){
+				$xml = $(result);
+				var output = $xml.find("score").text();
+				console.log(output);
+				if (output.trim() != "") {
+					$("#matchPercentage").text("Match percentage is "+output);
+				}
+			}});
+			
+		}
+	});
+	
+	$('#codeArea').bind('input propertychange', function() {
+		var val = this.value.length;
+		var code = this.value;
+		//alert(this.value);
+		if (val > 0) {
+			$.ajax({url: "compileJavaCode.jsp?source="+code, dataType: "xml", success: function(result){
+				$xml = $(result);
+				var output = $xml.find("result").text();
+				if (output.trim() == "") {
+					$("#compileResult").text("Success");
+				}
+				else {
+					$("#compileResult").text(output);
+				}
+			}});
+		}
+	});
+});
+</script>
+<body>
+<div>
+<textarea id="mynotes" class="ta5" rows="10" cols="50"></textarea>
+<br/>
+<button id="btnSave">Save Notes</button> <div id="matchPercentage"></div>
+</div>
+<div>
+<br/><br/>
+<textarea id="codeArea" rows="25" cols="100" id="codeArea" class="ta5"> public class Solution { }</textarea>
+</div>
+<label id="compileResult"></label>
+</body>
+</html>
