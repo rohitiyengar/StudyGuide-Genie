@@ -59,7 +59,7 @@ public class LuceneIndexHelper {
 	public LuceneIndexHelper() throws IOException {
 		String osname = System.getProperty("os.name");
 		this.application_path = this.getClass().getResource("/luceneindex").getPath();		
-		if (!osname.toLowerCase().contains("mac")) {
+		if (osname.toLowerCase().contains("windows")) {
 			this.application_path = application_path.substring(1);
 		}
 		CORPUS_ROOT_FOLDER = application_path+"CrawledData";
