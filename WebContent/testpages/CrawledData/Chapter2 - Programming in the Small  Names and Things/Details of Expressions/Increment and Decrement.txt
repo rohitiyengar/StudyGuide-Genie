@@ -1,0 +1,21 @@
+You'll find that adding 1 to a variable is an extremely common operation in programming. Subtracting 1 from a variable is also pretty common. You might perform the operation of adding 1 to a variable with assignment statements such as:
+
+counter  =  counter + 1;
+goalsScored  =  goalsScored + 1;
+The effect of the assignment statement x = x + 1 is to take the old value of the variable x, compute the result of adding 1 to that value, and store the answer as the new value of x. The same operation can be accomplished by writing x++ (or, if you prefer, ++x). This actually changes the value of x, so that it has the same effect as writing "x = x + 1". The two statements above could be written
+
+counter++;
+goalsScored++;
+Similarly, you could write x-- (or --x) to subtract 1 from x. That is, x-- performs the same computation as x = x - 1. Adding 1 to a variable is called incrementing that variable, and subtracting 1 is called decrementing. The operators ++ and -- are called the increment operator and the decrement operator, respectively. These operators can be used on variables belonging to any of the numerical types and also on variables of type char. ('A'++ is 'B'.)
+
+Usually, the operators ++ or -- are used in statements like "x++;" or "x--;". These statements are commands to change the value of x. However, it is also legal to use x++, ++x, x--, or --x as expressions, or as parts of larger expressions. That is, you can write things like:
+
+y = x++;
+y = ++x;
+TextIO.putln(--x);
+z = (++x) * (y--);
+The statement "y = x++;" has the effects of adding 1 to the value of x and, in addition, assigning some value to y. The value assigned to y is the value of the expression x++, which is defined to be the old value of x, before the 1 is added. Thus, if the value of x is 6, the statement "y = x++;" will change the value of x to 7, but it will change the value of y to 6 since the value assigned to y is the old value of x. On the other hand, the value of ++x is defined to be the new value of x, after the 1 is added. So if x is 6, then the statement "y = ++x;" changes the values of both x and y to 7. The decrement operator, --, works in a similar way.
+
+Note in particular that the statement x = x++; does not change the value of x! This is because the value that is being assigned to x is the old value of x, the one that it had before the statement was executed. The net result is that x is incremented but then immediately changed back to its previous value! You also need to remember that x++ is not the same as x + 1. The expression x++ changes the value of x; the expression x + 1 does not.
+
+This can be confusing, and I have seen many bugs in student programs resulting from the confusion. My advice is: Don't be confused. Use ++ and -- only as stand-alone statements, not as expressions. I will follow this advice in almost all examples in these notes.

@@ -1,0 +1,19 @@
+Java has boolean variables and boolean-valued expressions that can be used to express conditions that can be either true or false. One way to form a boolean-valued expression is to compare two values using a relational operator. Relational operators are used to test whether two values are equal, whether one value is greater than another, and so forth. The relational operators in Java are: ==, !=, <, >, <=, and >=. The meanings of these operators are:
+
+A == B       Is A "equal to" B?
+A != B       Is A "not equal to" B?
+A < B        Is A "less than" B?
+A > B        Is A "greater than" B?
+A <= B       Is A "less than or equal to" B?
+A >= B       Is A "greater than or equal to" B?
+These operators can be used to compare values of any of the numeric types. They can also be used to compare values of type char. For characters, < and > are defined according the numeric Unicode values of the characters. (This might not always be what you want. It is not the same as alphabetical order because all the upper case letters come before all the lower case letters.)
+
+When using boolean expressions, you should remember that as far as the computer is concerned, there is nothing special about boolean values. In the next chapter, you will see how to use them in loop and branch statements. But you can also assign boolean-valued expressions to boolean variables, just as you can assign numeric values to numeric variables. And functions can return boolean values.
+
+By the way, the operators == and != can be used to compare boolean values too. This is occasionally useful. For example, can you figure out what this does:
+
+boolean sameSign;
+sameSign = ((x > 0) == (y > 0));
+One thing that you cannot do with the relational operators <, >, <=, and >= is to use them to compare values of type String. You can legally use == and != to compare Strings, but because of peculiarities in the way objects behave, they might not give the results you want. (The == operator checks whether two objects are stored in the same memory location, rather than whether they contain the same value. Occasionally, for some objects, you do want to make such a check -- but rarely for strings. I'll get back to this in a later chapter.) Instead, you should use the subroutines equals(), equalsIgnoreCase(), and compareTo(), which were described in Subsection 2.3.3, to compare two Strings.
+
+Another place where == and != don't work as you would expect is with Double.NaN, the constant that represents an undefined value of type double. The values of x == Double.NaN and x != Double.NaN are both defined to be false in all cases, whether or not x is Double.NaN! To test whether a real value x is the undefined value Double.NaN, use the boolean-valued function Double.isNaN(x).

@@ -1,0 +1,45 @@
+You are already familiar with the assignment statement, which uses the symbol "=" to assign the value of an expression to a variable. In fact, = is really an operator in the sense that an assignment can itself be used as an expression or as part of a more complex expression. The value of an assignment such as A=B is the same as the value that is assigned to A. So, if you want to assign the value of B to A and test at the same time whether that value is zero, you could say:
+
+if ( (A=B) == 0 )...
+Usually, I would say, don't do things like that!
+
+In general, the type of the expression on the right-hand side of an assignment statement must be the same as the type of the variable on the left-hand side. However, in some cases, the computer will automatically convert the value computed by the expression to match the type of the variable. Consider the list of numeric types: byte, short, int, long, float, double. A value of a type that occurs earlier in this list can be converted automatically to a value that occurs later. For example:
+
+int A;
+double X;
+short B;
+A = 17;
+X = A;    // OK; A is converted to a double
+B = A;    // illegal; no automatic conversion
+          //       from int to short
+The idea is that conversion should only be done automatically when it can be done without changing the semantics of the value. Any int can be converted to a double with the same numeric value. However, there are int values that lie outside the legal range of shorts. There is simply no way to represent the int 100000 as a short, for example, since the largest value of type short is 32767.
+
+In some cases, you might want to force a conversion that wouldn't be done automatically. For this, you can use what is called a type cast. A type cast is indicated by putting a type name, in parentheses, in front of the value you want to convert. For example,
+
+int A;
+short B;
+A = 17;
+B = (short)A;  // OK; A is explicitly type cast
+               //      to a value of type short
+You can do type casts from any numeric type to any other numeric type. However, you should note that you might change the numeric value of a number by type-casting it. For example, (short)100000 is -31072. (The -31072 is obtained by taking the 4-byte int 100000 and throwing away two of those bytes to obtain a short -- you've lost the real information that was in those two bytes.)
+
+When you type-cast a real number to an integer, the fractional part is discarded. For example, (int)7.9453 is 7. As another example of type casts, consider the problem of getting a random integer between 1 and 6. The function Math.random() gives a real number between 0.0 and 0.9999..., and so 6*Math.random() is between 0.0 and 5.999.... The type-cast operator, (int), can be used to convert this to an integer: (int)(6*Math.random()). Thus, (int)(6*Math.random()) is one of the integers 0, 1, 2, 3, 4, and 5. To get a number between 1 and 6, we can add 1: "(int)(6*Math.random()) + 1". (The parentheses around 6*Math.random() are necessary because of precedence rules; without the parentheses, the type cast operator would apply only to the 6.)
+
+The type char is almost an integer type. You can assign char values to int variables, and you can assign numerical constants in the range 0 to 65535 to char variables. You can also use explicit type-casts between char and the numeric types. For example, (char)97 is 'a', (int)'+' is 43, and (char)('A' + 2) is 'C'.
+
+Type conversion between String and other types cannot be done with type-casts. One way to convert a value of any type into a string is to concatenate it with an empty string. For example, "" + 42 is the string "42". But a better way is to use the function String.valueOf(x), a static member function in the String class. String.valueOf(x) returns the value of x, converted into a string. For example, String.valueOf(42) is the string "42", and if ch is a char variable, then String.valueOf(ch) is a string of length one containing the single character that is the value of ch.
+
+It is also possible to convert certain strings into values of other types. For example, the string "10" should be convertible into the int value 10, and the string "17.42e-2" into the double value 0.1742. In Java, these conversions are handled by built-in functions.
+
+The standard class Integer contains a static member function for converting from String to int. In particular, if str is any expression of type String, then Integer.parseInt(str) is a function call that attempts to convert the value of str into a value of type int. For example, the value of Integer.parseInt("10") is the int value 10. If the parameter to Integer.parseInt does not represent a legal int value, then an error occurs.
+
+Similarly, the standard class Double includes a function Double.parseDouble. If str is a String, then the function call Double.parseDouble(str) tries to convert str into a value of type double. An error occurs if str does not represent a legal double value.
+
+Getting back to assignment statements, Java has several variations on the assignment operator, which exist to save typing. For example, "A += B" is defined to be the same as "A = A + B". Every operator in Java that applies to two operands, except for the relational operators, gives rise to a similar assignment operator. For example:
+
+x -= y;     // same as:   x = x - y;
+x *= y;     // same as:   x = x * y;
+x /= y;     // same as:   x = x / y;
+x %= y;     // same as:   x = x % y;
+q &&= p;    // same as:   q = q && p;  (for booleans q and p)
+The combined assignment operator += even works with strings. Recall that when the + operator is used with a string as one of the operands, it represents concatenation. Since str += x is equivalent to str = str + x, when += is used with a string on the left-hand side, it appends the value on the right-hand side onto the string. For example, if str has the value "tire", then the statement str += 'd'; changes the value of str to "tired".

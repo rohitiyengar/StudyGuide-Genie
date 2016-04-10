@@ -1,0 +1,7 @@
+Any good programming language has some nifty little features that aren't really necessary but that let you feel cool when you use them. Java has the conditional operator. It's a ternary operator -- that is, it has three operands -- and it comes in two pieces, ? and :, that have to be used together. It takes the form
+
+boolean-expression ? expression1 : expression2
+The computer tests the value of boolean-expression. If the value is true, it evaluates expression1; otherwise, it evaluates expression2. For example:
+
+next = (N % 2 == 0) ? (N/2) : (3*N+1);
+will assign the value N/2 to next if N is even (that is, if N % 2 == 0 is true), and it will assign the value (3*N+1) to next if N is odd. (The parentheses in this example are not required, but they do make the expression easier to read.)

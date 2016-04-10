@@ -1,0 +1,15 @@
+In English, complicated conditions can be formed using the words "and", "or", and "not." For example, "If there is a test and you did not study for it...". "And", "or", and "not" are boolean operators, and they exist in Java as well as in English.
+
+In Java, the boolean operator "and" is represented by &&. The && operator is used to combine two boolean values. The result is also a boolean value. The result is true if both of the combined values are true, and the result is false if either of the combined values is false. For example, "(x == 0) && (y == 0)" is true if and only if both x is equal to 0 and y is equal to 0.
+
+The boolean operator "or" is represented by ||. (That's supposed to be two of the vertical line characters, |.) The expression "A || B" is true if either A is true or B is true, or if both are true. "A || B" is false only if both A and B are false.
+
+The operators && and || are said to be short-circuited versions of the boolean operators. This means that the second operand of && or || is not necessarily evaluated. Consider the test
+
+(x != 0) && (y/x > 1)
+Suppose that the value of x is in fact zero. In that case, the division y/x is undefined mathematically. However, the computer will never perform the division, since when the computer evaluates (x != 0), it finds that the result is false, and so it knows that ((x != 0) && anything) has to be false. Therefore, it doesn't bother to evaluate the second operand. The evaluation has been short-circuited and the division by zero is avoided. (This may seem like a technicality, and it is. But at times, it will make your programming life a little easier.)
+
+The boolean operator "not" is a unary operator. In Java, it is indicated by ! and is written in front of its single operand. For example, if test is a boolean variable, then
+
+test = ! test;
+will reverse the value of test, changing it from true to false, or from false to true.

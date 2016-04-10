@@ -1,0 +1,14 @@
+If you use several operators in one expression, and if you don't use parentheses to explicitly indicate the order of evaluation, then you have to worry about the precedence rules that determine the order of evaluation. (Advice: don't confuse yourself or the reader of your program; use parentheses liberally.)
+
+Here is a listing of the operators discussed in this section, listed in order from highest precedence (evaluated first) to lowest precedence (evaluated last):
+
+Unary operators:              ++, --, !, unary -, unary +, type-cast
+Multiplication and division:  *,  /,  %
+Addition and subtraction:     +,  -
+Relational operators:         <,  >,  <=,  >=
+Equality and inequality:      ==,  !=
+Boolean and:                  &&
+Boolean or:                   ||
+Conditional operator:         ?:
+Assignment operators:         =,  +=,  -=,  *=,  /=,  %=
+Operators on the same line have the same precedence. When operators of the same precedence are strung together in the absence of parentheses, unary operators and assignment operators are evaluated right-to-left, while the remaining operators are evaluated left-to-right. For example, A*B/C means (A*B)/C, while A=B=C means A=(B=C). (Can you see how the expression A=B=C might be useful, given that the value of B=C as an expression is the same as the value that is assigned to B?)

@@ -1,0 +1,54 @@
+TextIO includes a variety of functions for inputting values of various types. Here are the functions that you are most likely to use:
+
+j = TextIO.getlnInt();     // Reads a value of type int.
+y = TextIO.getlnDouble();  // Reads a value of type double.
+a = TextIO.getlnBoolean(); // Reads a value of type boolean.
+c = TextIO.getlnChar();    // Reads a value of type char.
+w = TextIO.getlnWord();    // Reads one "word" as a value of type String.
+s = TextIO.getln();        // Reads an entire input line as a String.
+For these statements to be legal, the variables on the left side of each assignment statement must already be declared and must be of the same type as that returned by the function on the right side. Note carefully that these functions do not have parameters. The values that they return come from outside the program, typed in by the user as the program is running. To "capture" that data so that you can use it in your program, you have to assign the return value of the function to a variable. You will then be able to refer to the user's input value by using the name of the variable.
+
+When you call one of these functions, you are guaranteed that it will return a legal value of the correct type. If the user types in an illegal value as input -- for example, if you ask for an int and the user types in a non-numeric character or a number that is outside the legal range of values that can be stored in a variable of type int -- then the computer will ask the user to re-enter the value, and your program never sees the first, illegal value that the user entered. For TextIO.getlnBoolean(), the user is allowed to type in any of the following: true, false, t, f, yes, no, y, n, 1, or 0. Furthermore, they can use either upper or lower case letters. In any case, the user's input is interpreted as a true/false value. It's convenient to use TextIO.getlnBoolean() to read the user's response to a Yes/No question.
+
+You'll notice that there are two input functions that return Strings. The first, getlnWord(), returns a string consisting of non-blank characters only. When it is called, it skips over any spaces and carriage returns typed in by the user. Then it reads non-blank characters until it gets to the next space or carriage return. It returns a String consisting of all the non-blank characters that it has read. The second input function, getln(), simply returns a string consisting of all the characters typed in by the user, including spaces, up to the next carriage return. It gets an entire line of input text. The carriage return itself is not returned as part of the input string, but it is read and discarded by the computer. Note that the String returned by TextIO.getln() might be the empty string, "", which contains no characters at all. You will get this return value if the user simply presses return, without typing anything else first.
+
+TextIO.getln() does not skip blanks or end-of-lines before reading a value. But the input functions getlnInt(), getlnDouble(), getlnBoolean(), and getlnChar() behave like getlnWord() in that they will skip past any blanks and carriage returns in the input before reading a value. When one of these functions skips over an end-of-line, it outputs a '?' to let the user know that more input is expected.
+
+Furthermore, if the user types extra characters on the line after the input value, all the extra characters will be discarded, along with the carriage return at the end of the line. If the program executes another input function, the user will have to type in another line of input, even if they had typed more than one value on the previous line. It might not sound like a good idea to discard any of the user's input, but it turns out to be the safest thing to do in most programs.
+
+Using TextIO for input and output, we can now improve the program from Section 2.2 for computing the value of an investment. We can have the user type in the initial value of the investment and the interest rate. The result is a much more useful program -- for one thing, it makes sense to run it more than once! Note that this program uses formatted output to print out monetary values in their correct format.
+
+/**
+ * This class implements a simple program that will compute
+ * the amount of interest that is earned on an investment over
+ * a period of one year.  The initial amount of the investment
+ * and the interest rate are input by the user.  The value of
+ * the investment at the end of the year is output.  The
+ * rate must be input as a decimal, not a percentage (for
+ * example, 0.05 rather than 5).
+ */
+
+public class Interest2 {
+
+   public static void main(String[] args) {
+   
+       double principal;  // The value of the investment.
+       double rate;       // The annual interest rate.
+       double interest;   // The interest earned during the year.
+       
+       System.out.print("Enter the initial investment: ");
+       principal = TextIO.getlnDouble();
+       
+       System.out.print("Enter the annual interest rate (as a decimal): ");
+       rate = TextIO.getlnDouble();
+       
+       interest = principal * rate;       // Compute this year's interest.
+       principal = principal + interest;  // Add it to principal.
+       
+       System.out.printf("The amount of interest is $%1.2f%n", interest);
+       System.out.printf("The value after one year is $%1.2f%n", principal);
+       
+   } // end of main()
+      
+} // end of class Interest2
+(You might be wondering why there is only one output routine, System.out.println, which can output data values of any type, while there is a separate input routine for each data type. For the output function, the computer can tell what type of value is being output by looking at the parameter. However, the input routines don't have parameters, so the different input routines can only be distinguished by having different names.)

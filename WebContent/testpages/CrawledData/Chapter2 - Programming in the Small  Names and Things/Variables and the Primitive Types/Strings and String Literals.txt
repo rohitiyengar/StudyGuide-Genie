@@ -1,0 +1,11 @@
+Java has other types in addition to the primitive types, but all the other types represent objects rather than "primitive" data values. For the most part, we are not concerned with objects for the time being. However, there is one predefined object type that is very important: the type String. (String is a type, but not a primitive type; it is in fact the name of a class, and we will return to that aspect of strings in the next section.)
+
+A value of type String is a sequence of characters. You've already seen a string literal: "Hello World!". The double quotes are part of the literal; they have to be typed in the program. However, they are not part of the actual String value, which consists of just the characters between the quotes. A string can contain any number of characters, even zero. A string with no characters is called the empty string and is represented by the literal "", a pair of double quote marks with nothing between them. Remember the difference between single quotes and double quotes! Single quotes are used for char literals and double quotes for String literals! There is a big difference between the String "A" and the char 'A'.
+
+Within a string literal, special characters can be represented using the backslash notation. Within this context, the double quote is itself a special character. For example, to represent the string value
+
+I said, "Are you listening!"
+with a linefeed at the end, you would have to type the string literal:
+
+"I said, \"Are you listening!\"\n"
+You can also use \t, \r, \\, and Unicode sequences such as \u00E9 to represent other special characters in string literals.

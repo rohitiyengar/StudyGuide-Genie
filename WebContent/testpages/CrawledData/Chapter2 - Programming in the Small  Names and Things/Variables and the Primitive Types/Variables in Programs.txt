@@ -1,0 +1,58 @@
+A variable can be used in a program only if it has first been declared. A variable declaration statement is used to declare one or more variables and to give them names. When the computer executes a variable declaration, it sets aside memory for the variable and associates the variable's name with that memory. A simple variable declaration takes the form:
+
+type-name  variable-name-or-names;
+The variable-name-or-names can be a single variable name or a list of variable names separated by commas. (We'll see later that variable declaration statements can actually be somewhat more complicated than this.) Good programming style is to declare only one variable in a declaration statement, unless the variables are closely related in some way. For example:
+
+int numberOfStudents;
+String name;
+double x, y;        
+boolean isFinished;
+char firstInitial, middleInitial, lastInitial;
+It is also good style to include a comment with each variable declaration to explain its purpose in the program, or to give other information that might be useful to a human reader. For example:
+
+double principal;    // Amount of money invested.
+double interestRate; // Rate as a decimal, not percentage.
+In this chapter, we will only use variables declared inside the main() subroutine of a program. Variables declared inside a subroutine are called local variables for that subroutine. They exist only inside the subroutine, while it is running, and are completely inaccessible from outside. Variable declarations can occur anywhere inside the subroutine, as long as each variable is declared before it is used in any way. Some people like to declare all the variables at the beginning of the subroutine. Others like to wait to declare a variable until it is needed. My preference: Declare important variables at the beginning of the subroutine, and use a comment to explain the purpose of each variable. Declare "utility variables" which are not important to the overall logic of the subroutine at the point in the subroutine where they are first used. Here is a simple program using some variables and assignment statements:
+
+/**
+ * This class implements a simple program that
+ * will compute the amount of interest that is
+ * earned on $17,000 invested at an interest
+ * rate of 0.027 for one year.  The interest and
+ * the value of the investment after one year are
+ * printed to standard output.
+ */
+ 
+public class Interest {
+   
+   public static void main(String[] args) {
+   
+       /* Declare the variables. */
+   
+       double principal;     // The value of the investment.
+       double rate;          // The annual interest rate.
+       double interest;      // Interest earned in one year.
+       
+       /* Do the computations. */
+       
+       principal = 17000;
+       rate = 0.027;
+       interest = principal * rate;   // Compute the interest.
+       
+       principal = principal + interest;
+             // Compute value of investment after one year, with interest.
+             // (Note: The new value replaces the old value of principal.)
+             
+       /* Output the results. */
+             
+       System.out.print("The interest earned is $");
+       System.out.println(interest);
+       System.out.print("The value of the investment after one year is $");
+       System.out.println(principal);
+                      
+   } // end of main()
+      
+} // end of class Interest
+This program uses several subroutine call statements to display information to the user of the program. Two different subroutines are used: System.out.print and System.out.println. The difference between these is that System.out.println adds a linefeed after the end of the information that it displays, while System.out.print does not. Thus, the value of interest, which is displayed by the subroutine call "System.out.println(interest);", follows on the same line as the string displayed by the previous System.out.print statement. Note that the value to be displayed by System.out.print or System.out.println is provided in parentheses after the subroutine name. This value is called a parameter to the subroutine. A parameter provides a subroutine with information it needs to perform its task. In a subroutine call statement, any parameters are listed in parentheses after the subroutine name. Not all subroutines have parameters. If there are no parameters in a subroutine call statement, the subroutine name must be followed by an empty pair of parentheses.
+
+All the sample programs for this textbook are available in separate source code files in the on-line version of this text at http://math.hws.edu/javanotes/source. They are also included in the downloadable archives of the web site, in a folder named source. The source code for the Interest program, for example, can be found in the file Interest.java in subfolder named chapter2 inside the source folder.

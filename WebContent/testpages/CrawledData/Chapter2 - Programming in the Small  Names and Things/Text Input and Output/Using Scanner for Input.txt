@@ -1,0 +1,46 @@
+TextIO makes it easy to get input from the user. However, since it is not a standard class, you have to remember to make TextIO.java available to any program that uses it. Another option for input is the Scanner class. One advantage of using Scanner is that it's a standard part of Java and so is always there when you want it.
+
+It's not that hard to use a Scanner for user input, and it has some nice features, but using it requires some syntax that will not be introduced until Chapter 4 and Chapter 5. I'll tell you how to do it here, without explaining why it works. You won't understand all the syntax at this point. (Scanners will be covered in more detail in Subsection 11.1.5.)
+
+First, you should add the following line to your program at the beginning of the source code file, before the "public class...":
+
+import java.util.Scanner;
+Then include the following statement at the beginning of your main() routine:
+
+Scanner stdin = new Scanner( System.in );
+This creates a variable named stdin of type Scanner. (You can use a different name for the variable if you want; "stdin" stands for "standard input.") You can then use stdin in your program to access a variety of subroutines for reading user input. For example, the function stdin.nextInt() reads one value of type int from the user and returns it. It is almost the same as TextIO.getInt() except for two things: If the value entered by the user is not a legal int, then stdin.nextInt() will crash rather than prompt the user to re-enter the value. And the integer entered by the user must be followed by a blank space or by an end-of-line, whereas TextIO.getInt() will stop reading at any character that is not a digit.
+
+There are corresponding methods for reading other types of data, including stdin.nextDouble(), stdin.nextLong(), and stdin.nextBoolean(). (stdin.nextBoolean() will only accept "true" or "false" as input.) These subroutines can read more than one value from a line, so they are more similar to the "get" versions of TextIO subroutines rather than the "getln" versions. The method stdin.nextLine() is equivalent to TextIO.getln(), and stdin.next(), like TextIO.getWord(), returns a string of non-blank characters.
+
+As a simple example, here is a version of the sample program Interest2.java that uses Scanner instead of TextIO for user input:
+
+import java.util.Scanner;  // Make the Scanner class available.
+
+public class Interest2WithScanner {
+   
+   public static void main(String[] args) {
+      
+      Scanner stdin = new Scanner( System.in );  // Create the Scanner.
+      
+      double principal;  // The value of the investment.
+      double rate;       // The annual interest rate.
+      double interest;   // The interest earned during the year.
+      
+      System.out.print("Enter the initial investment: ");
+      principal = stdin.nextDouble();
+      
+      System.out.print("Enter the annual interest rate (as a decimal): ");
+      rate = stdin.nextDouble();
+      
+      interest = principal * rate;       // Compute this year's interest.
+      principal = principal + interest;  // Add it to principal.
+      
+      System.out.printf("The amount of interest is $%1.2f%n", interest);
+      System.out.printf("The value after one year is $%1.2f%n", principal);
+      
+   } // end of main()
+   
+} // end of class Interest2With Scanner
+Note the inclusion of the two lines given above to import Scanner and create stdin. Also note the substitution of stdin.nextDouble() for TextIO.getlnDouble(). (In fact, stdin.nextDouble() is really equivalent to TextIO.getDouble() rather than to the "getln" version, but this will not affect the behavior of the program as long as the user types just one number on each line of input.)
+
+I will continue to use TextIO for input for the time being, but I will give a few more examples of using Scanner in the on-line solutions to the end-of-chapter exercises. There will be more detailed coverage of Scanner later in the book.

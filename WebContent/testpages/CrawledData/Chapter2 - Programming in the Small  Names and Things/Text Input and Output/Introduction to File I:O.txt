@@ -1,0 +1,67 @@
+System.out sends its output to the output destination known as "standard output." But standard output is just one possible output destination. For example, data can be written to a file that is stored on the user's hard drive. The advantage to this, of course, is that the data is saved in the file even after the program ends, and the user can print the file, email it to someone else, edit it with another program, and so on. Similarly, System.in has only one possible source for input data.
+
+TextIO has the ability to write data to files and to read data from files. TextIO includes output functions TextIO.put, TextIO.putln, and TextIO.putf. Ordinarily, these functions work exactly like System.out.print, System.out.println, and System.out.prinf and are interchangeable with them. However, they can also be used to output text to files and to other destinations.
+
+When you write output using TextIO.put, TextIO.putln, or TextIO.putf, the output is sent to the current output destination. By default, the current output destination is standard output. However, TextIO has subroutines that can be used to change the current output destination. To write to a file named "result.txt", for example, you would use the statement:
+
+TextIO.writeFile("result.txt");
+After this statement is executed, any output from TextIO output statements will be sent to the file named "result.txt" instead of to standard output. The file will be created if it does not already exist. Note that if a file with the same name already exists, its previous contents will be erased without any warning!
+
+When you call TextIO.writeFile, TextIO remembers the file and automatically sends any output from TextIO.put or other output functions to that file. If you want to go back to writing to standard output, you can call
+
+TextIO.writeStandardOutput();
+Here is a simple program that asks the user some questions and outputs the user's responses to a file named "profile.txt." As an example, it uses TextIO for output to standard output as well as to the file, but System.out could also have been used for the output to stadard output.
+
+public class CreateProfile {
+    
+    public static void main(String[] args) {
+    
+        String name;     // The user's name.
+        String email;    // The user's email address.
+        double salary;   // the user's yearly salary.
+        String favColor; // The user's favorite color.
+  
+        TextIO.putln("Good Afternoon!  This program will create");
+        TextIO.putln("your profile file, if you will just answer");
+        TextIO.putln("a few simple questions.");
+        TextIO.putln();
+  
+        /* Gather responses from the user. */
+      
+        TextIO.put("What is your name?           ");
+        name = TextIO.getln();
+        TextIO.put("What is your email address?  ");
+        email = TextIO.getln();
+        TextIO.put("What is your yearly income?  ");
+        salary = TextIO.getlnDouble();
+        TextIO.put("What is your favorite color? ");
+        favColor = TextIO.getln();
+    
+        /* Write the user's information to the file named profile.txt. */
+      
+        TextIO.writeFile("profile.txt");  // subsequent output goes to file
+        TextIO.putln("Name:            " + name); 
+        TextIO.putln("Email:           " + email);
+        TextIO.putln("Favorite Color:  " + favColor);
+        TextIO.putf( "Yearly Income:   %,1.2f%n", salary);
+       
+        /* Print a final message to standard output. */
+          
+        TextIO.writeStandardOutput();
+        TextIO.putln("Thank you.  Your profile has been written to profile.txt.");
+        
+    }
+    
+}
+In many cases, you want to let the user select the file that will be used for output. You could ask the user to type in the file name, but that is error-prone, and users are more familiar with selecting a file from a file dialog box. The statement
+
+TextIO.writeUserSelectedFile();
+will open a typical graphical-user-interface file selection dialog where the user can specify the output file. This also has the advantage of alerting the user if they are about to replace an existing file. It is possible for the user to cancel the dialog box without selecting a file. TextIO.writeUserSelectedFile is a function that returns a boolean value. The return value is true if the user selected a file, and is false if the user canceled the dialog box. Your program can check the return value if it needs to know whether it is actually going to write to a file or not.
+
+TextIO can also read from files, as an alternative to reading from standard input. You can specify an input source for TextIO's various "get" functions. The default input source is standard input. You can use the statement TextIO.readFile("data.txt") to read from a file named "data.txt" instead, or you can let the user select the input file with a GUI-style dialog box by saying TextIO.readUserSelectedFile(). After you have done this, any input will come from the file instead of being typed by the user. You can go back to reading the user's input with TextIO.readStandardInput().
+
+When your program is reading from standard input, the user gets a chance to correct any errors in the input. This is not possible when the program is reading from a file. If illegal data is found when a program tries to read from a file, an error occurs that will crash the program. (Later, we will see that it is possible to "catch" such errors and recover from them.) Errors can also occur, though more rarely, when writing to files.
+
+A complete understanding of input/output in Java requires a knowledge of object oriented programming. We will return to the topic later, in Chapter 11. The file I/O capabilities in TextIO are rather primitive by comparison. Nevertheless, they are sufficient for many applications, and they will allow you to get some experience with files sooner rather than later.
+
+

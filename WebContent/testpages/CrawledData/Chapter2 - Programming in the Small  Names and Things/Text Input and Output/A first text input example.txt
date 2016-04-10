@@ -1,0 +1,38 @@
+For some unfathomable reason, Java has never made it very easy to read data typed in by the user of a program. You've already seen that output can be displayed to the user using the subroutine System.out.print. This subroutine is part of a pre-defined object called System.out. The purpose of this object is precisely to display output to the user. There is a corresponding object called System.in that exists to read data input by the user, but it provides only very primitive input facilities, and it requires some advanced Java programming skills to use it effectively.
+
+Java 5.0 finally made input a little easier with a new Scanner class. However, it requires some knowledge of object-oriented programming to use this class, so it's not ideal for use here at the beginning of this course. Java 6 introduced the Console class for communicating with the user, but Console has its own problems. (It is not always available, and it can only read strings, not numbers.) Furthermore, in my opinion, Scanner and Console still don't get things quite right. Nevertheless, I will introduce Scanner briefly at the end of this section, in case you want to start using it now. However, we start with my own version of text input.
+
+Fortunately, it is possible to extend Java by creating new classes that provide subroutines that are not available in the standard part of the language. As soon as a new class is available, the subroutines that it contains can be used in exactly the same way as built-in routines. Along these lines, I've written a class named TextIO that defines subroutines for reading values typed by the user. The subroutines in this class make it possible to get input from the standard input object, System.in, without knowing about the advanced aspects of Java that are needed to use Scanner or to use System.in directly. TextIO also has a few other capabilities that I will discuss later in this section.
+
+To use the TextIO class, you must make sure that the class is available to your program. What this means depends on the Java programming environment that you are using. In general, you just have to add the source code file, TextIO.java, to the same directory that contains your main program. See Section 2.6 for information about how to use TextIO.
+
+The input routines in the TextIO class are static member functions. (Static member functions were introduced in the previous section.) Let's suppose that you want your program to read an integer typed in by the user. The TextIO class contains a static member function named getlnInt that you can use for this purpose. Since this function is contained in the TextIO class, you have to refer to it in your program as TextIO.getlnInt. The function has no parameters, so a complete call to the function takes the form "TextIO.getlnInt()". This function call represents the int value typed by the user, and you have to do something with the returned value, such as assign it to a variable. For example, if userInput is a variable of type int (created with a declaration statement "int userInput;"), then you could use the assignment statement
+
+userInput = TextIO.getlnInt();
+When the computer executes this statement, it will wait for the user to type in an integer value. The user must type a number and press return before the program can continue. The value that the user typed will then be returned by the function, and it will be stored in the variable, userInput. Here is a complete program that uses TextIO.getlnInt to read a number typed by the user and then prints out the square of that number:
+
+/**
+ * A program that reads an integer that is typed in by the
+ * user and computes and prints the square of that integer.
+ */
+ 
+public class PrintSquare {
+    
+     public static void main(String[] args) {
+ 
+        int userInput;  // The number input by the user.
+        int square;     // The userInput, multiplied by itself.
+        
+        System.out.print("Please type a number: ");
+        userInput = TextIO.getlnInt();
+        square = userInput * userInput;
+
+        System.out.println();
+        System.out.println("The number that you entered was " + userInput);
+        System.out.println("The square of that number is " + square);
+        System.out.println();
+        
+     } // end of main()
+  
+} //end of class PrintSquare
+When you run this program, it will display the message "Please type a number:" and will pause until you type a response, including a carriage return after the number. Note that it is good style to output a question or some other prompt to the user before reading input. Otherwise, the user will have no way of knowing exactly what the computer is waiting for, or even that it is waiting for the user to do something.
