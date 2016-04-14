@@ -10,6 +10,6 @@ public interface UserBO {
 	void save(User user) throws ConstraintViolationException, Exception;
 	void update(User user);
 	void delete(User user);
-	User findUser(String userName);
+	User findUser(String userName) throws IllegalArgumentException, Exception;
 
 }

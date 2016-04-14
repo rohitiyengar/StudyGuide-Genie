@@ -43,7 +43,7 @@ public class UserBOImplementation implements UserBO{
 	}
 
 	@Override
-	public User findUser(String userName) {
+	public User findUser(String userName) throws IllegalArgumentException, Exception {
 		// TODO Auto-generated method stub
 		return userDao.findUser(userName);
 	}

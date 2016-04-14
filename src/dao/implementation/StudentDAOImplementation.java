@@ -1,7 +1,10 @@
 package dao.implementation;
 
 
+import java.util.List;
+
 import model.Student;
+import model.User;
 
 import org.hibernate.FlushMode;
 import org.hibernate.Transaction;
@@ -61,9 +64,14 @@ public class StudentDAOImplementation extends GenericHibernateDaoSupport impleme
 	}
 
 	@Override
-	public Student findStudent(String student_id) {
+	public Student findStudent(String student_id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		return null;
+		List<Student> studList = (List<Student>) getHibernateTemplate().find("from Student where studentId = ? ", student_id);
+		if (studList == null || studList.size() == 0)
+		{
+			throw new IllegalArgumentException("Student doesnt exists");
+		}
+		return (Student) studList.get(0);
 	}
 
 

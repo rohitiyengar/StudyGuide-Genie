@@ -23,6 +23,15 @@ version="3.0">
     <url-pattern>/</url-pattern>
 </servlet-mapping>
 
+<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/spring-security.xml, 
+			/WEB-INF/applicationContext.xml
+		</param-value>
+	</context-param>
+
+
 <filter>
         <filter-name>hibernateFilter</filter-name>
         <filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
@@ -33,6 +42,17 @@ version="3.0">
     </filter>
     <filter-mapping>
         <filter-name>hibernateFilter</filter-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
+    
+    <!-- Spring Security -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/j_spring_security_logout</url-pattern>
+	</filter-mapping>
 </web-app>

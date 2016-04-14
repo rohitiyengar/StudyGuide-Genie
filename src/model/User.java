@@ -10,7 +10,10 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Transient;
 
+import org.springframework.context.annotation.Scope;
 
+
+@Scope("session")
 @Entity
 @Table(name="users", catalog="public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "username") })

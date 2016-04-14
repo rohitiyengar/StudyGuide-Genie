@@ -46,24 +46,34 @@
           <br>
           <font size="30" color="#1D9269" style="font-family: 'Tahoma', Geneva, sans-serif;">Login</font>
           <div class="well" style="width:50%">
-            <form role="form">
-              <div class="form-group">
-                <label for="email" style="float:left">Email:</label>
-
-                <input type="email" class="form-control" id="email" placeholder="Email">
-              </div>
-              <div class="form-group">
-                <label for="pwd" style="float:left">Password:</label>
-                <input type="password" class="form-control" id="pwd" placeholder="Password">
-              </div>
-              <div class="checkbox">
+           <c:if test="${not empty loginMessage }">
+                  <div class="green">${loginMessage }</div>
+             </c:if>
+            <form:form modelAttribute="registerUser" method="POST">
+            <table>
+              <tr>
+              <td>
+                <label for="userName" style="float:left">User name:</label>
+               </td>
+               <td>
+				<form:input path="userName" id="userName" type="text" required="true" class="control form-control" />
+				</td>
+              </tr>
+              <tr>
+              <td>
+                <label for="password">Password:</label>&nbsp;&nbsp;
+               </td>
+               <td>
+                <form:password path="password" id="password"  required="true" class="control form-control" />
+               </td>
+             <tr>
+              </table>
                 <label style="float:left">
                   <input type="checkbox"> Remember me</label>
-              </div>
               <br>
               <br>
               <button type="submit" class="btn btn-success">Login</button>
-            </form>
+            </form:form>
           </div>
           </center>
       </div>
@@ -88,7 +98,7 @@
                         <label for="userName">Username:</label>&nbsp;&nbsp;
                       </td>
                       <td>
-                        <form:input path="userName" id="userName" type="text" class="control form-control" />
+                        <form:input path="userName" id="userName" required="true" type="text" class="control form-control" />
                         <br>
                       </td>
 
@@ -128,7 +138,7 @@
                         <label for="Email">Email:</label>&nbsp;&nbsp;
                       </td>
                       <td>
-                        <form:input path="email" id="Email" class="control form-control" />
+                        <form:input path="email" id="Email" class="control form-control" required="true" />
                         <br>
                       </td>
 

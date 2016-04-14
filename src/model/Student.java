@@ -8,7 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.springframework.context.annotation.Scope;
 
+
+
+@Scope("session")
 @Entity
 @Table(name="student", catalog="public", uniqueConstraints = {
 		@UniqueConstraint(columnNames = "student_id") })

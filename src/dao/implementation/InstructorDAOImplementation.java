@@ -1,11 +1,14 @@
 package dao.implementation;
 
+import java.util.List;
+
 import org.hibernate.FlushMode;
 import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 import model.Instructor;
+import model.User;
 import dao.InstructorDAO;
 import util.GenericHibernateDaoSupport;
 
@@ -61,7 +64,12 @@ public class InstructorDAOImplementation extends GenericHibernateDaoSupport impl
 	@Override
 	public Instructor findInstructor(String instructor_id) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Instructor> userList = (List<Instructor>) getHibernateTemplate().find("from Instructor where instructorId = ? ", instructor_id);
+		if (userList == null || userList.size() == 0)
+		{
+			throw new IllegalArgumentException("User doesnt exists");
+		}
+		return (Instructor) userList.get(0);
 	}
 
 }

@@ -61,8 +61,12 @@ public class UserDAOImplementation extends GenericHibernateDaoSupport implements
 	}
 
 	@Override
-	public User findUser(String userName) {
-		List<User> userList = (List<User>) getHibernateTemplate().find("from users where username = ? ", userName);
+	public User findUser(String userName) throws IllegalArgumentException, Exception {
+		List<User> userList = (List<User>) getHibernateTemplate().find("from User where username = ? ", userName);
+		if (userList == null || userList.size() == 0)
+		{
+			throw new IllegalArgumentException("User doesnt exists");
+		}
 		return (User) userList.get(0);
 	}
 
