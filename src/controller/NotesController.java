@@ -82,6 +82,7 @@ public class NotesController {
 					notes.setStudentId(student.getStudentId());
 					notes.setTopicid(topic.getTopicId());
 					notes.setTopicName(student.getCurrentTopic());
+					mv.addObject("notes", notes);
 					return mv;
 				}
 			} 
