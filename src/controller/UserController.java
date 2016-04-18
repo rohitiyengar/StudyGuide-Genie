@@ -96,14 +96,15 @@ public class UserController {
 					{
 						Student student = studentBo.findUser(userFound.getUserName());
 						mv.addObject("sessionUser", student);	
-						if(student.getCurrentTopic() != null || !student.getCurrentTopic().isEmpty())
+						System.out.println(student==null);
+						if(student.getCurrentTopic() != null && !student.getCurrentTopic().isEmpty())
 						{
 							Topic topic = topicBo.findTopicByName(student.getCurrentTopic());
 							mv.addObject("topic", topic);
-							request.getSession().setAttribute("sessionUser", student);
 							request.getSession().setAttribute("topic", topic);
 							
 						}
+						request.getSession().setAttribute("sessionUser", student);
 						mv.setViewName("studentDetails");
 				
 					}
