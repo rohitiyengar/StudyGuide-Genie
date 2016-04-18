@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TopicList>
+    <Topic>
+        <topicId>1</topicId>
+        <topicName>The Mental Landscape</topicName>
+        <SubTopics>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Machine Language</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Polling Loops and Interrupts</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>The Java Virtual Machine</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Fundamental Building Blocks of Programs</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Objects and Object-oriented Programming</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>The Modern User Interface</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>The Internet and Beyond</topicName>
+            </Topic>
+        </SubTopics>
+    </Topic>
+    <Topic>
+        <topicId>1</topicId>
+        <topicName>Names and Things</topicName>
+        <SubTopics>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>The Basic Java Application</topicName>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Variables and the Primitive Types</topicName>
+                <SubTopics>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Variables</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Types</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Literals</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Strings and String Literals</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Variables in Programs</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Variables and the Primitive Types</topicName>
+                    </Topic>
+                </SubTopics>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Strings, Classes, Objects and Subroutines</topicName>
+                <SubTopics>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Built-in Subroutines and Functions</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Classes and Objects</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Operations on Strings</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Introduction to Enums</topicName>
+                    </Topic>
+                </SubTopics>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Text Input and Output</topicName>
+                <SubTopics>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Basic Output and Formatted Output</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>A first text input example</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Basic TextIO Input Functions</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Introduction to File IO</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Other TextIO Features</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Using Scanner for Input</topicName>
+                    </Topic>
+                </SubTopics>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Details of Expressions</topicName>
+                <SubTopics>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Arithmetic Operators</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Assignment Operators and type conversion</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Boolean Operators</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Details of Expressions</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Conditional Operator</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Increment and Decrement</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Precedence Rules</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Relational Operators</topicName>
+                    </Topic>
+                </SubTopics>
+            </Topic>
+            <Topic>
+                <topicId>2</topicId>
+                <topicName>Programming Environments</topicName>
+                <SubTopics>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Java Development Kit</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Command Line Environment</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Eclipse</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>Netbeans</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>BlueJ</topicName>
+                    </Topic>
+                    <Topic>
+                        <topicId>2</topicId>
+                        <topicName>The Problem Of Packages</topicName>
+                    </Topic>
+                </SubTopics>
+            </Topic>
+        </SubTopics>
+    </Topic>
+</TopicList>

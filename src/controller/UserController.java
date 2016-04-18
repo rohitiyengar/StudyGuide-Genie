@@ -26,18 +26,22 @@ import org.hibernate.exception.ConstraintViolationException;
 
 
 
+
+
 import model.Student;
+import model.Topic;
 import model.User;
 import model.Instructor;
 
 
 import bo.StudentBO;
+import bo.TopicBO;
 import bo.UserBO;
 import bo.InstructorBO;
 
 
 @Controller
-@SessionAttributes("sessionUser")
+@SessionAttributes({"sessionUser", "topic"})
 public class UserController {
 
 	@Autowired
@@ -48,6 +52,9 @@ public class UserController {
 
 	@Autowired
 	InstructorBO instructorBo;
+	
+	@Autowired
+	TopicBO topicBo;
 
 	@ModelAttribute("user")
 	public User getUser()
@@ -88,13 +95,23 @@ public class UserController {
 					if(userFound.getRole().equals(User.roles.STUDENT.toString()))
 					{
 						Student student = studentBo.findUser(userFound.getUserName());
+						mv.addObject("sessionUser", student);	
+						if(student.getCurrentTopic() != null || !student.getCurrentTopic().isEmpty())
+						{
+							Topic topic = topicBo.findTopicByName(student.getCurrentTopic());
+							mv.addObject("topic", topic);
+							request.getSession().setAttribute("sessionUser", student);
+							request.getSession().setAttribute("topic", topic);
+							
+						}
 						mv.setViewName("studentDetails");
-						mv.addObject("sessionUser", student);
+				
 					}
 					else if(userFound.getRole().equals(User.roles.INSTRUCTOR.toString()))
 					{
 						Instructor instructor = instructorBo.findInstructor(userFound.getUserName());
 						mv.addObject("sessionUser", instructor);
+						request.getSession().setAttribute("sessionUser", instructor);
 						mv.setViewName("instructor");
 					}
 					else if(userFound.getRole().equals(User.roles.ADMIN))

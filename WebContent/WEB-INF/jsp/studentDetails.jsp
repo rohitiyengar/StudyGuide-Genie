@@ -41,6 +41,9 @@
         <br>
         <center>
             <div class="well">
+            <c:if test="${not empty registerMessage }">
+							<div class="bg-danger">${registerMessage }</div><br>
+			</c:if>
                 <table class="table">
                     <tr>
                         <td><h3>Your role:</h3></td>
@@ -51,6 +54,7 @@
                         <td><h3> ${sessionUser.isRegistered()}</h3></td>
                     </tr>
                 </table>
+                <a class = "btn btn-danger" href="${pageContext.request.contextPath}/notes">Write notes</a>
                 <a class = "btn btn-danger" href="<c:url value= 'j_spring_security_logout'  />"> Logout</a>
               </div>
             </center>

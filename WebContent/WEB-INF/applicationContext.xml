@@ -57,6 +57,8 @@
 				<value>model.User</value>
 				<value>model.Student</value>
 				<value>model.Instructor</value>
+				<value>model.Topic</value>
+				<value>model.Notes</value>
 			</list>
 		</property>
 	</bean>

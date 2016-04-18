@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+targetNamespace="http://www.asu.edu/Topics" 
+xmlns:tns="http://www.asu.edu/Topics" 
+elementFormDefault="qualified">
+
+
+<element name="Exams">
+	<complexType>
+		<sequence>
+			<element name="name" type="string"/>
+			<element ref="tns:TopicList"/>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="TopicList">
+	<complexType>
+		<sequence>
+			<element ref="tns:Topic" minOccurs="1" maxOccurs="unbounded"/>
+		</sequence>
+	</complexType>
+</element>
+
+<element name="Topic">
+	<complexType>
+		<sequence>
+			<element name="topicId" type="string"/>
+			<element name="topicName" type="string"/>
+			<element name="SubTopics" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element ref="tns:Topic" minOccurs="0" maxOccurs="unbounded"></element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+</element>
+
+
+</schema>
