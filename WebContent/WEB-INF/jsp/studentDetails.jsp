@@ -27,8 +27,11 @@
                     <li><a href="#">Visualize</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                	<li><a href="#">
+                	 ${sessionUser.getFname()}</a>
+                	</li>
                     <li>
-                        <a href="#">
+                        <a href="<c:url value= 'j_spring_security_logout' />">
                             <span class="glyphicon glyphicon-log-out"></span> Logout</a>
                     </li>
                 </ul>
@@ -44,7 +47,7 @@
             <c:if test="${not empty registerMessage }">
 							<div class="bg-danger">${registerMessage }</div><br>
 			</c:if>
-                <table class="table">
+                <table class="table table-bordered table-condensed">
                     <tr>
                         <td><h3>Your role:</h3></td>
                         <td><h3>Student</h3></td>

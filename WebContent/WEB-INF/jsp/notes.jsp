@@ -21,8 +21,8 @@
 <style>
 textarea {
 	background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
-	width: 600px;
-	height: 300px;
+	width: 500px;
+	height: 200px;
 	font-family: 'Handlee', cursive;
 	font-weight: bold;
 	font-size: 14px;
@@ -210,7 +210,7 @@ textarea {
           txt += "<li role='presentation'><a class = 'panel-default' data-toggle='collapse' href='#topics1" + p + "'><font color='black' size = '4'>" + x[i].getAttribute("title") + "</font></a>";
           y = xmlDoc.getElementsByTagName('chapter')[i].getElementsByTagName('topic');
           yLen = y.length;
-          txt += "<div class = 'collapse' id='topics1" + p + "'>";
+          txt += "<div class = 'collapse in' id='topics1" + p + "'>";
           txt += "<ul class='nav nav-pills nav-stacked'>";
           for (j = 0; j < yLen; j++) {
             if (y[j].getAttribute("done") == "y") {
@@ -251,7 +251,10 @@ textarea {
 					<li><a href="#">Visualize</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"> <span class="glyphicon glyphicon-log-out"></span>
+					<li><a href="#">
+                	 ${sessionUser.getFname()}</a>
+                	</li>
+					<li><a href="<c:url value= 'j_spring_security_logout' />"> <span class="glyphicon glyphicon-log-out"></span>
 							Logout
 					</a></li>
 				</ul>
@@ -260,15 +263,17 @@ textarea {
 		</div>
 	</nav>
 	<div class="container">
+		<center><div class = "well"><h1>${sessionUser.getCurrentTopic()}</h1></div></center>
 		<div class="row">
-			<div class="col-md-3">
-				<h1> Contents: </h1>
+			<div class="col-md-4">
+			
+				<h2> Index: </h2>
         		<div id="topics" class = "well">
         		</div>
 			</div>
-			<div class="col-md-9">
-				<br>
-				<h1>Notes:</h1>
+			<div class="col-md-6">
+				
+				<h2>Notes:</h2>
 				<div >
 				<br>
 					<c:if test="${not empty notesMessage }">
@@ -284,8 +289,8 @@ textarea {
 						<div>
 							<h3>Please Enter Your Notes Here:</h3>
 							<form:textarea path="topicText" id="mynotes" class="ta5" rows="10" cols="50"></form:textarea>
-							<br />
-							<form:input id="matchPercentage" path="matchPercentage"/>
+							<br /><br />
+							<label for="matchPercentage">Match Percentage:</label>&nbsp;&nbsp;<form:input id="matchPercentage" path="matchPercentage" class="control form-control"/>
 						</div>
 						<br /> <br />
 						<div>
@@ -300,7 +305,14 @@ textarea {
 				</center>
 				</div>
 			</div>
+			<div class="col-md-2">
+			
+				<h2>Recommendations: </h2>
+        		<div id="recommendations" class = "well">
+        		</div>
+			</div>
 		</div>
 	</div>
+	<br><br>
 </body>
 </html>

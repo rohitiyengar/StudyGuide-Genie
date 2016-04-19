@@ -26,8 +26,11 @@
                     <li><a href="#">Visualize</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                	<li><a href="#">
+                	 ${sessionUser.getFname()}</a>
+                	</li>
                     <li>
-                        <a href="#">
+                        <a href="<c:url value= 'j_spring_security_logout' />">
                             <span class="glyphicon glyphicon-log-out"></span> Logout</a>
                     </li>
                 </ul>
@@ -40,7 +43,7 @@
         <br>
         <center>
             <div class="well">
-                <table class = "table">
+                <table class = "table table-bordered table-condensed">
                     <th>
                         <td><h3>Your role:</h3></td>
                         <td><h3>Instructor</h3></td>
