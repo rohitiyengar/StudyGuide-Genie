@@ -166,6 +166,7 @@ textarea {
 																		.trim() == "") {
 																	$(
 																			"#compileResult")
+																			
 																			.text(
 																					"Compiled Successfully");
 																	$(
@@ -173,6 +174,9 @@ textarea {
 																			.attr(
 																					'class',
 																					'bg-success');
+																	$(
+																			"#compileResult")
+																			.append("&nbsp;<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>&nbsp;");
 																} else {
 																	$(
 																			"#compileResult")
@@ -183,6 +187,9 @@ textarea {
 																			.attr(
 																					'class',
 																					'bg-danger');
+																	$(
+																	"#compileResult")
+																	.append("&nbsp;<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>&nbsp;");
 																}
 															}
 														});
