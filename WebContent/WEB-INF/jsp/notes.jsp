@@ -45,20 +45,15 @@ textarea {
 </head>
 <script>
 	var bullet = '\u2022';
-	$()
-			.ready(
-					function() {
-						var suggests = [];
-						var input = document.getElementById("mynotes");
-						var autocomplete = new Awesomplete(input, {
-							autoFirst : true
-						});
-						$("#mynotes")
-								.keyup(
-										function(e) {
-											if (e.keyCode == 32) {
-												//space
-												autocomplete.list = [];
+	$().ready(function() {
+						
+	var suggests = [];
+	var input = document.getElementById("mynotes");
+	var autocomplete = new Awesomplete(input, {	autoFirst : true});
+	$("#mynotes").keyup(function(e) {
+				if (e.keyCode == 32) {
+						//space
+											autocomplete.list = [];
 												return;
 											}
 
@@ -76,8 +71,8 @@ textarea {
 												var words = notes.val().split(
 														" ");
 												var currentWord = words[words.length - 1];
-												currentWord = currentWord
-														.trim();
+												currentWord = currentWord.trim();
+												console.log(currentWord);
 												$
 														.ajax({
 															url : "testpages/autosuggests.jsp?q="
@@ -106,17 +101,21 @@ textarea {
 										});
 
 						$("#mynotes")
-								.bind('input propertychange',
+								.bind(
+										'input propertychange',
 										function() {
 											var res = $("#mynotes").val()
 													.trim();
-											console.log("clicked " + res);
-											var topicName =  $("#topicName").val();
-											console.log("topicName "+topicName)
+											//console.log("clicked " + res);
+											var topicName = $("#topicName")
+													.val();
+											//console.log("topicName "+topicName)
 											if (res != "") {
 												$
 														.ajax({
-															url : "testpages/notesMatcherPercentage.jsp?topic="+ topicName +"&notes="
+															url : "testpages/notesMatcherPercentage.jsp?topic="
+																	+ topicName
+																	+ "&notes="
 																	+ res,
 															dataType : "xml",
 															success : function(
@@ -132,7 +131,8 @@ textarea {
 																		.trim() != "") {
 																	$(
 																			"#matchPercentage")
-																			.val(output);
+																			.val(
+																					output);
 																}
 															}
 														});
@@ -140,34 +140,52 @@ textarea {
 											}
 										});
 
-						$('#codeArea').bind(
-								'input propertychange',
-								function() {
-									var val = this.value.length;
-									var code = this.value;
-									//alert(this.value);
-									if (val > 0) {
-										$.ajax({
-											url : "testpages/compileJavaCode.jsp?source="
-													+ code,
-											dataType : "xml",
-											success : function(result) {
-												$xml = $(result);
-												var output = $xml
-														.find("result").text();
-												if (output.trim() == "") {
-													$("#compileResult").text(
-															"Success");
-													$("#compileResult").attr('class','bg-success');
-												} else {
-													$("#compileResult").text(
-															output);
-													$("#compileResult").attr('class','bg-danger');
-												}
+						$('#codeArea')
+								.bind(
+										'input propertychange',
+										function() {
+											var val = this.value.length;
+											var code = this.value;
+											//alert(this.value);
+											if (val > 0) {
+												$
+														.ajax({
+															url : "testpages/compileJavaCode.jsp?source="
+																	+ code,
+															dataType : "xml",
+															success : function(
+																	result) {
+																$xml = $(result);
+																var output = $xml
+																		.find(
+																				"result")
+																		.text();
+																if (output
+																		.trim() == "") {
+																	$(
+																			"#compileResult")
+																			.text(
+																					"Success");
+																	$(
+																			"#compileResult")
+																			.attr(
+																					'class',
+																					'bg-success');
+																} else {
+																	$(
+																			"#compileResult")
+																			.text(
+																					output);
+																	$(
+																			"#compileResult")
+																			.attr(
+																					'class',
+																					'bg-danger');
+																}
+															}
+														});
 											}
 										});
-									}
-								});
 					});
 </script>
 <body>

@@ -33,6 +33,7 @@ version="3.0">
     <servlet-mapping>
     <servlet-name>saveNotes</servlet-name>
     <url-pattern>/notes</url-pattern>
+    <url-pattern>/exam</url-pattern>
 </servlet-mapping>
 
 <context-param>

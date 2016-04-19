@@ -10,5 +10,5 @@ public interface TopicBO {
 	void update(Topic topic);
 	void delete(Topic topic);
 	Topic findTopicByName(String topicName) throws IllegalArgumentException, Exception;
-	Topic findTopicById(String topicId) throws IllegalArgumentException, Exception;
+	Topic findTopicById(int topicId) throws IllegalArgumentException, Exception;
 	}

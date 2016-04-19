@@ -14,6 +14,6 @@ public interface NotesDAO {
 	void delete(Notes notes);
 	Notes findNotes(String studentId, int topicId) throws IllegalArgumentException, Exception;
 	Notes findNotes(String notesId) throws IllegalArgumentException, Exception;
-
+	
 
 }

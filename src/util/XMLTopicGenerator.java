@@ -8,16 +8,16 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import util.Topic.SubTopics;
+
 
 public class XMLTopicGenerator {
 	
-	
+	/*
 	private static String path = "C:\\Users\\abhi\\git\\StudyGenie\\resources\\luceneindex\\CrawledData";
 	public static TopicList topicList;
 	
 	
-	public static void readDirectory(File dir)
+	/*public static void readDirectory(File dir)
 	{
 		File[] files = dir.listFiles();
 		for (int i = 0; i < files.length; i++) {

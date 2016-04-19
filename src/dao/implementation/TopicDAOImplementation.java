@@ -36,7 +36,7 @@ public class TopicDAOImplementation extends GenericHibernateDaoSupport implement
 	}
 
 	@Override
-	public Topic findTopicById(String topicId) throws IllegalArgumentException, Exception {
+	public Topic findTopicById(int topicId) throws IllegalArgumentException, Exception {
 		// TODO Auto-generated method stub
 		List<Topic> userList = (List<Topic>) getHibernateTemplate().find("from Topic  where topicId = ? ", topicId);
 		if (userList == null || userList.size() == 0)

@@ -45,7 +45,7 @@ public class TopicBOImplementation implements TopicBO {
 	}
 
 	@Override
-	public Topic findTopicById(String topicId)throws IllegalArgumentException, Exception {
+	public Topic findTopicById(int topicId)throws IllegalArgumentException, Exception {
 		// TODO Auto-generated method stub
 		return topicDao.findTopicById(topicId);
 	}

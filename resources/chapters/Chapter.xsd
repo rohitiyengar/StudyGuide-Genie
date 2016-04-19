@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Chapter" xmlns:tns="http://www.example.org/Chapter" elementFormDefault="qualified">
+<element name="topic">
+	<complexType>
+		<attribute name="name" type="string"></attribute>
+		<attribute name="done" type="string"></attribute>
+	</complexType>
+</element>
+<element name="chapter">
+	<complexType>
+	<sequence>
+	<element ref="tns:topic" minOccurs="0" maxOccurs="unbounded" > </element>
+	</sequence>
+	<attribute name="title" type="string"></attribute>
+	</complexType>
+</element>
+<element name="content">
+	<complexType>
+	<sequence>
+	<element ref="tns:chapter" minOccurs="0" maxOccurs="unbounded" > </element>
+	</sequence>
+	</complexType>
+</element>
+</schema>

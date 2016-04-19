@@ -48,7 +48,7 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.show_sql">false</prop>
 			</props>
 		</property>
 
@@ -59,6 +59,8 @@
 				<value>model.Instructor</value>
 				<value>model.Topic</value>
 				<value>model.Notes</value>
+				<value>model.Exam</value>
+				<value>model.Content</value>
 			</list>
 		</property>
 	</bean>

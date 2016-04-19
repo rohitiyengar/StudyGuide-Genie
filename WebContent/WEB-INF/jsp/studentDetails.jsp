@@ -55,6 +55,7 @@
                     </tr>
                 </table>
                 <a class = "btn btn-danger" href="${pageContext.request.contextPath}/notes">Write notes</a>
+                <a class = "btn btn-danger" href="${pageContext.request.contextPath}/exam">Exams</a>
                 <a class = "btn btn-danger" href="<c:url value= 'j_spring_security_logout'  />"> Logout</a>
               </div>
             </center>
