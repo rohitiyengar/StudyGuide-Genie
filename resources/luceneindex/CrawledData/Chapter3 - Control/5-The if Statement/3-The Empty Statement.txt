@@ -1,0 +1,18 @@
+As a final note in this section, I will mention one more type of statement in Java: the empty statement. This is a statement that consists simply of a semicolon and which tells the computer to do nothing. The existence of the empty statement makes the following legal, even though you would not ordinarily see a semicolon after a } :
+
+if (x < 0) {
+    x = -x;
+};
+The semicolon is legal after the }, but the computer considers it to be an empty statement, not part of the if statement. Occasionally, you might find yourself using the empty statement when what you mean is, in fact, "do nothing." For example, the rather contrived if statement
+
+if ( done )
+   ;  // Empty statement
+else
+   System.out.println( "Not done yet.");
+does nothing when the boolean variable done is true, and prints out "Not done yet" when it is false. You can't just leave out the semicolon in this example, since Java syntax requires an actual statement between the if and the else. I prefer, though, to use an empty block, consisting of { and } with nothing between, for such cases.
+
+Occasionally, stray empty statements can cause annoying, hard-to-find errors in a program. For example, the following program segment prints out "Hello" just once, not ten times:
+
+for (int i = 0; i < 10; i++);
+    System.out.println("Hello");
+Why? Because the ";" at the end of the first line is a statement, and it is this empty statement that is executed ten times. The System.out.println statement is not really inside the for statement at all, so it is executed just once, after the for loop has completed. The for loop just does nothing, ten times!

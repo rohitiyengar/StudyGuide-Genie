@@ -1,0 +1,44 @@
+Consider an application where the number of items that we want to store in an array changes as the program runs. Since the size of the array can't be changed, a separate counter variable must be used to keep track of how many spaces in the array are in use. (Of course, every space in the array has to contain something; the question is, how many spaces contain useful or valid items?)
+
+Consider, for example, a program that reads positive integers entered by the user and stores them for later processing. The program stops reading when the user inputs a number that is less than or equal to zero. The input numbers can be kept in an array, numbers, of type int[]. Let's say that no more than 100 numbers will be input. Then the size of the array can be fixed at 100. But the program must keep track of how many numbers have actually been read and stored in the array. For this, it can use an integer variable. Each time a number is stored in the array, we have to count it; that is, value of the counter variable must be incremented by one. One question is, when we add a new item to the array, where do we put it? Well, if the number of items is count, then they would be stored in the array in positions number 0, 1, ..., (count-1). The next open spot would be position number count, so that's where we should put the new item.
+
+As a rather silly example, let's write a program that will read the numbers input by the user and then print them in the reverse of the order in which they were entered. Assume that an input value equal to zero marks the end of the data. (This is, at least, a processing task that requires that the numbers be saved in an array. Note that many types of processing, such as finding the sum or average or maximum of the numbers, can be done without saving the individual numbers.)
+
+public class ReverseInputNumbers {
+
+   public static void main(String[] args) {
+   
+     int[] numbers;  // An array for storing the input values.
+     int count;      // The number of numbers saved in the array.
+     int num;        // One of the numbers input by the user.
+     
+     numbers = new int[100];   // Space for 100 ints.
+     count = 0;                // No numbers have been saved yet.
+     
+     System.out.println("Enter up to 100 positive integers; enter 0 to end.");
+     
+     while (true) {   // Get the numbers and put them in the array.
+        System.out.print("? ");
+        num = TextIO.getlnInt();
+        if (num <= 0) {
+              // Zero marks the end of input; we have all the numbers.
+           break;
+        }
+        numbers[count] = num;  // Put num in position count.
+        count++;  // Count the number
+     }
+     
+     System.out.println("\nYour numbers in reverse order are:\n");
+     
+     for (int i = count - 1; i >= 0; i--) {
+         System.out.println( numbers[i] );
+     }
+     
+   } // end main();
+   
+}  // end class ReverseInputNumbers
+It is especially important to note how the variable count plays a dual role. It is the number of items that have been entered into the array. But it is also the index of the next available spot in the array.
+
+When the time comes to print out the numbers in the array, the last occupied spot in the array is location count - 1, so the for loop prints out values starting from location count - 1 and going down to 0. This is also a nice example of processing the elements of an array in reverse order.
+
+You might wonder what would happen in this program if the user tries to input more than 100 numbers. The result would be an error that would crash the program. When the user enters the 101-st number, the program tries to store that number in an array element number[100]. However, there is no such array element. There are only 100 items in the array, and the index of the last item is 99. The attempt to use number[100] generates an exception of type ArrayIndexOutOfBoundsException. Exceptions of this type are a common source of run-time errors in programs that use arrays.

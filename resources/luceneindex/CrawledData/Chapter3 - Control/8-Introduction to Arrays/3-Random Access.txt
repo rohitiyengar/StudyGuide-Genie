@@ -1,0 +1,60 @@
+So far, my examples of array processing have used sequential access. That is, the elements of the array were processed one after the other in the sequence in which they occur in the array. But one of the big advantages of arrays is that they allow random access. That is, every element of the array is equally accessible at any given time.
+
+As an example, let's look at a well-known problem called the birthday problem: Suppose that there are N people in a room. What's the chance that there are two people in the room who have the same birthday? (That is, they were born on the same day in the same month, but not necessarily in the same year.) Most people severely underestimate the probability. We will actually look at a different version of the question: Suppose you choose people at random and check their birthdays. How many people will you check before you find one who has the same birthday as someone you've already checked? Of course, the answer in a particular case depends on random factors, but we can simulate the experiment with a computer program and run the program several times to get an idea of how many people need to be checked on average.
+
+To simulate the experiment, we need to keep track of each birthday that we find. There are 365 different possible birthdays. (We'll ignore leap years.) For each possible birthday, we need to keep track of whether or not we have already found a person who has that birthday. The answer to this question is a boolean value, true or false. To hold the data for all 365 possible birthdays, we can use an array of 365 boolean values:
+
+boolean[] used; 
+used = new boolean[365];
+For this problem, the days of the year are numbered from 0 to 364. The value of used[i] is true if someone has been selected whose birthday is day number i. Initially, all the values in the array are false. (Remember that this is done automatically when the array is created.) When we select someone whose birthday is day number i, we first check whether used[i] is true. If it is true, then this is the second person with that birthday. We are done. On the other hand, if used[i] is false, we set used[i] to be true to record the fact that we've encountered someone with that birthday, and we go on to the next person. Here is a program that carries out the simulated experiment (of course, in the program, there are no simulated people, only simulated birthdays):
+
+/**
+ * Simulate choosing people at random and checking the day of the year they 
+ * were born on.  If the birthday is the same as one that was seen previously, 
+ * stop, and output the number of people who were checked.
+ */
+public class BirthdayProblem {
+
+   public static void main(String[] args) {
+
+       boolean[] used;  // For recording the possible birthdays
+                        //   that have been seen so far.  A value
+                        //   of true in used[i] means that a person
+                        //   whose birthday is the i-th day of the
+                        //   year has been found.
+
+       int count;       // The number of people who have been checked.
+
+       used = new boolean[365];  // Initially, all entries are false.
+   
+       count = 0;
+
+       while (true) {
+             // Select a birthday at random, from 0 to 364.
+             // If the birthday has already been used, quit.
+             // Otherwise, record the birthday as used.
+
+          int birthday;  // The selected birthday.
+          birthday = (int)(Math.random()*365);
+          count++;
+
+          System.out.printf("Person %d has birthday number %d", count, birthday);
+          System.out.println();
+
+          if ( used[birthday] ) {  
+                // This day was found before; it's a duplicate.  We are done.
+             break;
+          }
+
+          used[birthday] = true;
+
+       } // end while
+
+       System.out.println();
+       System.out.println("A duplicate birthday was found after " 
+                                             + count + " tries.");
+   }
+
+} // end class BirthdayProblem
+You should study the program to understand how it works and how it uses the array. Also, try it out! You will probably find that a duplicate birthday tends to occur sooner than you expect.
+
