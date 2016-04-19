@@ -67,9 +67,21 @@ public class NotesController {
 
 
 	@RequestMapping(value="/notes", method=RequestMethod.GET)
-	public ModelAndView loadForm(HttpServletRequest request)
+	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		if (request.getParameter("topicName") != null)
+		{
+			System.out.println("topicName is:"+request.getParameter("topicName"));
+			student.setCurrentTopic(request.getParameter("topicName"));
+			Topic newtopic = topicBo.findTopicByName(request.getParameter("topicName"));
+			request.getSession().setAttribute("topic", newtopic);
+			
+		}
+		else
+		{
+			System.out.println("Topicname is null");
+		}
 		Topic topic = (Topic)request.getSession().getAttribute("topic");
 		ModelAndView mv = new ModelAndView("notes");
 		Notes notes = new Notes();
@@ -113,11 +125,13 @@ public class NotesController {
 	public ModelAndView saveNotes(HttpServletRequest request, @ModelAttribute("notes") Notes notes)
 	{
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		student.setCurrentTopic(notes.getTopicName());
 		ModelAndView mv = new ModelAndView("notes");
 		try 
 		{
 			notes.setStudentId(student.getStudentId());
 			notesBo.save(notes);
+			studentBo.save(student);
 		} 
 		
 		catch (ConstraintViolationException e ) 
@@ -129,6 +143,7 @@ public class NotesController {
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
 			mv.addObject("notes", notes);
 			mv.addObject("notesMessage", "Unexpected System Error. Please try again");
 			return mv;

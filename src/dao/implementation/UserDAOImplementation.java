@@ -25,7 +25,7 @@ public class UserDAOImplementation extends GenericHibernateDaoSupport implements
 		try
 		{
 			tx = getHibernateTemplate().getSessionFactory().getCurrentSession().beginTransaction();
-			getHibernateTemplate().save(user);
+			getHibernateTemplate().saveOrUpdate(user);
 			tx.commit();
 			
 		}

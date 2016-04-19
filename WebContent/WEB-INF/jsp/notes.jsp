@@ -214,14 +214,14 @@ textarea {
           txt += "<ul class='nav nav-pills nav-stacked'>";
           for (j = 0; j < yLen; j++) {
             if (y[j].getAttribute("done") == "y") {
-              txt += "<li role='presentation'><a href='#'><img src = 'images/checkmark.png' width = '20' height = '20'></img>&nbsp;" + "<font color='green'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/checkmark.png' width = '20' height = '20'></img>&nbsp;" + "<font color='green'>" + y[j].getAttribute("name") + "</font></a>";
               txt += "</li>";
             } else if (y[j].getAttribute("done") == "i") {
-              txt += "<li role='presentation'><a href='#'><img src = 'images/exclaim.png' width = '20' height = '20'></img>&nbsp;" + "<font color='orange'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/exclaim.png' width = '20' height = '20'></img>&nbsp;" + "<font color='orange'>" + y[j].getAttribute("name") + "</font></a>";
               txt += "</li>";
             } else {
 
-              txt += "<li role='presentation'><a href='#'><img src = 'images/transparent.png' width = '20' height = '20'></img>&nbsp;" + "<font color='grey'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/transparent.png' width = '20' height = '20'></img>&nbsp;" + "<font color='grey'>" + y[j].getAttribute("name") + "</font></a>";
               txt += "</li>";
 
             }

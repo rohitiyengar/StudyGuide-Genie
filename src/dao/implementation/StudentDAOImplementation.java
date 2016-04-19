@@ -25,7 +25,7 @@ public class StudentDAOImplementation extends GenericHibernateDaoSupport impleme
 		try
 		{
 			tx = getHibernateTemplate().getSessionFactory().getCurrentSession().beginTransaction();
-			getHibernateTemplate().save(student);
+			getHibernateTemplate().saveOrUpdate(student);
 			tx.commit();
 
 		}
