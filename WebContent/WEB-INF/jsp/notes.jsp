@@ -185,8 +185,59 @@ textarea {
 															}
 														});
 											}
-										});
-					});
+										});	
+						
+						$
+						.ajax({
+							url : "${pageContext.request.contextPath}/exam",
+							dataType : "xml",
+							success : function(
+									result) {
+								
+						
+								myFunction(result);
+								}
+							});
+	});
+	
+	function myFunction(xml) {
+        var xmlDoc = xml;
+        var txt = "<ul class='nav nav-pills nav-stacked'>";
+        x = xmlDoc.getElementsByTagName('chapter');
+        xLen = x.length;
+        p = 0;
+        for (i = 0; i < xLen; i++) {
+          txt += "<li role='presentation'><a class = 'panel-default' data-toggle='collapse' href='#topics1" + p + "'><font color='black' size = '4'>" + x[i].getAttribute("title") + "</font></a>";
+          y = xmlDoc.getElementsByTagName('chapter')[i].getElementsByTagName('topic');
+          yLen = y.length;
+          txt += "<div class = 'collapse' id='topics1" + p + "'>";
+          txt += "<ul class='nav nav-pills nav-stacked'>";
+          for (j = 0; j < yLen; j++) {
+            if (y[j].getAttribute("done") == "y") {
+              txt += "<li role='presentation'><a href='#'><img src = 'images/checkmark.png' width = '20' height = '20'></img>&nbsp;" + "<font color='green'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "</li>";
+            } else if (y[j].getAttribute("done") == "i") {
+              txt += "<li role='presentation'><a href='#'><img src = 'images/exclaim.png' width = '20' height = '20'></img>&nbsp;" + "<font color='orange'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "</li>";
+            } else {
+
+              txt += "<li role='presentation'><a href='#'><img src = 'images/transparent.png' width = '20' height = '20'></img>&nbsp;" + "<font color='grey'>" + y[j].getAttribute("name") + "</font></a>";
+              txt += "</li>";
+
+            }
+
+          }
+          txt += "</ul>";
+          txt += "</div>"
+
+          txt += "</li>";
+          p++;
+        }
+        txt += "</ul>";
+
+        document.getElementById("topics").innerHTML =
+          txt;
+      }
 </script>
 <body>
 	<nav class="navbar navbar-default">
@@ -211,13 +262,14 @@ textarea {
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3">
-				<br>
-				<h1>Index:</h1>
+				<h1> Contents: </h1>
+        		<div id="topics" class = "well">
+        		</div>
 			</div>
 			<div class="col-md-9">
 				<br>
 				<h1>Notes:</h1>
-				<div class="well">
+				<div >
 				<br>
 					<c:if test="${not empty notesMessage }">
 							<div class="bg-danger">${notesMessage }</div><br>
