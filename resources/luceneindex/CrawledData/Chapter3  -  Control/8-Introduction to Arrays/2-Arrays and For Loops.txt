@@ -1,0 +1,51 @@
+A lot of the real power of arrays comes from the fact that the index of an element can be given by an integer variable or even an integer-valued expression. For example, if list is an array and i is a variable of type int, then you can use list[i] and even list[2*i+1] as variable names. The meaning of list[i] depends on the value of i. This becomes especially useful when we want to process all the elements of an array, since that can be done with a for loop. For example, to print out all the items in an array, list, we can just write
+
+int i;  // the array index
+for (i = 0; i < list.length; i++) {
+    System.out.println( list[i] );
+}
+The first time through the loop, i is 0, and list[i] refers to list[0]. So, it is the value stored in the variable list[0] that is printed. The second time through the loop, i is 1, and the value stored in list[1] is printed. The loop ends after printing the value of list[4], when i becomes equal to 5 and the continuation condition "i < list.length" is no longer true. This is a typical example of using a loop to process an array.
+
+Let's look at a few more examples. Suppose that A is an array of double, and we want to find the average of all the elements of the array. We can use a for loop to add up the numbers, and then divide by the length of the array to get the average:
+
+double total;    // The sum of the numbers in the array.
+double average;  // The average of the numbers.
+int i;  // The array index.
+total = 0;
+for ( i = 0; i < A.length; i++ ) {
+    total = total + A[i];  // Add element number i to the total.
+}
+average = total / A.length;  // A.length is the number of items
+Another typical problem is to find the largest number in the array A. The strategy is to go through the array, keeping track of the largest number found so far. We'll store the largest number found so far in a variable called max. As we look through the array, whenever we find a number larger than the current value of max, we change the value of max to that larger value. After the whole array has been processed, max is the largest item in the array overall. The only question is, what should the original value of max be? One possibility is to start with max equal to A[0], and then to look through the rest of the array, starting from A[1], for larger items:
+
+double max;  // The largest number seen so far.
+max = A[0];   // At first, the largest number seen is A[0].
+int i;
+for ( i = 1; i < A.length; i++ ) {
+    if (A[i] > max) {
+       max = A[i];
+    }
+}
+// at this point, max is the largest item in A
+Sometimes, you only want to process some elements of the array. In that case, you can use an if statement inside the for loop to decide whether or not to process a given element. Let's look at the problem of averaging the elements of an array, but this time, suppose that we only want to average the non-zero elements. In this case, the number of items that we add up can be less than the length of the array, so we will need to keep a count of the number of items added to the sum:
+
+double total;    // The sum of the non-zero numbers in the array.
+int count;       // The number of non-zero numbers.
+double average;  // The average of the non-zero numbers.
+int i;
+total = 0;
+count = 0;
+for ( i = 0; i < A.length; i++ ) {
+    if ( A[i] != 0 ) {
+        total = total + A[i];  // Add element to the total
+        count = count + 1;     //      and count it.
+    }
+}
+if (count == 0) {
+    System.out.println("There were no non-zero elements.");
+}
+else {
+    average = total / count;  // Divide by number of items
+    System.out.printf("Average of %d elements is %1.5g%n",
+                            count, average);
+}

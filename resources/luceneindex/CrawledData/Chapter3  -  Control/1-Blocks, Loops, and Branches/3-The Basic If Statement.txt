@@ -1,0 +1,36 @@
+An if statement tells the computer to take one of two alternative courses of action, depending on whether the value of a given boolean-valued expression is true or false. It is an example of a "branching" or "decision" statement. An if statement has the form:
+
+if ( boolean-expression )
+    statement1
+else
+    statement2
+When the computer executes an if statement, it evaluates the boolean expression. If the value is true, the computer executes the first statement and skips the statement that follows the "else". If the value of the expression is false, then the computer skips the first statement and executes the second one. Note that in any case, one and only one of the two statements inside the if statement is executed. The two statements represent alternative courses of action; the computer decides between these courses of action based on the value of the boolean expression.
+
+In many cases, you want the computer to choose between doing something and not doing it. You can do this with an if statement that omits the else part:
+
+if ( boolean-expression )
+    statement
+To execute this statement, the computer evaluates the expression. If the value is true, the computer executes the statement that is contained inside the if statement; if the value is false, the computer skips over that statement. In either case, the computer then continues with whatever follows the if statement in the program.
+
+Sometimes, novice programmers confuse while statements with simple if statements (with no else part), although their meanings are quite different. The statement in an if is executed at most once, while the statement in a while can be executed any number of times. It can be helpful to look at diagrams of the the flow of control for while and simple if statements:
+In these diagrams, the arrows represent the flow of time as the statement is executed. Control enters the diagram at the top and leaves at the bottom. Similarly, a flow control diagram for an if..else statement makes it clear that exactly one of the two nested statements is executed
+As an example, here is an if statement that exchanges the value of two variables, x and y, but only if x is greater than y to begin with. After this if statement has been executed, we can be sure that the value of x is definitely less than or equal to the value of y:
+
+if ( x > y ) {
+    int temp;      // A temporary variable for use in this block.
+    temp = x;      // Save a copy of the value of x in temp.
+    x = y;         // Copy the value of y into x.
+    y = temp;      // Copy the value of temp into y.
+}
+Finally, here is an example of an if statement that includes an else part. See if you can figure out what it does, and why it would be used:
+
+if ( years > 1 ) {  // handle case for 2 or more years
+    System.out.print("The value of the investment after ");
+    System.out.print(years);
+    System.out.print(" years is $");
+}
+else {  // handle case for 1 year
+    System.out.print("The value of the investment after 1 year is $");
+}  // end of if statement
+System.out.printf("%1.2f", principal);  // this is done in any case
+I'll have more to say about control structures later in this chapter. But you already know the essentials. If you never learned anything more about control structures, you would already know enough to perform any possible computing task. Simple looping and branching are all you really need!

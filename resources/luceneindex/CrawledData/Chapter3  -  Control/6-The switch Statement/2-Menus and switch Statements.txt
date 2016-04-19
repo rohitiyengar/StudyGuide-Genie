@@ -1,0 +1,85 @@
+One application of switch statements is in processing menus. A menu is a list of options. The user selects one of the options. The computer has to respond to each possible choice in a different way. If the options are numbered 1, 2, ..., then the number of the chosen option can be used in a switch statement to select the proper response.
+
+In a TextIO-based program, the menu can be presented as a numbered list of options, and the user can choose an option by typing in its number. Here is an example that could be used in a variation of the LengthConverter example from the previous section:
+
+int optionNumber;   // Option number from menu, selected by user.
+double measurement; // A numerical measurement, input by the user.
+                    //    The unit of measurement depends on which
+                    //    option the user has selected.
+double inches;      // The same measurement, converted into inches.
+
+/* Display menu and get user's selected option number. */
+
+System.out.println("What unit of measurement does your input use?");
+System.out.println();
+System.out.println("         1.  inches");
+System.out.println("         2.  feet");
+System.out.println("         3.  yards");
+System.out.println("         4.  miles");
+System.out.println();
+System.out.println("Enter the number of your choice: ");
+optionNumber = TextIO.getlnInt();
+
+/* Read user's measurement and convert to inches. */
+
+switch ( optionNumber ) {
+   case 1:
+       System.out.println("Enter the number of inches: ");
+       measurement = TextIO.getlnDouble();
+       inches = measurement;
+       break;          
+   case 2:
+       System.out.println("Enter the number of feet: ");
+       measurement = TextIO.getlnDouble();
+       inches = measurement * 12;
+       break;          
+   case 3:
+       System.out.println("Enter the number of yards: ");
+       measurement = TextIO.getlnDouble();
+       inches = measurement * 36;
+       break;          
+   case 4:
+       System.out.println("Enter the number of miles: ");
+       measurement = TextIO.getlnDouble();
+       inches = measurement * 12 * 5280;
+       break;
+   default:
+       System.out.println("Error!  Illegal option number!  I quit!");
+       System.exit(1);          
+} // end switch
+
+/* Now go on to convert inches to feet, yards, and miles... */
+This example could instead be written using a String in the switch statement:
+
+String units;       // Unit of measurement, entered by user.
+double measurement; // A numerical measurement, input by the user.
+double inches;      // The same measurement, converted into inches.
+
+/* Read the user's unit of measurement. */
+
+System.out.println("What unit of measurement does your input use?");
+System.out.print("Legal responses: inches, feet, yards, or miles : ");
+units = TextIO.getln().toLowerCase();
+
+/* Read user's measurement and convert to inches. */
+
+System.out.print("Enter the number of " + units + ":  ");
+measurement = TextIO.getlnDouble();
+
+switch ( units ) {
+   case "inches":
+       inches = measurement;
+       break;          
+   case "feet":
+       inches = measurement * 12;
+       break;          
+   case "yards":
+       inches = measurement * 36;
+       break;          
+   case "miles":
+       inches = measurement * 12 * 5280;
+       break;
+   default:
+       System.out.println("Wait a minute!  Illegal unit of measure!  I quit!");
+       System.exit(1);          
+} // end switch

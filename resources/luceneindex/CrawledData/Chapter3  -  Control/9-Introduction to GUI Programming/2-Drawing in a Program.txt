@@ -1,0 +1,40 @@
+Now, as you know, you can't just have a bunch of Java code standing by itself. The code has to be inside a subroutine definition that is itself inside a class definition. In fact, for my circle-drawing program, the complete subroutine for drawing the picture looks like this:
+
+public void drawFrame(Graphics g, int frameNumber, int width, int height) {
+    
+    int centerX;     // The x-coord of the center of a disk.
+    int centerY;     // The y-coord of the center of a disk.
+    int colorChoice; // Used to select a random color.
+    int count;       // Loop control variable for counting disks.
+    
+    for (count = 0; count < 500; count++) {
+        
+        colorChoice = (int)(3*Math.random());
+        switch (colorChoice) {
+        case 0:
+            g.setColor(Color.RED);
+            break;
+        case 1:
+            g.setColor(Color.GREEN);
+            break;
+        case 2:
+            g.setColor(Color.BLUE);
+            break;
+        }
+        
+        centerX = (int)(width*Math.random());
+        centerY = (int)(height*Math.random());
+        
+        g.fillOval( centerX - 50, centerY - 50, 100, 100 );
+        g.setColor(Color.BLACK);
+        g.drawOval( centerX - 50, centerY - 50, 100, 100 );
+        
+    }
+}
+This is the first subroutine definition that you have seen, other than main(), but you will learn all about defining subroutines in the next chapter. The first line of the definition makes available certain values that are used in the subroutine: the graphics context g and the width and height of the drawing area. (Ignore frameNumber for now.) These values come from outside the subroutine, but the subroutine can use them. The point here is that to draw something, you just have to fill in the inside of the subroutine, just as you write a program by filling in the inside of main().
+
+The subroutine definition still has to go inside a class that defines the program. In this case, the class is named RandomCircles, and the complete program is available in the sample source code file RandomCircles.java. You can run that program to see the drawing.
+
+There's a lot in the program that you won't understand. To make your own drawing, all you have to do is erase the inside of the drawFrame() routine in the source code and substitute your own drawing code. You don't need to understand the rest. The source code file SimpleAnimationStarter.java can be used as a basis for your own first graphics explorations. It's essentially the same as RandomCircles.java but with the drawing code omitted. You'll need it to do some of the exercises for this chapter.
+
+(By the way, you might notice that the main() subroutine uses the word static in its definition, but drawFrame() does not. This has to do with the fact that the drawing area in this program is an object, and drawFrame is a subroutine in that object. The difference between static and non-static subroutines is important but not something that we need to worry about for the time being. It will become important for us in Chapter 5.)

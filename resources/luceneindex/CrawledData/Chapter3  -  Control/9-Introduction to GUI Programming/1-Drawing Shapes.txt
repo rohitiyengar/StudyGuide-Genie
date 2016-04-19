@@ -1,0 +1,57 @@
+To understand computer graphics, you need to know a little about pixels and coordinate systems. The computer screen is made up of small squares called pixels, arranged in rows and columns, usually about 100 pixels per inch. The computer controls the color of the pixels, and drawing is done by changing the colors of individual pixels. Each pixel has a pair of integer coordinates, often called x and y, that specify the pixel's horizontal and vertical position. For a graphics context drawing to a rectangular area on the screen, the coordinates of the pixel in the upper left corner of the rectangle are (0,0). The x coordinate increases from the left to right, and the y coordinate increases from top to bottom. Shapes are specified using pixels. For example, a rectangle is specified by the x and y coordinates of its upper left corner and by its width and height measured in pixels. Here's a picture of a rectangular drawing area, showing the ranges of x and y coordinates. The "width" and "height" in this picture are give the size of the drawing area, in pixels:
+
+Assuming that the drawing area is 800-by-500 pixels, the rectangle in the upper left of the picture would have, approximately, width 200, height 150, and upper left corner at coordinates (50,50).
+
+Drawing in Java is done using a graphics context. A graphics context is an object. As an object, it can include subroutines and data. Among the subroutines in a graphics context are routines for drawing basic shapes such as lines, rectangles, ovals, and text. (When text appears on the screen, the characters have to be drawn there by the computer, just like the computer draws any other shapes.) Among the data in a graphics context are the color and font that are currently selected for drawing. (A font determines the style and size of characters.) One other piece of data in a graphics context is the "drawing surface" on which the drawing is done. Generally, the drawing surface is a rectangle on the computer screen, although it can be other surfaces such as a page to be printed. Different graphics context objects can draw to different drawing surfaces. For us, the drawing surface will be the content area of a window, not including its border or title bar.
+
+A graphics context is represented by a variable. The type for the variable is Graphics (just like the type for a string variable is String). The variable is often named g, but the name of the variable is of course up to the programmer. Here are a few of the subroutines that are available in a graphics context g:
+
+g.setColor(c), is called to set the color to be used for drawing. The parameter, c is an object belonging to a class named Color. There are about a dozen constants representing standard colors that can be used as the parameter in this subroutine. The standard colors include Color.BLACK, Color.WHITE, Color.LIGHT_GRAY, Color.RED, Color.GREEN, and Color.BLUE. (Later, we will see that it is also possible to create new colors.) For example, if you want to draw in red, you would say "g.setColor(Color.RED);". The specified color is used for all subsequent drawing operations up until the next time g.setColor() is called.
+g.drawLine(x1,y1,x2,y2) draws a line from the point with coordinates (x1,y1) to the point with coordinates (x2,y2).
+g.drawRect(x,y,w,h) draws the outline of a rectangle with vertical and horizontal sides. The parameters x, y, w, and h must be integers or integer-valued expressions. This subroutine draws the outline of the rectangle whose top-left corner is x pixels from the left edge of the drawing area and y pixels down from the top. The width of the rectangle is w pixels, and the height is h pixels. The color that is used is black, unless a different color has been set by calling g.setColor().
+g.fillRect(x,y,w,h) is similar to g.drawRect() except that it fills in the inside of the rectangle instead of drawing an outline.
+g.drawOval(x,y,w,h) draws the outline of an oval. The oval just fits inside the rectangle that would be drawn by g.drawRect(x,y,w,h). To get a circle, use the same values for w and for h.
+g.fillOval(x,y,w,h) is similar to g.drawOval() except that it fills in the inside of the oval instead of drawing an outline.
+This is enough information to draw some pictures using Java graphics. To start with something simple, let's say that we want to draw a set of ten parallel lines, something like this:
+
+a stack of 10 horizontal lines
+
+Let's say that the lines are 200 pixels long and that the distance from each line to the next is 10 pixels, and let's put the start of the first line at the pixel with coordinates (100,50). To draw one line, we just have to call g.drawLine(x1,y1,x2,y2) with appropriate values for the parameters. Now, all the lines start at x-coordinate 100, so we can use the constant 100 as the value for x1. Since the lines are 200 pixels long, we can use the constant 300 as the value for x2. The y-coordinates of the lines are different, but we can see that both endpoints of a line have the same y-coordinates, so we can use a single variable as the value for y1 and for y2. Using y as the name of that variable, the command for drawing one of the lines becomes g.drawLine(100,y,300,y). The value of y is 50 for the top line and increases by 10 each time we move down from one line to the next. We just need to make sure that y takes on the correct sequence of values. We can use a for loop that counts from 1 to 10:
+
+int y;   // y-coordinate for the line
+int i;   // loop control variable
+y = 50;  // y starts at 50 for the first line
+for ( i = 1; i <= 10; i++ ) {
+    g.drawLine( 100, y, 300, y );
+    y = y + 10;  // increase y by 10 before drawing the next line.
+}
+Alternatively, we could use y itself as the loop control variable, noting that the value of y for the last line is 140:
+
+int y;
+for ( y = 50; y <= 140; y = y + 10 )
+    g.drawLine( 100, y, 300, y );
+If we wanted to set the color of the lines, we could do that by calling g.setColor() before drawing them. If we just draw the lines without setting the color, they will be black.
+
+For something a little more complicated, let's draw a large number of randomly colored, randomly positioned, filled circles. Since we only know a few colors, I will randomly select the color to be red, green, or blue. That can be done with a simple switch statement, similar to the ones in Subsection 3.6.4:
+
+switch ( (int)(3*Math.random()) ) {
+    case 0:
+        g.setColor( Color.RED );
+        break;
+    case 1:
+        g.setColor( Color.GREEN );
+        break;
+    case 2:
+        g.setColor( Color.BLUE );
+        break;
+}
+I will choose the center points of the circles at random. Let's say that the width of the drawing area is given by a variable, width. Then we want a random value in the range 0 to width-1 for the horizontal position of the center. Similarly, the vertical position of the center will a random value in the range 0 to height-1. That leaves the size of the circle to be determined; I will make the radius of each circle equal to 50 pixels. We can draw the circle with a statement of the form g.fillOval(x,y,w,h). However, in this command, x and y are not the coordinates of the center of the circle; they are the upper left corner of a rectangle drawn around the circle. To get values for x and y, we have to move back from the center of the circle by 50 pixels, an amount equal to the radius of the circle. The parameters w and h give the width and height of the rectangle, which has to be twice the radius, or 100 pixels in this case. Taking all this into account, here is a code segment for drawing a random circle:
+
+centerX = (int)(width*Math.random());
+centerY = (int)(height*Math.random());
+g.fillOval( centerX - 50, centerY - 50, 100, 100 );
+This code comes after the color-setting code given above. In the end, I found that the picture looks better if I also draw a black outline around each filled circle, so I added this code at the end:
+
+g.setColor( Color.BLACK );
+g.drawOval( centerX - 50, centerY - 50, 100, 100 );
+Finally, to get a large number of circles, I put all of the above code into a for loop that runs for 500 executions. Here's a typical drawing from the program, shown at reduced size:

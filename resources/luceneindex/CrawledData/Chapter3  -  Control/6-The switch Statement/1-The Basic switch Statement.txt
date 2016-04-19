@@ -1,0 +1,70 @@
+A switch statement allows you to test the value of an expression and, depending on that value, to jump directly to some location within the switch statement. Only expressions of certain types can be used. The value of the expression can be one of the primitive integer types int, short, or byte. It can be the primitive char type. It can be String. Or it can be an enum type (see Subsection 2.3.4 for an introduction to enums). In particular, note that the expression cannot be a double or float value.
+
+The positions within a switch statement to which it can jump are marked with case labels that take the form: "case constant:". The constant here is a literal of the same type as the expression in the switch. A case label marks the position the computer jumps to when the expression evaluates to the given constant value. As the final case in a switch statement you can, optionally, use the label "default:", which provides a default jump point that is used when the value of the expression is not listed in any case label.
+
+A switch statement, as it is most often used, has the form:
+
+switch (expression) {
+   case constant-1:
+      statements-1
+      break;
+   case constant-2:
+      statements-2
+      break;
+      .
+      .   // (more cases)
+      .
+   case constant-N:
+      statements-N
+      break;
+   default:  // optional default case
+      statements-(N+1)
+} // end of switch statement
+This has exactly the same effect as the following multiway if statement, but the switch statement can be more efficient because the computer can evaluate one expression and jump directly to the correct case, whereas in the if statement, the computer must evaluate up to N expressions before it knows which set of statements to execute:
+
+if (expression == constant-1) { // but use .equals for String!!
+    statements-2
+} 
+else if (expression == constant-2) { 
+    statements-3
+} 
+else
+    .
+    .
+    .
+else if (expression == constant-N) { 
+    statements-N
+} 
+else {
+    statements-(N+1)
+}
+The break statements in the switch are technically optional. The effect of a break is to make the computer jump past the end of the switch statement, skipping over all the remaining cases. If you leave out the break statement, the computer will just forge ahead after completing one case and will execute the statements associated with the next case label. This is rarely what you want, but it is legal. (I will note here -- although you won't understand it until you get to the next chapter -- that inside a subroutine, the break statement is sometimes replaced by a return statement, which terminates the subroutine as well as the switch.)
+
+Note that you can leave out one of the groups of statements entirely (including the break). You then have two case labels in a row, containing two different constants. This just means that the computer will jump to the same place and perform the same action for each of the two constants.
+
+Here is an example of a switch statement. This is not a useful example, but it should be easy for you to follow. Note, by the way, that the constants in the case labels don't have to be in any particular order, but they must all be different:
+
+switch ( N ) {   // (Assume N is an integer variable.)
+   case 1:
+      System.out.println("The number is 1.");
+      break;
+   case 2:
+   case 4:
+   case 8:
+      System.out.println("The number is 2, 4, or 8.");
+      System.out.println("(That's a power of 2!)");
+      break;
+   case 3:
+   case 6:
+   case 9:
+      System.out.println("The number is 3, 6, or 9.");
+      System.out.println("(That's a multiple of 3!)");
+      break;
+   case 5:
+      System.out.println("The number is 5.");
+      break;
+   default:
+      System.out.println("The number is 7 or is outside the range 1 to 9.");
+}
+The switch statement is pretty primitive as control structures go, and it's easy to make mistakes when you use it. Java takes all its control structures directly from the older programming languages C and C++. The switch statement is certainly one place where the designers of Java should have introduced some improvements.
+
