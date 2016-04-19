@@ -18,7 +18,9 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
+<!-- Referenced from : http://jsfiddle.net/q3FhL/ -->
 <style>
+
 textarea {
 	background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
 	width: 500px;
@@ -165,7 +167,7 @@ textarea {
 																	$(
 																			"#compileResult")
 																			.text(
-																					"Success");
+																					"Compiled Successfully");
 																	$(
 																			"#compileResult")
 																			.attr(
@@ -238,6 +240,13 @@ textarea {
         document.getElementById("topics").innerHTML =
           txt;
       }
+	$('#codeArea').live('keypress', function(e) {
+	    if (e.keyCode === 9) {
+	        e.preventDefault();
+	        // do work
+	    }
+	});
+
 </script>
 <body>
 	<nav class="navbar navbar-default">
@@ -296,10 +305,10 @@ textarea {
 						<div>
 
 							<h3>Please Write Code Here If Any:</h3>
-							<form:textarea path="code" rows="25" cols="100" id="codeArea"
+							<form:textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" path="code" rows="25" cols="100" id="codeArea"
 								class="ta5"></form:textarea>
 						</div>
-						<br> <label id="compileResult"></label>
+						<br> <label id="compileResult"></label> <br><br>
 						<button class="btn btn-success" id="btnSave">Save Notes</button>
 					</form:form>
 				</center>
