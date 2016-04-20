@@ -278,7 +278,7 @@ textarea {
 					<li><a href="#">Visualize</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#">
+					<li><a href="${pageContext.request.contextPath}/">
                 	 ${sessionUser.getFname()}</a>
                 	</li>
 					<li><a href="<c:url value= 'j_spring_security_logout' />"> <span class="glyphicon glyphicon-log-out"></span>

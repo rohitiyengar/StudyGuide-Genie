@@ -71,6 +71,7 @@ public class NotesController {
 	@RequestMapping(value="/notes", method=RequestMethod.GET)
 	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
+		
 		System.out.println("NOTES FROM EXAM");
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		if (request.getParameter("topicName") != null)
@@ -172,9 +173,12 @@ public class NotesController {
 
 
 	@RequestMapping(value="/notes", method=RequestMethod.POST)
-	public ModelAndView saveNotes(HttpServletRequest request, @ModelAttribute("notes") Notes notes)
+	public ModelAndView saveNotes(HttpServletRequest request, @ModelAttribute("notes") Notes notes) throws IllegalArgumentException, Exception
 	{
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Topic obj = topicBo.findTopicById(notes.getTopicid());
+		request.getSession().setAttribute("topic", obj);
+		
 		student.setCurrentTopic(notes.getTopicName());
 		ModelAndView mv = new ModelAndView("notes");
 		try 

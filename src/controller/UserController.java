@@ -70,9 +70,14 @@ public class UserController {
 
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public ModelAndView loadForm()
+	public ModelAndView loadForm(HttpServletRequest request)
 	{
 		ModelAndView mv = new ModelAndView("registerUser");
+		if(request.getSession().getAttribute("sessionUser") != null)
+		{
+			mv.setViewName("studentDetails");
+			return mv;
+		}
 		mv.addObject("registerUser", new User());
 		return mv;
 	}
