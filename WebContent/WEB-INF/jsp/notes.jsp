@@ -18,7 +18,7 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
-<!-- Referenced from : http://jsfiddle.net/q3FhL/ -->
+<!-- Referenced from : http://jsfiddle.net/q3FhL/ & http://jsfiddle.net/TV47t/1/-->
 <style>
 
 textarea {
@@ -33,6 +33,16 @@ textarea {
 	line-height: 25px;
 	padding: 2px 10px;
 	border: solid 1px #ddd;
+}
+
+#codeArea {
+	background: url(http://s24.postimg.org/62v2ipx81/underline.png) repeat;
+	background-size:10;
+	background-color: #1d9269;
+	font-size: 16px;
+	color: #ffffff;
+	font-family: 'Times New Roman';
+	line-height:30px;
 }
 
 /* .ta5 {
