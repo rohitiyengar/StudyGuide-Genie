@@ -12,5 +12,6 @@ public interface ContentBO {
 	void update(Content content);
 	void delete(Content content);
 	List<Content> findContentList(int exam_id);
+	Content findContentByTopicId(int topic_id);
 
 }

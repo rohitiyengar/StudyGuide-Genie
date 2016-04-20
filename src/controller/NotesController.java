@@ -59,11 +59,19 @@ public class NotesController {
 	
 	@Autowired
 	ContentBO contentBo;
+	
+	private static String MID_TERM_1 = "Mid term 1";
+	private static String MID_TERM_2 = "Mid term 2";
+	private static String MID_TERM_3 = "Mid term 3";
+	private static String FINAL_EXAM = "Final exam";
+	
+
 
 
 	@RequestMapping(value="/notes", method=RequestMethod.GET)
 	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
+		System.out.println("NOTES FROM EXAM");
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		if (request.getParameter("topicName") != null)
 		{
@@ -73,10 +81,57 @@ public class NotesController {
 			request.getSession().setAttribute("topic", newtopic);
 			
 		}
-		else
+		
+		if (request.getParameter("examName") != null)
 		{
-			System.out.println("Topicname is null");
+			System.out.println("Exam name is:"+request.getParameter("examName"));
+			int exam_id = 0;
+			if(request.getParameter("examName").equals(MID_TERM_1))
+			{
+				exam_id = 2;
+			}
+			else if(request.getParameter("examName").equals(MID_TERM_2))
+			{
+				exam_id = 3;
+			}
+			else if(request.getParameter("examName").equals(MID_TERM_3))
+			{
+				exam_id = 4;
+			}
+			else if(request.getParameter("examName").equals(FINAL_EXAM))
+			{
+				exam_id = 5;
+			}
+				
+			List<Content> examContent = contentBo.findContentList(exam_id);
+			System.out.println("Setting exam_id to"+exam_id);
+			request.getSession().setAttribute("examid", exam_id);
+			int examid = 0;
+			if(student.getCurrentTopic() != null)
+			{
+				int id = topicBo.findTopicByName(student.getCurrentTopic()).getTopicId();
+				System.out.println("id is "+id);
+				System.out.println(contentBo.findContentByTopicId(id));
+				examid = contentBo.findContentByTopicId(id).getExamId();
+				
+				if(examid == exam_id)
+				{
+					request.getSession().setAttribute("examid", examid);
+				}
+			}
+			if(examid != exam_id)
+			{
+				student.setCurrentTopic(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
+				Topic newtopic = topicBo.findTopicByName(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
+				request.getSession().setAttribute("topic", newtopic);
+				
+			}
+			
+			
+			
 		}
+		
+		
 		Topic topic = (Topic)request.getSession().getAttribute("topic");
 		ModelAndView mv = new ModelAndView("notes");
 		Notes notes = new Notes();
@@ -155,7 +210,7 @@ public class NotesController {
 	public ModelAndView getExamsList(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
 		List<Exam> list = examBo.findAllExams();
-		request.getSession().setAttribute("examid", list.get(0).getExamId());
+		//request.getSession().setAttribute("examid", list.get(0).getExamId());
 		ModelAndView mv = new ModelAndView("getExams");
 		mv.addObject("exams", list);
 		

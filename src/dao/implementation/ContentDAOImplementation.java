@@ -63,12 +63,23 @@ public class ContentDAOImplementation extends GenericHibernateDaoSupport impleme
 	public List<Content> findContentList(int exam_id) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
 		@SuppressWarnings("unchecked")
-		List<Content> userList = (List<Content>) getHibernateTemplate().find("from Content  where examId = ? ", exam_id);
+		List<Content> userList = (List<Content>) getHibernateTemplate().find("from Content  where examId = ? order by topicId", exam_id);
 		if (userList == null || userList.size() == 0)
 		{
 			throw new IllegalArgumentException("Content List doesnt exists");
 		}
 		return userList;
+	}
+
+	@Override
+	public Content findContentByTopicId(int topic_id) {
+		// TODO Auto-generated method stub
+		List<Content> userList = (List<Content>) getHibernateTemplate().find("from Content  where topicId = ? ", topic_id);
+		if (userList == null || userList.size() == 0)
+		{
+			throw new IllegalArgumentException("Content List doesnt exists");
+		}
+		return userList.get(0);
 	}
 
 }

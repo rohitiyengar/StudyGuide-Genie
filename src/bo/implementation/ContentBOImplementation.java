@@ -44,4 +44,10 @@ public class ContentBOImplementation implements ContentBO{
 		return contentDao.findContentList(exam_id);
 	}
 
+	@Override
+	public Content findContentByTopicId(int topic_id) {
+		// TODO Auto-generated method stub
+		return contentDao.findContentByTopicId(topic_id);
+	}
+
 }
