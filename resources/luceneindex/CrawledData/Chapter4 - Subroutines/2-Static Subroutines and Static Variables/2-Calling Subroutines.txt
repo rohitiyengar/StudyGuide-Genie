@@ -1,0 +1,16 @@
+When you define a subroutine, all you are doing is telling the computer that the subroutine exists and what it does. The subroutine doesn't actually get executed until it is called. (This is true even for the main() routine in a class -- even though you don't call it, it is called by the system when the system runs your program.) For example, the playGame() method given as an example above could be called using the following subroutine call statement:
+
+playGame();
+This statement could occur anywhere in the same class that includes the definition of playGame(), whether in a main() method or in some other subroutine. Since playGame() is a public method, it can also be called from other classes, but in that case, you have to tell the computer which class it comes from. Since playGame() is a static method, its full name includes the name of the class in which it is defined. Let's say, for example, that playGame() is defined in a class named Poker. Then to call playGame() from outside the Poker class, you would have to say
+
+Poker.playGame();
+The use of the class name here tells the computer which class to look in to find the method. It also lets you distinguish between Poker.playGame() and other potential playGame() methods defined in other classes, such as Roulette.playGame() or Blackjack.playGame().
+
+More generally, a subroutine call statement for a static subroutine takes the form
+
+subroutine-name(parameters);
+if the subroutine that is being called is in the same class, or
+
+class-name.subroutine-name(parameters);
+if the subroutine is defined elsewhere, in a different class. (Non-static methods belong to objects rather than classes, and they are called using objects instead of class names. More on that later.) Note that the parameter list can be empty, as in the playGame() example, but the parentheses must be there even if there is nothing between them. The number of parameters that you provide when you call a subroutine must match the number listed in the parameter list in the subroutine definition, and the types of the parameters in the call statement must match the types in the subroutine definition.
+

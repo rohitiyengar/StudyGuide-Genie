@@ -1,0 +1,55 @@
+A subroutine must be defined somewhere. The definition has to include the name of the subroutine, enough information to make it possible to call the subroutine, and the code that will be executed each time the subroutine is called. A subroutine definition in Java takes the form:
+
+modifiers  return-type  subroutine-name  ( parameter-list ) {
+    statements
+}
+It will take us a while -- most of the chapter -- to get through what all this means in detail. Of course, you've already seen examples of subroutines in previous chapters, such as the main() routine of a program and the drawFrame() routine of the animation programs in Section 3.9. So you are familiar with the general format.
+
+The statements between the braces, { and }, in a subroutine definition make up the body of the subroutine. These statements are the inside, or implementation part, of the "black box," as discussed in the previous section. They are the instructions that the computer executes when the method is called. Subroutines can contain any of the statements discussed in Chapter 2 and Chapter 3.
+
+The modifiers that can occur at the beginning of a subroutine definition are words that set certain characteristics of the subroutine, such as whether it is static or not. The modifiers that you've seen so far are "static" and "public". There are only about a half-dozen possible modifiers altogether.
+
+If the subroutine is a function, whose job is to compute some value, then the return-type is used to specify the type of value that is returned by the function. It can be a type name such as String or int or even an array type such as double[]. We'll be looking at functions and return types in some detail in Section 4.4. If the subroutine is not a function, then the return-type is replaced by the special value void, which indicates that no value is returned. The term "void" is meant to indicate that the return value is empty or non-existent.
+
+Finally, we come to the parameter-list of the method. Parameters are part of the interface of a subroutine. They represent information that is passed into the subroutine from outside, to be used by the subroutine's internal computations. For a concrete example, imagine a class named Television that includes a method named changeChannel(). The immediate question is: What channel should it change to? A parameter can be used to answer this question. Since the channel number is an integer, the type of the parameter would be int, and the declaration of the changeChannel() method might look like
+
+public void changeChannel(int channelNum) { ... }
+This declaration specifies that changeChannel() has a parameter named channelNum of type int. However, channelNum does not yet have any particular value. A value for channelNum is provided when the subroutine is called; for example: changeChannel(17);
+
+The parameter list in a subroutine can be empty, or it can consist of one or more parameter declarations of the form type parameter-name. If there are several declarations, they are separated by commas. Note that each declaration can name only one parameter. For example, if you want two parameters of type double, you have to say "double x, double y", rather than "double x, y".
+
+Parameters are covered in more detail in the next section.
+
+Here are a few examples of subroutine definitions, leaving out the statements that define what the subroutines do:
+
+public static void playGame() {
+    // "public" and "static" are modifiers; "void" is the 
+    // return-type; "playGame" is the subroutine-name; 
+    // the parameter-list is empty.
+    . . .  // Statements that define what playGame does go here.
+}
+
+int getNextN(int N) {
+    // There are no modifiers; "int" in the return-type;
+    // "getNextN" is the subroutine-name; the parameter-list 
+    // includes one parameter whose name is "N" and whose 
+    // type is "int".
+    . . .  // Statements that define what getNextN does go here.
+}
+
+static boolean lessThan(double x, double y) {
+    // "static" is a modifier; "boolean" is the
+    // return-type; "lessThan" is the subroutine-name; 
+    // the parameter-list includes two parameters whose names are 
+    // "x" and "y", and the type of each of these parameters 
+    // is "double".
+    . . .  // Statements that define what lessThan does go here.
+}
+In the second example given here, getNextN is a non-static method, since its definition does not include the modifier "static" -- and so it's not an example that we should be looking at in this chapter! The other modifier shown in the examples is "public". This modifier indicates that the method can be called from anywhere in a program, even from outside the class where the method is defined. There is another modifier, "private", which indicates that the method can be called only from inside the same class. The modifiers public and private are called access specifiers. If no access specifier is given for a method, then by default, that method can be called from anywhere in the "package" that contains the class, but not from outside that package. (Packages were mentioned in Subsection 2.6.6, and you'll learn more about them later in this chapter, in Section 4.5.) There is one other access modifier, protected, which will only become relevant when we turn to object-oriented programming in Chapter 5.
+
+Note, by the way, that the main() routine of a program follows the usual syntax rules for a subroutine. In
+
+public static void main(String[] args) { ... }
+the modifiers are public and static, the return type is void, the subroutine name is main, and the parameter list is "String[] args". In this case, the type for the parameter is the array type String[].
+
+You've already had some experience with filling in the implementation of a subroutine. In this chapter, you'll learn all about writing your own complete subroutine definitions, including the interface part.
