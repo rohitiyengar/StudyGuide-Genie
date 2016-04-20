@@ -90,7 +90,7 @@
 		<h2>Welcome ${sessionUser.getFname()}</h2>
 		<br>
 		<center>
-			<div class="well">
+			<!--  <div class="well">
 				<c:if test="${not empty registerMessage }">
 					<div class="bg-danger">${registerMessage }</div>
 					<br>
@@ -113,7 +113,7 @@
 					href="${pageContext.request.contextPath}/allexams">Get all
 					exams</a> <a class="btn btn-danger"
 					href="<c:url value= 'j_spring_security_logout'  />"> Logout</a>
-			</div>
+			</div>-->
 		</center>
 
 		<br>

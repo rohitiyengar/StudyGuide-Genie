@@ -9,21 +9,21 @@
 <title>Student Notes</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/prism.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/awesomplete.css" />
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/scripts/awesomplete.js"></script>
 <link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
 <!-- Referenced from : http://jsfiddle.net/q3FhL/ & http://jsfiddle.net/TV47t/1/-->
 <style>
 
 textarea {
 	background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
-	width: 500px;
+	width: 400px;
 	height: 200px;
 	font-family: 'Handlee', cursive;
 	font-weight: bold;
@@ -289,20 +289,21 @@ textarea {
 
 		</div>
 	</nav>
+	
 	<div class="container">
 		<center><div class = "well"><h1>${sessionUser.getCurrentTopic()}</h1></div></center>
 		<div class="row">
 			<div class="col-md-4">
 			
-				<h2> Index: </h2>
+				<center><h2> Chapters:</h2></center>
         		<div id="topics" class = "well">
         		</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-5">
 				
-				<h2>Notes:</h2>
+				<center><h2>Notes:</h2></center>
 				<div >
-				<br>
+				
 					<c:if test="${not empty notesMessage }">
 							<div class="bg-danger">${notesMessage }</div><br>
 						</c:if>
@@ -314,15 +315,15 @@ textarea {
 							<form:input id="notesId" path="notesId" type="hidden"/>
 					</div>
 						<div>
-							<h3>Please Enter Your Notes Here:</h3>
+							<br>
 							<form:textarea path="topicText" id="mynotes" class="ta5" rows="10" cols="50"></form:textarea>
 							<br /><br />
 							<label for="matchPercentage">Match Percentage:</label>&nbsp;&nbsp;<form:input id="matchPercentage" path="matchPercentage" class="control form-control"/>
 						</div>
-						<br /> <br />
+						<br /> 
 						<div>
 
-							<h3>Please Write Code Here If Any:</h3>
+							<h3>Code:</h3>
 							<form:textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" path="code" rows="25" cols="100" id="codeArea"
 								class="ta5"></form:textarea>
 						</div>
@@ -332,14 +333,28 @@ textarea {
 				</center>
 				</div>
 			</div>
-			<div class="col-md-2">
 			
-				<h2>Recommendations: </h2>
+			<div class="col-md-3">
+			
+				<center><h2>Recommendations: </h2></center>
         		<div id="recommendations" class = "well">
+        		<ul>
+        		<li><a href="https://en.wikibooks.org/wiki/Java_Programming/Arrays#Fundamentals">Array Fundamentals</a></li>
+        		<li><a href="https://en.wikibooks.org/wiki/Java_Programming/API/java.lang.String#Comparing_Strings">String Comparisons</a></li>
+        		</ul>
+        		</div>
+        		<center><h2>Keywords: </h2></center>
+        		<div id="recommendations" class = "well">
+        		<i>This section contains relevant keywords included by your peers that you may have missed.</i><br><br>
+        		<ul>
+        		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
+        		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
+        		</ul>
         		</div>
 			</div>
 		</div>
 	</div>
+	
 	<br><br>
 </body>
 </html>
