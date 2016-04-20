@@ -36,11 +36,12 @@ textarea {
 }
 
 #codeArea {
-	background: url(http://s24.postimg.org/62v2ipx81/underline.png) repeat;
+	background: none;
 	background-size:10;
-	background-color: #1d9269;
+	background-color: #F2FEF2;
 	font-size: 16px;
-	color: #ffffff;
+	font-style:italic;
+	color: #1d9269;
 	font-family: 'Times New Roman';
 	line-height:30px;
 }
