@@ -243,6 +243,81 @@ public class NotesController {
 	}
 	
 	
+	@RequestMapping(value="/allexams", method=RequestMethod.GET)
+	public ModelAndView getAllExams(HttpServletRequest request) throws IllegalArgumentException, Exception
+	{
+		ModelAndView mv = new ModelAndView("getAllExams");
+		HashMap<Integer, List<Content>> examContentMapWithExamId = new HashMap<Integer, List<Content>>();
+		exam.jaxbclasses.Exams examsXML = new exam.jaxbclasses.Exams();
+		List<model.Exam> list = examBo.findAllExams();
+		request.getSession().setAttribute("listofAllExams", list); //Use this session variable in above method.
+		//boolean noContent = false;
+		for(model.Exam exam : list)
+		{
+			List<Content> examContent = null;
+			try
+			{
+				examContent = contentBo.findContentList(exam.getExamId());
+			}
+			catch(IllegalArgumentException e)
+			{
+				if(e.getMessage().equals("Content List doesnt exists"));
+				{
+					//do nothing
+				}
+			}
+			if((examContent != null) && !examContent.isEmpty())
+			{
+				HashMap<Integer, exam.jaxbclasses.Chapter> chapterTopicMap = new HashMap<Integer, exam.jaxbclasses.Chapter>();
+				///noContent = true;
+				exam.jaxbclasses.Exam examobj = new exam.jaxbclasses.Exam();
+				examobj.setNumber(exam.getExamValue());
+				for(Content c : examContent)
+				{
+					int topicId = c.getTopicId();
+					model.Topic topicobj = topicBo.findTopicById(topicId);
+					int parentTopicId = topicobj.getParentTopicId();
+					if(parentTopicId == 0)
+					{
+						if(!chapterTopicMap.containsKey(topicId))
+						{
+							exam.jaxbclasses.Chapter chapterObj = new exam.jaxbclasses.Chapter();
+							chapterObj.setName(topicobj.getTopicName());
+							chapterTopicMap.put(topicId, chapterObj);
+						}
+					}
+					else
+					{
+						if(chapterTopicMap.containsKey(parentTopicId))
+						{
+							chapterTopicMap.get(parentTopicId).getTopic().add(topicobj.getTopicName());
+						}
+					}
+
+				}
+				for(Integer in : chapterTopicMap.keySet())
+				{
+					examobj.getChapter().add(chapterTopicMap.get(in));
+				}
+				examsXML.getExam().add(examobj);
+				examContentMapWithExamId.put(exam.getExamId(), examContent);
+			}
+		}
+
+		request.getSession().setAttribute("examContentMapWithExamId", examContentMapWithExamId);
+
+		JAXBContext context = JAXBContext.newInstance(exam.jaxbclasses.Exams.class);
+		Marshaller marshaller = context.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+		StringWriter writer = new StringWriter();
+		marshaller.marshal(examsXML, writer);
+		mv.addObject("allExams", writer);
+		return mv;
+	}
+	
+	
 	
 
 

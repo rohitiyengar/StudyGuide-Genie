@@ -1,7 +1,7 @@
 <root>
   <facet id="jpt.jaxb">
     <node name="classgen">
-      <attribute name="package" value="util"/>
+      <attribute name="package" value="exam.jaxbclasses"/>
     </node>
   </facet>
 </root>
