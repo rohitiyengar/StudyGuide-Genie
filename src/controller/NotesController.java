@@ -1,42 +1,37 @@
 package controller;
 
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import model.Content;
+import model.Exam;
+import model.Notes;
+import model.Student;
+import model.Topic;
+
 import org.hibernate.exception.ConstraintViolationException;
-import org.hibernate.internal.util.xml.XmlDocument;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import util.*;
-
-import java.io.StringWriter;
-import java.util.*;
-
-import model.Content;
-import model.Exam;
-import model.Student;
-import model.Topic;
-import model.User;
-import model.Instructor;
-import model.Notes;
-
-
+import util.Chapter;
 import bo.ContentBO;
 import bo.ExamBO;
+import bo.InstructorBO;
 import bo.NotesBO;
 import bo.StudentBO;
 import bo.TopicBO;
 import bo.UserBO;
-import bo.InstructorBO;
 
 
 @Controller
@@ -243,8 +238,6 @@ public class NotesController {
 		
 		String result = writer.toString();
 		mv.addObject("chapterList", result.trim());
-		System.out.println("Hello");
-		System.out.println(result.trim());
 		
 		return mv;
 	}
