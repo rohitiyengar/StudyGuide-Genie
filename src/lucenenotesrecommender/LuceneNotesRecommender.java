@@ -47,7 +47,7 @@ public class LuceneNotesRecommender {
 	private StandardAnalyzer analyzer = new StandardAnalyzer();
 	
 	private IndexWriter writer;
-	private IndexWriterConfig config = new IndexWriterConfig(analyzer);
+	//private IndexWriterConfig config = new IndexWriterConfig(analyzer);
 	private IndexSearcher searcher = null;
 	
 	public LuceneNotesRecommender() throws IOException {
@@ -103,6 +103,7 @@ public class LuceneNotesRecommender {
 				// if no changes in notes, don't update
 				if (!studentnotes.equals(currentNotes)) {
 					// delete the document
+					IndexWriterConfig config = new IndexWriterConfig(analyzer);
 					writer = new IndexWriter(indexDir,config);
 					writer.deleteDocuments(query);
 					
@@ -121,6 +122,7 @@ public class LuceneNotesRecommender {
 		
 		// didnot find the index, add it
 		if (!foundIndex) {
+			IndexWriterConfig config = new IndexWriterConfig(analyzer);
 			writer = new IndexWriter(indexDir,config);
 			Document doc = new Document();
 			doc.add(new TextField(TOPIC_FIELD_ID,Integer.toString(topicid),TextField.Store.YES));
