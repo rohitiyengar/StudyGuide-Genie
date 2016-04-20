@@ -110,14 +110,15 @@ public class NotesController {
 			int examid = 0;
 			if(student.getCurrentTopic() != null)
 			{
-				int id = topicBo.findTopicByName(student.getCurrentTopic()).getTopicId();
-				System.out.println("id is "+id);
-				System.out.println(contentBo.findContentByTopicId(id));
-				examid = contentBo.findContentByTopicId(id).getExamId();
-				
+				Topic currentTopic = topicBo.findTopicByName(student.getCurrentTopic());
+				System.out.println("id is "+currentTopic.getTopicId());
+				System.out.println(contentBo.findContentByTopicId(currentTopic.getTopicId()));
+				examid = contentBo.findContentByTopicId(currentTopic.getTopicId()).getExamId();
+				//Check if the exam id last left is the same as the student has clicked on now in a new session.
 				if(examid == exam_id)
 				{
 					request.getSession().setAttribute("examid", examid);
+					request.getSession().setAttribute("topic", currentTopic);
 				}
 			}
 			if(examid != exam_id)
@@ -178,8 +179,8 @@ public class NotesController {
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		model.Topic obj = topicBo.findTopicById(notes.getTopicid());
 		request.getSession().setAttribute("topic", obj);
-		
 		student.setCurrentTopic(notes.getTopicName());
+		request.getSession().setAttribute("sessionUser", student);
 		ModelAndView mv = new ModelAndView("notes");
 		try 
 		{
