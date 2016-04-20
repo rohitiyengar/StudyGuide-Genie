@@ -38,7 +38,7 @@ textarea {
 #codeArea {
 	background: none;
 	background-size:10;
-	background-color: #F2FEF2;
+	background-color: #FFFFFF;
 	font-size: 16px;
 	font-style:italic;
 	color: #1d9269;
