@@ -355,7 +355,7 @@ textarea {
         		<c:if test="${not empty recommendedWords}">
         		<ul>
         		<c:forEach items="${recommendedWords}" var="recoIter">
-					<li>${recoIter}<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
+					<li>${recoIter}</li>
 				</c:forEach>
 <!--         		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
 <!--         		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
