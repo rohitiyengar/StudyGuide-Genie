@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Transient;
+
 
 
 
@@ -24,7 +28,20 @@ public class Notes {
 	private String code;
 	private String topicName;
 	
+	@Transient
+	private Set<String> recommmendedWords;
 	
+	
+	@Transient
+	public Set<String> getRecommmendedWords() {
+		return recommmendedWords;
+	}
+
+
+	public void setRecommmendedWords(Set<String> recommmendedWords) {
+		this.recommmendedWords = recommmendedWords;
+	}
+
 
 	@Column(name = "topic_name")
 	public String getTopicName() {

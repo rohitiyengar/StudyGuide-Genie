@@ -346,10 +346,15 @@ textarea {
         		<center><h2>Keywords: </h2></center>
         		<div id="recommendations" class = "well">
         		<i>This section contains relevant keywords included by your peers that you may have missed.</i><br><br>
+        		<c:if test="${not empty recommendedWords}">
         		<ul>
-        		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
-        		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
+        		<c:forEach items="${recommendedWords}" var="recoIter">
+					<li>${recoIter}<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li>
+				</c:forEach>
+<!--         		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
+<!--         		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
         		</ul>
+        		</c:if>
         		</div>
 			</div>
 		</div>

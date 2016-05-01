@@ -4,6 +4,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
@@ -22,7 +23,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+
+
+
+
 
 import util.Chapter;
 import bo.ContentBO;
@@ -32,7 +40,7 @@ import bo.NotesBO;
 import bo.StudentBO;
 import bo.TopicBO;
 import bo.UserBO;
-
+import lucenenotesrecommender.LuceneNotesRecommender;
 
 @Controller
 @SessionAttributes({"sessionUser", "topic"})
@@ -65,8 +73,7 @@ public class NotesController {
 	private static String MID_TERM_3 = "Mid term 3";
 	private static String FINAL_EXAM = "Final exam";
 	
-
-
+	
 
 	@RequestMapping(value="/notes", method=RequestMethod.GET)
 	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
@@ -157,7 +164,16 @@ public class NotesController {
 				System.out.println(topic.getTopicId());
 				System.out.println(student.getStudentId());
 				notes = notesBo.findNotes(student.getStudentId(), topic.getTopicId());
-				
+				WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+				LuceneNotesRecommender luceneNotesBean = (LuceneNotesRecommender)webApplicationContext.getBean("luceneNotesBean");
+				luceneNotesBean.updateNotesIndex(topic.getTopicId(), student.getStudentId(), notes.getTopicText());
+				Set<String> recommendedWords = luceneNotesBean.getNotesRecommendations(topic.getTopicId(), student.getStudentId(), notes.getTopicText(), 5);
+				notes.setRecommmendedWords(recommendedWords);
+				for(String s : recommendedWords)
+				{
+					System.out.println("The keyword is "+s);
+				}
+				mv.addObject("recommendedWords", notes.getRecommmendedWords());
 			}
 			catch(IllegalArgumentException exception)
 			{
@@ -185,6 +201,8 @@ public class NotesController {
 	public ModelAndView saveNotes(HttpServletRequest request, @ModelAttribute("notes") Notes notes) throws IllegalArgumentException, Exception
 	{
 		ModelAndView mv = new ModelAndView("notes");
+		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+		LuceneNotesRecommender luceneNotesBean = (LuceneNotesRecommender)webApplicationContext.getBean("luceneNotesBean");
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		model.Topic obj = topicBo.findTopicById(notes.getTopicid());
 		request.getSession().setAttribute("topic", obj);
@@ -197,6 +215,9 @@ public class NotesController {
 			notes.setStudentId(student.getStudentId());
 			notesBo.save(notes);
 			studentBo.save(student);
+			//update the index by calling LuceneNotesIndexer
+			luceneNotesBean.updateNotesIndex(notes.getTopicid(), notes.getStudentId(), notes.getTopicText());
+
 		} 
 		
 		catch (ConstraintViolationException e ) 
@@ -213,7 +234,13 @@ public class NotesController {
 			mv.addObject("notesMessage", "Unexpected System Error. Please try again");
 			return mv;
 		}
-		
+		Set<String> recommendedWords = luceneNotesBean.getNotesRecommendations(notes.getTopicid(), student.getStudentId(), notes.getTopicText(), 5);
+		notes.setRecommmendedWords(recommendedWords);
+		for(String s : recommendedWords)
+		{
+			System.out.println("The keyword is "+s);
+		}
+		mv.addObject("recommendedWords", notes.getRecommmendedWords());
 		mv.addObject("notes", notes);
 		mv.addObject("notesMessage", "Saved");
 
