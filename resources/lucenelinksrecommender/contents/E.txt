@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Index#E
+else enum Exceptions Throwing and Catching Examples: Rounding number example Singleton example extends

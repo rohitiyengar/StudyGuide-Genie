@@ -1,0 +1,6 @@
+https://en.wikibooks.org/wiki/Java_Programming/Database_Programming#Connecting_to_PostgreSQL
+try {
+   Class.forName("org.postgresql.Driver");
+   Connection conn = DriverManager.getConnection("jdbc:postgresql:MyDatabase", "MyAccount", "MyPassword");
+   conn.close();
+} catch(SQLException e) { e.printStackTrace(); }

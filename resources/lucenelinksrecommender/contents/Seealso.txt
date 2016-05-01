@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/EJB#See_also
+EJB in Java EE

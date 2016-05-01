@@ -1,0 +1,10 @@
+https://en.wikibooks.org/wiki/Java_Programming/Preventing_NullPointerException#Comparing_string_variable_with_a_string_literal
+When you compare a variable with a string literal, most of people would do that this way: Code section 6.15: Bad comparison. 
+1 if (state.equals("OK")) {
+2   ...
+3 }
+ Always put the string literal first: Code section 6.16: Better comparison. 
+1 if ("OK".equals(state)) {
+2   ...
+3 }
+ If the state variable is null, you get a NullPointerException in the first example, but not in the second one.

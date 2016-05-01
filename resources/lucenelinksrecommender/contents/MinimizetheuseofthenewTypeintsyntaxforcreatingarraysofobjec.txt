@@ -1,0 +1,7 @@
+https://en.wikibooks.org/wiki/Java_Programming/Preventing_NullPointerException#Minimize_the_use_of_the_new_Type[int]_syntax_for_creating_arrays_of_objects
+An array created using new Object[10] has 10 null pointers. That's 10 more than we want, so use collections instead, or explicitly fill the array at initialization with: Code section 6.19: Declaring an exception. 
+1 Object[] objects = {"blah", 5, new File("/usr/bin")};
+
+ or: Code section 6.20: Declaring an exception. 
+1 Object[] objects;
+2 objects = new Object[]{"blah", 5, new File("/usr/bin")};

@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/EJB#Types_of_EJB
+Session Beans StateFull Session Beans Stateless Session Beans Entity Beans Message Driven Beans

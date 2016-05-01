@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/EJB#EJB_Features
+Security Management Persistence Management Transaction Management Distributable Interoperable Management Exception Management

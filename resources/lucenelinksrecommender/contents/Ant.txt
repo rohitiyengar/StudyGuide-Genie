@@ -1,0 +1,72 @@
+https://en.wikibooks.org/wiki/Java_Programming/Compilation#Ant
+For comprehensive information about all aspects of Ant, please see the Ant Wikibook.The best way to build your application is to use a build tool. This checks all the needed dependencies and compiles only the needed class for the build. Ant tool is one of the best and the most popular build tools currently available. Ant is a build management tool designed to replace MAKE as the tool for automated builds of large Java applications. Like Java, and unlike MAKE, Ant is designed to be platform independent.Using Ant you would build your application from the command line by typing:The build.xml file contains all the information needed to build the application.Building a Java application requires certain tasks to be performed defined in a build.xml file. Those tasks may include not only compiling the code, but also copying code, packaging the program to a Jar, creating EJBs, running automated tests, doing ftp for the code to remote site, and so on. For some tasks a condition can be assigned, for example to compile only changed code, or do the task if that was not already done so. Tasks dependency can also be specified, which will make sure that the order of executions of the tasks are in the right order. For example, when compiling the code before packaging it to a jar, the package-to-jar task depends on the compilation task.The build.xml file is generally kept in the root directory of the java project. Ant parses this file and executes the tasks therein. Below we give an example build.xml file.Ant tool is written in Java and is open source, so it can be extended if there is a task you'd like to be done during the build that is not in the predefined tasks list. It is very easy to hook your ant task code to the other tasks: your code only needs to be in the classpath, and the Ant tool will load it at runtime. For more information about writing your own Ant tasks, please see the project website at http://ant.apache.org/.Example build.xml file. 
+<?xml version="1.0"?>
+
+<project name="ExampleApp" basedir="." default="main">
+
+    <property name="source.dir"    value="source" />
+    <property name="libraries.dir" value="libraries" />
+    <property name="build.dir"     value="build" />
+    <property name="classes.dir"   value="${build.dir}/classes" />
+    <property name="dist.dir"      value="${build.dir}/dist" />
+    <property name="main-class"    value="com.example.ExampleApp"/>
+
+    <path id="classpath">
+        <fileset dir="${libraries.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${source.dir}" destdir="${classes.dir}" classpathref="classpath" />
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" excludes="**/*.java" />
+        </copy>
+    </target>
+
+    <target name="build" depends="compile">
+        <mkdir dir="${dist.dir}"/>
+        <copy todir="${dist.dir}/lib" flatten="true">
+            <path refid="classpath" />
+        </copy>
+        <path id="dist.classpath">
+            <fileset dir="${dist.dir}/lib" includes="*.jar" />
+        </path>
+        <manifestclasspath property="dist.manifest.classpath" jarfile="${dist.dir}/${ant.project.name}.jar">
+            <classpath refid="dist.classpath" />
+        </manifestclasspath>
+        <jar destfile="${dist.dir}/${ant.project.name}.jar" >
+            <zipfileset dir="${classes.dir}" />
+            <manifest>
+                <attribute name="Class-Path" value="${dist.manifest.classpath}"/>
+                <attribute name="Main-Class" value="${main-class}" />
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run-build" depends="build">
+        <java jar="${dist.dir}/${ant.project.name}.jar" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <path location="${dist.dir}/${ant.project.name}.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="run" depends="compile">
+        <java classname="${main-class}" >
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${classes.dir}" />
+            </classpath>
+        </java>
+    </target>
+
+    <target name="clean-build" depends="clean, build"/>
+
+    <target name="main" depends="clean, run"/>
+
+</project>The next most popular way to build applications is using an Integrated Development Environment (IDE).

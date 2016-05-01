@@ -1,0 +1,7 @@
+https://en.wikibooks.org/wiki/Java_Programming/Keywords#for
+for is a Java keyword.It starts a looping block.The general syntax of a for, using Extended Backus-Naur Form, isfor-looping-statement ::= for condition-clause 
+                                    single-statement | block-statement
+ 
+condition-clause    ::= ( before-statement;  Boolean Expression ; after-statement )
+single-statement    ::= Statement
+block-statement     ::= { Statement [ Statement ] }For example:See also:Java Programming/Keywords/while Java Programming/Keywords/do

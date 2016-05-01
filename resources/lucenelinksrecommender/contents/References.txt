@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Byte_Code#References
+? Oracle's Java Virtual Machine Specification

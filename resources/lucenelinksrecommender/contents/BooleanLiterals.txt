@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Literals#Boolean_Literals
+There are two boolean literalstrue represents a true boolean value false represents a false boolean valueThere are no other boolean literals, because there are no other boolean values!

@@ -1,0 +1,31 @@
+https://en.wikibooks.org/wiki/Java_Programming/API/java.lang.String#String_cases
+The String class also allows for the modification of cases. The two methods that make this possible are toLowerCase() and toUpperCase().These methods are useful to do a search which is not case sensitive:Test your knowledge Question 3.12: You have mail addresses in the following form: <firstName>.<lastName>@<companyName>.org Write the String getDisplayName(String) method that receives the mail string as parameter and returns the readable person name like this: LASTNAME Firstname Answer Answer 3.12: getDisplayName() 
+ 1 public static String getDisplayName(String mail) {
+ 2   String displayName = null;
+ 3  
+ 4   if (mail != null) {
+ 5     String[] mailParts = mail.split("@");
+ 6     String namePart = mailParts[0];
+ 7     String[] namesParts = namePart.split("\\.");
+ 8    
+ 9     // The last name
+10     String lastName = namesParts[1];
+11     lastName = lastName.toUpperCase();
+12    
+13     // The first name
+14     String firstName = namesParts[0];
+15    
+16     String firstNameInitial = firstName.substring(0, 1);
+17     firstNameInitial = firstNameInitial.toUpperCase();
+18    
+19     String firstNameEnd = firstName.substring(1);
+20     firstNameEnd = firstNameEnd.toLowerCase();
+21    
+22     // Concatenation
+23     StringBuilder displayNameBuilder = new StringBuilder(lastName).append(" ").append(firstNameInitial).append(firstNameEnd);
+24     displayName = displayNameBuilder.toString();
+25   }
+26  
+27   return displayName;
+28 }
+ We only process non null strings, We first split the mail into two parts to separate the personal information from the company information and we keep the name data, Then we split the name information to separate the first name from the last name. As the split() method use regular expression and . is a wildcard character, we have to escape it (\.). However, in a string, the \ is also a special character, so we need to escape it too (\\.), The last name is just capitalized, As the case of all the first name characters will not be the same, we have to cut the first name. Only the first name initial will be capitalized, Now we can concatenate all the fragments. We prefer to use a StringBuilder to do that.

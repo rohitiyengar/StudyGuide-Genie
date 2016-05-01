@@ -1,0 +1,11 @@
+https://en.wikibooks.org/wiki/Java_Programming/Graphics/Drawing_shapes#Hmm,_everything.27s_perfect,_but...
+Sometimes people ask, after creating simple programs like the ones above, questions like:Why did I have to tell the Graphics instance the color before each drawing routine? Why can't it remember my choice for the outlines and for the fill colors? The answer is simpler than it seems. But, to fully understand it, we need to focus on one little thing called the Graphics Context. The graphics context is the information that adheres to a single instance of the Graphics class. Such an instance remembers only one color at a time and that is why we need to make sure the context knows of the color we need to use by using the setColor(Color) method. Can I manipulate the shapes, like tilt them and crop them? Hold your horses, cowboy! Everything is possible in Java, even tilting and cropping drawings. We will be focusing on these issues in a later section. Is making shapes like triangles, rhombuses and other complex ones tedious? Well, to be honest here, you need to go back to your dusty book cabinet and take out that High School Geometry book because we would be covering some geometry basics while dealing with such shapes. Why not read a wikibook on Geometry?Test your knowledge Question 9.3: Throughout the exercise listings above, we have been filling the shapes first and then drawing their outlines. What happens if we do it the other way around? Consider the code below. 
+...
+public void paint(Graphics graphics) {
+    graphics.setColor(Color.red);
+    graphics.drawRect(10, 10, 100, 100);
+    graphics.setColor(Color.yellow);
+    graphics.fillRect(10, 10, 100, 100);
+}
+...
+ The left and the top outlines disappear. The right and the bottom outlines disappear. The color for the outline becomes the color for the fill area. All the outlines disappear. Answer All the outlines disappear. Question 9.4: What would drawLine(10, 100, 100, 100) give you? A horizontal line. A vertical line. A diagonal line. Answer A horizontal line.If you have any questions regarding the content provided here, please feel free to comment in this page's discussion.

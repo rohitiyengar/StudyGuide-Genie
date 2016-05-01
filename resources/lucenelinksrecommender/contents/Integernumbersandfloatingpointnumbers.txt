@@ -1,0 +1,22 @@
+https://en.wikibooks.org/wiki/Java_Programming/Primitive_Types#Integer_numbers_and_floating_point_numbers
+The data types that one can use for integer numbers are byte, short, int and long but when it comes to floating point numbers, we use float or double. Now that we know that, we can modify the code in the code section 3.53 as:Why not float, you say? If we'd used a float, we would have to append the number with a f as a suffix, so 10.5 should be 10.5f as in:Floating-point math never throws exceptions. Dividing a non-zero value by 0 equals infinity. Dividing a non-infinite value by infinity equals 0.Test your knowledge Question 3.7: Consider the following code: Question 3.7: Primitive type assignments. 
+ 5 ...
+ 6 
+ 7 a = false;
+ 8 b = 3.2;
+ 9 c = 35;
+10 d = -93485L;
+11 e = 'q';
+ These are five variables. There are a long, a byte, a char, a double and a boolean. Retrieve the type of each one. Answer Answer 3.7: Primitive type assignments and declarations. 
+ 1 boolean a;
+ 2 double b;
+ 3 byte c;
+ 4 long d;
+ 5 char e;
+ 6 
+ 7 a = false;
+ 8 b = 3.2;
+ 9 c = 35;
+10 d = -93485L;
+11 e = 'q';
+ a can only be the boolean because only a boolean can handle boolean values. e can only be the char because only a char can contain a character. b can only be the double because only a double can contain a decimal number here. d is the long because a byte can not contain such a low value. c is the remaining one so it is the byte.

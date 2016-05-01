@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Mathematical_functions#Math_constants
+There are two constants in the Math class that are fairly accurate approximations of irrational mathematical numbers.Math.E[edit]The Math.E constant represents the value of Euler's number (e), the base of the natural logarithm.Math.PI[edit]The Math.PI constant represents the value of pi, the ratio of a circle's circumference to its diameter.

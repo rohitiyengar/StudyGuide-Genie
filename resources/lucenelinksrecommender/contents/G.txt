@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Index#G
+Generics goto

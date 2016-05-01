@@ -1,0 +1,9 @@
+https://en.wikibooks.org/wiki/Java_Programming/Keywords#if
+if is a Java keyword. It starts a branching statement.The general syntax of a if, using Extended Backus-Naur Form, isbranching-statement ::= if condition-clause 
+                                    single-statement | block-statement
+                       [ else 
+                                    single-statement | block-statement ]
+ 
+condition-clause    ::= ( Boolean Expression )
+single-statement    ::= Statement
+block-statement     ::= { Statement [ Statements ] }For example:See also:Java Programming/Keywords/else

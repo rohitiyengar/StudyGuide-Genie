@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Keywords#throw
+throw is a keyword. It 'throws' an exception.Syntax:throw <Exception Ref>;For example:See also:Java Programming/Keywords/throws

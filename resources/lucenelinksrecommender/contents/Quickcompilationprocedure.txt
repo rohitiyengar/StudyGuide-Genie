@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Compilation#Quick_compilation_procedure
+To execute your first Java program, follow the instructions below:Ask for help if the program did not execute properly in the Discussion page for this chapter.

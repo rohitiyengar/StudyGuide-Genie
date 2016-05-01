@@ -1,0 +1,9 @@
+https://en.wikibooks.org/wiki/Java_Programming/Keywords#else
+else is a Java keyword. It is an optional part of a branching statement. It starts the 'false' statement block.The general syntax of a if, using Extended Backus-Naur Form, isbranching-statement ::= if condition-clause 
+                                    single-statement | block-statement
+                       [ else 
+                                    single-statement | block-statement ]
+ 
+condition-clause    ::= ( Boolean Expression )
+single-statement    ::= Statement
+block-statement     ::= { Statement [ Statement ] }For example:See also:Java Programming/Keywords/if

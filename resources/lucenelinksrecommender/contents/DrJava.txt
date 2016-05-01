@@ -1,0 +1,2 @@
+https://en.wikibooks.org/wiki/Java_Programming/Java_IDEs#DrJava
+DrJava is an IDE developed by the JavaPLT group at Rice University. It is designed for students.For more information see DrJava.
