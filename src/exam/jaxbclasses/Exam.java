@@ -47,6 +47,9 @@ public class Exam {
     protected List<Chapter> chapter;
     @XmlAttribute(name = "number")
     protected String number;
+    
+    @XmlAttribute(name = "complete")
+    protected double complete;
 
     /**
      * Gets the value of the chapter property.
@@ -100,5 +103,13 @@ public class Exam {
     public void setNumber(String value) {
         this.number = value;
     }
+
+	public double getComplete() {
+		return complete;
+	}
+
+	public void setComplete(double complete) {
+		this.complete = complete;
+	}
 
 }
