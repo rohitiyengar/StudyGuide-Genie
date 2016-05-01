@@ -522,6 +522,12 @@ public class NotesController {
 		
 	}
 	
+	@RequestMapping(value="/cheatSheetGenerate", method=RequestMethod.GET)
+	public ModelAndView redirectToCheatSheet()
+	{
+		return new ModelAndView("cheatsheet");
+	}
+	
 	
 
 
