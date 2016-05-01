@@ -71,7 +71,7 @@ public class NotesController {
 	@RequestMapping(value="/notes", method=RequestMethod.GET)
 	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
-		
+		ModelAndView mv = new ModelAndView("notes");
 		System.out.println("NOTES FROM EXAM");
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		if (request.getParameter("topicName") != null)
@@ -79,7 +79,10 @@ public class NotesController {
 			System.out.println("topicName is:"+request.getParameter("topicName"));
 			student.setCurrentTopic(request.getParameter("topicName"));
 			Topic newtopic = topicBo.findTopicByName(request.getParameter("topicName"));
+			System.out.println("new Topic id, when trying to change it is"+newtopic.getTopicId());
 			request.getSession().setAttribute("topic", newtopic);
+			mv.addObject("topic", newtopic);
+			
 			
 		}
 		
@@ -117,8 +120,11 @@ public class NotesController {
 				//Check if the exam id last left is the same as the student has clicked on now in a new session.
 				if(examid == exam_id)
 				{
+					System.out.println("Yes, Setting as exam id is the same");
 					request.getSession().setAttribute("examid", examid);
 					request.getSession().setAttribute("topic", currentTopic);
+					mv.addObject("topic", currentTopic);
+
 				}
 			}
 			if(examid != exam_id)
@@ -126,6 +132,9 @@ public class NotesController {
 				student.setCurrentTopic(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
 				Topic newtopic = topicBo.findTopicByName(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
 				request.getSession().setAttribute("topic", newtopic);
+				mv.addObject("topic", newtopic);
+
+				
 				
 			}
 			
@@ -135,7 +144,6 @@ public class NotesController {
 		
 		
 		Topic topic = (Topic)request.getSession().getAttribute("topic");
-		ModelAndView mv = new ModelAndView("notes");
 		Notes notes = new Notes();
 		if(topic == null)
 		{

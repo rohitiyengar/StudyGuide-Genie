@@ -41,7 +41,7 @@ import bo.InstructorBO;
 
 
 @Controller
-@SessionAttributes({"sessionUser", "topic"})
+@SessionAttributes({"sessionUser"})
 public class UserController {
 
 	@Autowired
@@ -105,8 +105,8 @@ public class UserController {
 						if(student.getCurrentTopic() != null && !student.getCurrentTopic().isEmpty())
 						{
 							Topic topic = topicBo.findTopicByName(student.getCurrentTopic());
-							mv.addObject("topic", topic);
-							request.getSession().setAttribute("topic", topic);
+							//mv.addObject("topic", topic);
+							//request.getSession().setAttribute("topic", topic);
 							
 						}
 						request.getSession().setAttribute("sessionUser", student);

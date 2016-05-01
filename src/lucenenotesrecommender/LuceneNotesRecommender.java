@@ -51,7 +51,11 @@ public class LuceneNotesRecommender {
 	private IndexSearcher searcher = null;
 
 	public LuceneNotesRecommender() throws IOException {
+		String osname = System.getProperty("os.name");
 		this.application_path = this.getClass().getResource("/lucenenotesrecommender").getPath();
+		if (osname.toLowerCase().contains("windows")) {
+			this.application_path = application_path.substring(1);
+		}
 		LUCENE_INDEX_FOLDER = application_path+"/NotesIndex";
 		createNotesIndexFolder();		
 	}
