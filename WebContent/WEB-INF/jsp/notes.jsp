@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
 
@@ -9,8 +9,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Student Notes</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/prism.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/awesomplete.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/prism.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/awesomplete.css" />
 <script src="https://code.jquery.com/jquery-latest.js"></script>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -19,13 +21,13 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/navbar.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/navbar.css">
 <!-- Referenced from : http://jsfiddle.net/q3FhL/ & http://jsfiddle.net/TV47t/1/-->
 <style>
-
 textarea {
 	background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
-	width: 400px;
+	width: 450px;
 	height: 200px;
 	font-family: 'Handlee', cursive;
 	font-weight: bold;
@@ -39,14 +41,16 @@ textarea {
 
 #codeArea {
 	background: none;
-	background-size:10;
+	background-size: 10;
 	background-color: #FFFFFF;
 	font-size: 16px;
-	font-style:italic;
+	font-style: italic;
 	color: #1d9269;
 	font-family: 'Times New Roman';
-	line-height:30px;
+	line-height: 30px;
 }
+
+h2 .btn-group { display: inline-block; }
 
 /* .ta5 {
 	border: 2px solid #765942;
@@ -56,19 +60,34 @@ textarea {
 	font-family:Tahoma;
 	font-size:large;
 }*/
+#chaptertitle {
+          position: relative;
+          background: url('images/greenpage.jpg') no-repeat center center;
+          width:100%;
+          height: 100%;
+          background-size: 100% 100%;
+          color: white;
+          font-family: baskerville;
+        }
 </style>
 </head>
 <script>
 	var bullet = '\u2022';
-	$().ready(function() {
-						
-	var suggests = [];
-	var input = document.getElementById("mynotes");
-	var autocomplete = new Awesomplete(input, {	autoFirst : true});
-	$("#mynotes").keyup(function(e) {
-				if (e.keyCode == 32) {
-						//space
-											autocomplete.list = [];
+	$()
+			.ready(
+					function() {
+
+						var suggests = [];
+						var input = document.getElementById("mynotes");
+						var autocomplete = new Awesomplete(input, {
+							autoFirst : true
+						});
+						$("#mynotes")
+								.keyup(
+										function(e) {
+											if (e.keyCode == 32) {
+												//space
+												autocomplete.list = [];
 												return;
 											}
 
@@ -86,7 +105,8 @@ textarea {
 												var words = notes.val().split(
 														" ");
 												var currentWord = words[words.length - 1];
-												currentWord = currentWord.trim();
+												currentWord = currentWord
+														.trim();
 												console.log(currentWord);
 												$
 														.ajax({
@@ -179,7 +199,7 @@ textarea {
 																		.trim() == "") {
 																	$(
 																			"#compileResult")
-																			
+
 																			.text(
 																					"Compiled Successfully");
 																	$(
@@ -189,7 +209,8 @@ textarea {
 																					'bg-success');
 																	$(
 																			"#compileResult")
-																			.append("&nbsp;<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>&nbsp;");
+																			.append(
+																					"&nbsp;<span class='glyphicon glyphicon-ok' aria-hidden='true'></span>&nbsp;");
 																} else {
 																	$(
 																			"#compileResult")
@@ -201,171 +222,225 @@ textarea {
 																					'class',
 																					'bg-danger');
 																	$(
-																	"#compileResult")
-																	.append("&nbsp;<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>&nbsp;");
+																			"#compileResult")
+																			.append(
+																					"&nbsp;<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>&nbsp;");
 																}
 															}
 														});
 											}
-										});	
-						
-						$
-						.ajax({
+										});
+
+						$.ajax({
 							url : "${pageContext.request.contextPath}/exam",
 							dataType : "xml",
-							success : function(
-									result) {
-								
-						
+							success : function(result) {
+
 								myFunction(result);
-								}
-							});
-	});
-	
+							}
+						});
+
+						$(function() {
+							$('[data-toggle="tooltip"]').tooltip()
+						});
+					});
+
 	function myFunction(xml) {
-        var xmlDoc = xml;
-        var txt = "<ul class='nav nav-pills nav-stacked'>";
-        x = xmlDoc.getElementsByTagName('chapter');
-        xLen = x.length;
-        p = 0;
-        for (i = 0; i < xLen; i++) {
-          txt += "<li role='presentation'><a class = 'panel-default' data-toggle='collapse' href='#topics1" + p + "'><font color='black' size = '4'>" + x[i].getAttribute("title") + "</font></a>";
-          y = xmlDoc.getElementsByTagName('chapter')[i].getElementsByTagName('topic');
-          yLen = y.length;
-          txt += "<div class = 'collapse in' id='topics1" + p + "'>";
-          txt += "<ul class='nav nav-pills nav-stacked'>";
-          for (j = 0; j < yLen; j++) {
-            if (y[j].getAttribute("done") == "y") {
-              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/checkmark.png' width = '20' height = '20'></img>&nbsp;" + "<font color='green'>" + y[j].getAttribute("name") + "</font></a>";
-              txt += "</li>";
-            } else if (y[j].getAttribute("done") == "i") {
-              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/exclaim.png' width = '20' height = '20'></img>&nbsp;" + "<font color='orange'>" + y[j].getAttribute("name") + "</font></a>";
-              txt += "</li>";
-            } else {
+		var xmlDoc = xml;
+		var txt = "<ul class='nav nav-pills nav-stacked'>";
+		x = xmlDoc.getElementsByTagName('chapter');
+		xLen = x.length;
+		p = 0;
+		for (i = 0; i < xLen; i++) {
+			txt += "<li role='presentation'><a class = 'panel-default' data-toggle='collapse' href='#topics1" + p + "'><font color='black' size = '4'>"
+					+ x[i].getAttribute("title") + "</font></a>";
+			y = xmlDoc.getElementsByTagName('chapter')[i]
+					.getElementsByTagName('topic');
+			yLen = y.length;
+			txt += "<div class = 'collapse in' id='topics1" + p + "'>";
+			txt += "<ul class='nav nav-pills nav-stacked'>";
+			for (j = 0; j < yLen; j++) {
+				if (y[j].getAttribute("done") == "y") {
+					txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="
+							+ y[j].getAttribute("name")
+							+ "'><img src = 'images/checkmark.png' width = '20' height = '20'></img>&nbsp;"
+							+ "<font color='green'>"
+							+ y[j].getAttribute("name") + "</font></a>";
+					txt += "</li>";
+				} else if (y[j].getAttribute("done") == "i") {
+					txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="
+							+ y[j].getAttribute("name")
+							+ "'><img src = 'images/exclaim.png' width = '20' height = '20'></img>&nbsp;"
+							+ "<font color='orange'>"
+							+ y[j].getAttribute("name") + "</font></a>";
+					txt += "</li>";
+				} else {
 
-              txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="+y[j].getAttribute("name")+"'><img src = 'images/transparent.png' width = '20' height = '20'></img>&nbsp;" + "<font color='grey'>" + y[j].getAttribute("name") + "</font></a>";
-              txt += "</li>";
+					txt += "<li role='presentation'><a href='${pageContext.request.contextPath}/notes?topicName="
+							+ y[j].getAttribute("name")
+							+ "'><img src = 'images/transparent.png' width = '20' height = '20'></img>&nbsp;"
+							+ "<font color='grey'>"
+							+ y[j].getAttribute("name")
+							+ "</font></a>";
+					txt += "</li>";
 
-            }
+				}
 
-          }
-          txt += "</ul>";
-          txt += "</div>"
+			}
+			txt += "</ul>";
+			txt += "</div>"
 
-          txt += "</li>";
-          p++;
-        }
-        txt += "</ul>";
+			txt += "</li>";
+			p++;
+		}
+		txt += "</ul>";
 
-        document.getElementById("topics").innerHTML =
-          txt;
-      }
+		document.getElementById("topics").innerHTML = txt;
+	}
 	$('#codeArea').live('keypress', function(e) {
-	    if (e.keyCode === 9) {
-	        e.preventDefault();
-	        // do work
-	    }
+		if (e.keyCode === 9) {
+			e.preventDefault();
+			// do work
+		}
 	});
-
 </script>
 <body>
 	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#"> <b>Study Guide |</b>
-				</a>
-			</div>
-			<div>
-				<ul class="nav navbar-nav">
-					<li><a href="#">Visualize</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="${pageContext.request.contextPath}/">
-                	 ${sessionUser.getFname()}</a>
-                	</li>
-					<li><a href="<c:url value= 'j_spring_security_logout' />"> <span class="glyphicon glyphicon-log-out"></span>
-							Logout
-					</a></li>
-				</ul>
-			</div>
-
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#"> <b>Study Guide |</b>
+			</a>
 		</div>
+		<div>
+			<ul class="nav navbar-nav">
+				<li><a href="#">Visualize</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="${pageContext.request.contextPath}/">
+						${sessionUser.getFname()}</a></li>
+				<li><a href="<c:url value= 'j_spring_security_logout' />">
+						<span class="glyphicon glyphicon-log-out"></span> Logout
+				</a></li>
+			</ul>
+		</div>
+
+	</div>
 	</nav>
-	
+
 	<div class="container">
-		<center><div class = "well"><h1>${sessionUser.getCurrentTopic()}</h1></div></center>
+		<center>
+			<div class="well" id="chaptertitle">
+				<h1>${sessionUser.getCurrentTopic()}</h1>
+			</div>
+		</center>
 		<div class="row">
 			<div class="col-md-4">
-			
-				<center><h2> Chapters:</h2></center>
-        		<div id="topics" class = "well">
-        		</div>
+
+				<center>
+					<h2>Chapters</h2>
+				</center>
+				<div id="topics" class="well"></div>
 			</div>
 			<div class="col-md-5">
-				
-				<center><h2>Notes:</h2></center>
-				<div >
-				
-					<c:if test="${not empty notesMessage }">
-							<div class="bg-danger">${notesMessage }</div><br>
-						</c:if>
-					<center>
-					<form:form action="${pageContext.request.contextPath}/notes" modelAttribute="notes" method="POST">
-					<div>
-							<form:input id ="topicid" path="topicid" type="hidden"/>
-							<form:input id="topicName" path="topicName" type="hidden"/>
-							<form:input id="notesId" path="notesId" type="hidden"/>
-					</div>
-						<div>
-							<br>
-							<form:textarea path="topicText" id="mynotes" class="ta5" rows="10" cols="50"></form:textarea>
-							<br /><br />
-							<label for="matchPercentage">Match Percentage:</label>&nbsp;&nbsp;<form:input id="matchPercentage" path="matchPercentage" class="control form-control"/>
-						</div>
-						<br /> 
-						<div>
 
-							<h3>Code:</h3>
-							<form:textarea onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}" path="code" rows="25" cols="100" id="codeArea"
-								class="ta5"></form:textarea>
-						</div>
-						<br> <label id="compileResult"></label> <br><br>
-						<button class="btn btn-success" id="btnSave">Save Notes</button>
-					</form:form>
+				<center>
+					<h2>Notes</h2>
 				</center>
+				<div>
+
+					<c:if test="${not empty notesMessage }">
+						<div class="bg-danger">${notesMessage }</div>
+						<br>
+					</c:if>
+					<center>
+						<form:form action="${pageContext.request.contextPath}/notes"
+							modelAttribute="notes" method="POST">
+							<div>
+								<form:input id="topicid" path="topicid" type="hidden" />
+								<form:input id="topicName" path="topicName" type="hidden" />
+								<form:input id="notesId" path="notesId" type="hidden" />
+							</div>
+							<div>
+								<br>
+								<form:textarea path="topicText" id="mynotes" class="ta5"
+									rows="10" cols="50"></form:textarea>
+								<br />
+								<br /> <label for="matchPercentage">Match Percentage:</label>&nbsp;&nbsp;
+								<form:input id="matchPercentage" path="matchPercentage"
+									class="control form-control" />
+							</div>
+							<br />
+							<div>
+
+								<h3>Code</h3>
+								<form:textarea
+									onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"
+									path="code" rows="25" cols="100" id="codeArea" class="ta5"></form:textarea>
+							</div>
+							<br>
+							<label id="compileResult"></label>
+							<br>
+							<br>
+							<button class="btn btn-success" id="btnSave">Save Notes</button>
+						</form:form>
+					</center>
 				</div>
 			</div>
-			
+
 			<div class="col-md-3">
-			
-				<center><h2>WikiBooks Recommendations: </h2></center>
-        		<div id="recommendations" class = "well">
-        		<c:if test ="${not empty recommendedLinks}">
-        		<ul>
-        			<c:forEach items="${recommendedLinks}" var="linkIter">
-        				<c:set var="displayName" value="${fn:substringAfter(linkIter, '#') }"></c:set>
-        				<li><a href="${linkIter }">${displayName}</a></li>
-        			</c:forEach>
-        		</ul>
-        		</c:if>
-        		</div>
-        		<center><h2>Keywords: </h2></center>
-        		<div id="recommendations" class = "well">
-        		<i>This section contains relevant keywords included by your peers that you may have missed.</i><br><br>
-        		<c:if test="${not empty recommendedWords}">
-        		<ul>
-        		<c:forEach items="${recommendedWords}" var="recoIter">
-					<li>${recoIter}</li>
-				</c:forEach>
-<!--         		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
-<!--         		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
-        		</ul>
-        		</c:if>
-        		</div>
+
+				<center>
+				<table>
+				<tr>
+					<td><h2>Recommendations</h2></td>
+					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="Recommendations from Java WikiBooks" data-placement="top"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
+				</tr>
+				</table>
+				</center>
+				<br>
+				<div id="recommendations">
+					<c:if test="${not empty recommendedLinks}">
+
+						<c:forEach items="${recommendedLinks}" var="linkIter">
+							<c:set var="displayName"
+								value="${fn:substringAfter(linkIter, '#').replace('_', ' ')}"></c:set>
+							<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>&nbsp;&nbsp;<a
+								href="${linkIter }">${displayName}</a>
+							<br>
+							<br>
+						</c:forEach>
+
+					</c:if>
+				</div>
+				<center>
+					<table>
+				<tr>
+					<td><h2>Keywords</h2></td>
+					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="This section contains relevant keywords included by your
+						peers that you may have missed" data-placement="top"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
+				</tr>
+				</table>
+				</center>
+				<div id="recommendations">
+					<br>
+					<c:if test="${not empty recommendedWords}">
+
+						<c:forEach items="${recommendedWords}" var="recoIter">
+							<h4>
+								&nbsp;&nbsp;&nbsp;<span class="label label-success"><span
+									class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;${recoIter}</span>
+							</h4>
+						</c:forEach>
+						<!--         		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
+						<!--         		<li>StringBuilder <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
+
+					</c:if>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-	<br><br>
+
+	<br>
+	<br>
 </body>
 </html>
