@@ -132,13 +132,12 @@ public class NotesController {
 					request.getSession().setAttribute("examid", examid);
 					request.getSession().setAttribute("topic", currentTopic);
 					mv.addObject("topic", currentTopic);
-
 				}
 			}
 			if(examid != exam_id)
 			{
-				student.setCurrentTopic(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
-				Topic newtopic = topicBo.findTopicByName(topicBo.findTopicById(examContent.get(0).getTopicId()).getTopicName());
+				student.setCurrentTopic(topicBo.findTopicById(examContent.get(1).getTopicId()).getTopicName());
+				Topic newtopic = topicBo.findTopicByName(topicBo.findTopicById(examContent.get(1).getTopicId()).getTopicName());
 				request.getSession().setAttribute("topic", newtopic);
 				mv.addObject("topic", newtopic);
 
