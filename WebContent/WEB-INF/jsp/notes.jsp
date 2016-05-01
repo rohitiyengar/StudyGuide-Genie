@@ -382,6 +382,7 @@ h2 .btn-group { display: inline-block; }
 							<br>
 							<br>
 							<button class="btn btn-success" id="btnSave">Save Notes</button>
+							 <a class = "btn btn-success" href="${pageContext.request.contextPath}/cheatSheet">Generate CheatSheet</a>
 						</form:form>
 					</center>
 				</div>

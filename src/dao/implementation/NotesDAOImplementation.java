@@ -11,6 +11,7 @@ import util.GenericHibernateDaoSupport;
 import dao.NotesDAO;
 
 
+import model.Content;
 import model.Notes;
 import model.Topic;
 
@@ -89,5 +90,19 @@ public class NotesDAOImplementation  extends GenericHibernateDaoSupport implemen
 		return (Notes) userList.get(0);
 
 	}
+	
+	
+	@Override
+	public List<Notes> findNotesByStudentId(String  studentId) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		List<Notes> notes = (List<Notes>) getHibernateTemplate().find("from Notes  where studentId = ? order by topicid", studentId);
+		if (notes == null || notes.size() == 0)
+		{
+			throw new IllegalArgumentException("Notes List doesnt exists");
+		}
+		return notes;
+	}
+
 
 }

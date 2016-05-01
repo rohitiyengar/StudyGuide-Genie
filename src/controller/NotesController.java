@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +31,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-
-
-import util.Chapter;
+import cheatsheet.jaxbclasses.Chapter;
+import cheatsheet.jaxbclasses.Exams;
 import bo.ContentBO;
 import bo.ExamBO;
 import bo.InstructorBO;
@@ -270,7 +270,7 @@ public class NotesController {
 		
 		util.Content contentXML = new util.Content();
 		
-		Map<Integer,Chapter> mapContentXML = new HashMap<Integer,Chapter>();
+		Map<Integer,util.Chapter> mapContentXML = new HashMap<Integer,util.Chapter>();
 		
 		for (Content c : contentList) {
 			int topicId = c.getTopicId();
@@ -310,7 +310,7 @@ public class NotesController {
 			
 			if (parentTopicId == 0) {
 				if (!mapContentXML.containsKey(topicId)) {
-					Chapter chapObj = new Chapter();
+					util.Chapter chapObj = new util.Chapter();
 					chapObj.setTitle(topicObj.getTopicName());
 					mapContentXML.put(topicId, chapObj);
 				}
@@ -420,6 +420,107 @@ public class NotesController {
 		return mv;
 	}
 	
+	
+	@RequestMapping(value="/cheatSheet", method=RequestMethod.GET)
+	public ModelAndView getDetailsForCheatSheet(HttpServletRequest request) 	{
+		
+		ModelAndView mv = new ModelAndView("cheatSheetGenerator");
+		int examid = (int)request.getSession().getAttribute("examid");
+		cheatsheet.jaxbclasses.Exams examObj = new Exams();
+		if(examid == 2)
+		{
+			examObj.setNumber(MID_TERM_1);
+		}
+		else if(examid == 3)
+		{
+			examObj.setNumber(MID_TERM_2);
+		}
+		else if(examid == 4)
+		{
+			examObj.setNumber(MID_TERM_3);
+		}
+		else if(examid == 5)
+		{
+			examObj.setNumber(FINAL_EXAM);
+		}
+		
+		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		HashMap<String, List<cheatsheet.jaxbclasses.Topic>> chapterTopicMap = new HashMap<>();
+		try
+		{
+			List<Notes> notes = notesBo.findNotesByStudentId(student.getStudentId());
+			for(Notes note: notes)
+			{
+				
+				String topicName = note.getTopicName();
+				Topic topic = topicBo.findTopicByName(topicName);
+				Content contentobj = contentBo.findContentByTopicId(topic.getTopicId());
+				if(contentobj.getExamId() == examid)
+				{
+
+					Topic parentTopic = topicBo.findTopicById(topic.getParentTopicId());			
+				
+					if(!chapterTopicMap.containsKey(parentTopic.getTopicName()))
+					{
+						List<cheatsheet.jaxbclasses.Topic> topicList = new ArrayList<>();
+						cheatsheet.jaxbclasses.Topic cTopic = new cheatsheet.jaxbclasses.Topic();
+						cTopic.setCode(note.getCode());
+						cTopic.setNotes(note.getTopicText());
+						cTopic.setTitle(topicName);
+						topicList.add(cTopic);
+						chapterTopicMap.put(parentTopic.getTopicName(), topicList);	
+					}
+					else if(chapterTopicMap.containsKey(parentTopic.getTopicName()))
+					{
+						cheatsheet.jaxbclasses.Topic cTopic = new cheatsheet.jaxbclasses.Topic();
+						cTopic.setCode(note.getCode());
+						cTopic.setNotes(note.getTopicText());
+						cTopic.setTitle(topicName);
+						chapterTopicMap.get(parentTopic.getTopicName()).add(cTopic);
+					}
+				}
+			}
+			
+			for(Map.Entry<String, List<cheatsheet.jaxbclasses.Topic>> entry : chapterTopicMap.entrySet())
+			{
+				String chapterName =  entry.getKey();
+				cheatsheet.jaxbclasses.Chapter chapterobj = new Chapter();
+				chapterobj.setName(chapterName);
+				chapterobj.getTopic().addAll(entry.getValue());
+				examObj.getChapter().add(chapterobj);
+				
+			}
+			
+			JAXBContext context = JAXBContext.newInstance(cheatsheet.jaxbclasses.Exams.class);
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, new Boolean(true));
+			marshaller.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
+
+			StringWriter writer = new StringWriter();
+			marshaller.marshal(examObj, writer);
+			mv.addObject("cheatsheet", writer);
+
+			
+			
+		}
+		catch(IllegalArgumentException e)
+		{
+			if(e.getMessage().equals("Notes List doesnt exists"))
+			{
+				//student has not written any notes.
+			}
+		}
+		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return mv;
+		
+		
+		
+	}
 	
 	
 

@@ -2,6 +2,8 @@ package dao;
 
 
 
+import java.util.List;
+
 import org.hibernate.exception.ConstraintViolationException;
 
 import model.Notes;
@@ -14,6 +16,7 @@ public interface NotesDAO {
 	void delete(Notes notes);
 	Notes findNotes(String studentId, int topicId) throws IllegalArgumentException, Exception;
 	Notes findNotes(String notesId) throws IllegalArgumentException, Exception;
+	List<Notes> findNotesByStudentId(String studentId)throws IllegalArgumentException;
 	
 
 }
