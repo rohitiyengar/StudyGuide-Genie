@@ -184,12 +184,14 @@ public class NotesController {
 	@RequestMapping(value="/notes", method=RequestMethod.POST)
 	public ModelAndView saveNotes(HttpServletRequest request, @ModelAttribute("notes") Notes notes) throws IllegalArgumentException, Exception
 	{
+		ModelAndView mv = new ModelAndView("notes");
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
 		model.Topic obj = topicBo.findTopicById(notes.getTopicid());
 		request.getSession().setAttribute("topic", obj);
 		student.setCurrentTopic(notes.getTopicName());
 		request.getSession().setAttribute("sessionUser", student);
-		ModelAndView mv = new ModelAndView("notes");
+		mv.addObject("sessionUser", student);
+		mv.addObject("topic", obj);
 		try 
 		{
 			notes.setStudentId(student.getStudentId());
