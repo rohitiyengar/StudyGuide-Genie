@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -336,12 +338,16 @@ textarea {
 			
 			<div class="col-md-3">
 			
-				<center><h2>Recommendations: </h2></center>
+				<center><h2>WikiBooks Recommendations: </h2></center>
         		<div id="recommendations" class = "well">
+        		<c:if test ="${not empty recommendedLinks}">
         		<ul>
-        		<li><a href="https://en.wikibooks.org/wiki/Java_Programming/Arrays#Fundamentals">Array Fundamentals</a></li>
-        		<li><a href="https://en.wikibooks.org/wiki/Java_Programming/API/java.lang.String#Comparing_Strings">String Comparisons</a></li>
+        			<c:forEach items="${recommendedLinks}" var="linkIter">
+        				<c:set var="displayName" value="${fn:substringAfter(linkIter, '#') }"></c:set>
+        				<li><a href="${linkIter }">${displayName}</a></li>
+        			</c:forEach>
         		</ul>
+        		</c:if>
         		</div>
         		<center><h2>Keywords: </h2></center>
         		<div id="recommendations" class = "well">

@@ -41,6 +41,7 @@ import bo.StudentBO;
 import bo.TopicBO;
 import bo.UserBO;
 import lucenenotesrecommender.LuceneNotesRecommender;
+import lucenelinksrecommender.LuceneLinksRecommender;
 
 @Controller
 @SessionAttributes({"sessionUser", "topic"})
@@ -174,6 +175,10 @@ public class NotesController {
 					System.out.println("The keyword is "+s);
 				}
 				mv.addObject("recommendedWords", notes.getRecommmendedWords());
+				
+				LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
+				mv.addObject("recommendedLinks", luceneLinksBean.getLinksRecommendations(notes.getTopicName(), 5));
+
 			}
 			catch(IllegalArgumentException exception)
 			{
@@ -184,7 +189,7 @@ public class NotesController {
 					notes.setTopicName(student.getCurrentTopic());
 					mv.addObject("notes", notes);
 					return mv;
-				}
+				} 
 			} 
 			catch (Exception e) {
 				mv.setViewName("studentDetails");
@@ -241,6 +246,8 @@ public class NotesController {
 			System.out.println("The keyword is "+s);
 		}
 		mv.addObject("recommendedWords", notes.getRecommmendedWords());
+		LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
+		mv.addObject("recommendedLinks", luceneLinksBean.getLinksRecommendations(notes.getTopicName(), 5));
 		mv.addObject("notes", notes);
 		mv.addObject("notesMessage", "Saved");
 
