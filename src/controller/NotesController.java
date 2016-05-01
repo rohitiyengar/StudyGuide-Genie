@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import cheatsheet.jaxbclasses.Chapter;
 import cheatsheet.jaxbclasses.Exams;
 import bo.ContentBO;
@@ -402,6 +403,7 @@ public class NotesController {
 				{
 					examobj.getChapter().add(chapterTopicMap.get(in));
 				}
+				examobj.setComplete(String.format("%.2f", (calculateCompletePercentage(request, exam.getExamId(), examobj))));
 				examsXML.getExam().add(examobj);
 				examContentMapWithExamId.put(exam.getExamId(), examContent);
 			}
@@ -416,8 +418,41 @@ public class NotesController {
 
 		StringWriter writer = new StringWriter();
 		marshaller.marshal(examsXML, writer);
+		System.out.println("Response xml is "+writer);
 		mv.addObject("allExams", writer);
 		return mv;
+	}
+	
+	
+	public double calculateCompletePercentage(HttpServletRequest request, int examId, exam.jaxbclasses.Exam examobj) throws IllegalArgumentException, Exception
+	{
+		double complete = 0.0;
+		double totalNoOfTopicExams = 0;
+		double totalNoOfCompleteTopicsinExams = 0;
+		
+		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		
+		List<exam.jaxbclasses.Chapter> listExamChapters = examobj.getChapter();	
+		for(exam.jaxbclasses.Chapter chapter : listExamChapters)
+		{
+			totalNoOfTopicExams =  totalNoOfTopicExams + chapter.getTopic().size();
+		}
+		
+		List<Notes> notes = notesBo.findNotesByStudentId(student.getStudentId());
+		
+		for(Notes note : notes)
+		{
+			String topicName = note.getTopicName();
+			Content c = contentBo.findContentByTopicId(topicBo.findTopicByName(topicName).getTopicId());
+			if (c.getExamId() == examId)
+			{
+				totalNoOfCompleteTopicsinExams = totalNoOfCompleteTopicsinExams+1;
+			}
+		}
+		
+		complete = totalNoOfCompleteTopicsinExams/totalNoOfTopicExams;
+		return complete;
+
 	}
 	
 	

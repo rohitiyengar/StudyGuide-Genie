@@ -49,7 +49,7 @@ public class Exam {
     protected String number;
     
     @XmlAttribute(name = "complete")
-    protected double complete;
+    protected String complete;
 
     /**
      * Gets the value of the chapter property.
@@ -104,11 +104,11 @@ public class Exam {
         this.number = value;
     }
 
-	public double getComplete() {
+	public String getComplete() {
 		return complete;
 	}
 
-	public void setComplete(double complete) {
+	public void setComplete(String complete) {
 		this.complete = complete;
 	}
 
