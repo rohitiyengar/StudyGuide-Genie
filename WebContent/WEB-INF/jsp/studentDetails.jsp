@@ -14,6 +14,12 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/navbar.css">
+
+<!-- For Radial Graphs -->
+<script type="text/javascript" src="scripts/percircle.js"></script>
+<link rel="stylesheet" href="css/styles.css">
+ <link rel="stylesheet" href="css/percircle.css">
+
 <title>Welcome!</title>
 <!--Reference : http://jsfiddle.net/josedvq/Jyjjx/45/-->
 <style>
@@ -124,6 +130,9 @@
 		<center>
 			<h3>Exam Information: <small><i>Hover over for details</i></small></h3>
 			<br> <br>
+			<div id="loading">
+				<img src="images/loading.gif"/>
+			</div>
 			<div id="exams"></div>
 			<br>
 			<br>
@@ -145,6 +154,7 @@
 		</center>
 		<script>
 			function myFunction(xml) {
+				$("#loading").hide();
 				var xmlDoc = xml;
 				var text = "<table width = '100%' ><tr>";
 				x = xmlDoc.getElementsByTagName('exam');
@@ -159,26 +169,49 @@
 								+ "<br>";
 
 					}
-					str += "<br>"
+					str += "<br>";
 					text += "<td align = 'center'>";
+					
+					var percent = x[i].getAttribute("complete") * 100;
+					var circleColor;
+					if (percent < 50) {
+						circleColor = "big red";
+					}
+					else if (percent < 100) {
+						circleColor = "big yellow";
+					}
+					else {
+						circleColor = "big green";
+					}
 
-					text += "<div class='round-button'><div class='round-button-circle'><a href='${pageContext.request.contextPath}/notes?examName="+x[i].getAttribute("number")+"' class='round-button' data-toggle='tooltip' data-placement='bottom' title = '" + str + "'>"
-							+ (i + 1) + "</a></div></div>";
+					//text += "<div class='round-button'><div class='round-button-circle'><a href='${pageContext.request.contextPath}/notes?examName="+x[i].getAttribute("number")+"' class='round-button' data-toggle='tooltip' data-placement='bottom' title = '" + str + "'>"
+							//+ (i + 1) + "</a></div></div>";
+					var url = "${pageContext.request.contextPath}/notes?examName="+x[i].getAttribute('number');
+					
+					var find = '\\s';
+					var re = new RegExp(find, 'g');
+					url = url.replace(re, '%20');
+					text += "<h2  align='center'> "+x[i].getAttribute('number')+" </h2> <div align='center' id='circle"+(i+1)+"' onclick=redirect('"+url+"') data-percent='"+percent+"' class='"+circleColor+"' ></div>";
 
 					text += "</td>";
 				}
-				text += "</tr></table>"
+				text += "</tr></table>";
 
 				document.getElementById("exams").innerHTML = text;
+				
+				
 			}
 
 			$(document).ready(function() {
+				$("#loading").show();
 				$.ajax({
 					url : "${pageContext.request.contextPath}/allexams",
 					dataType : "xml",
 					success : function(result) {
 
 						myFunction(result);
+						$("[id^='circle']").percircle();
+						
 						$('[data-toggle="tooltip"]').tooltip({
 		                      html: true
 		                  });
@@ -186,6 +219,11 @@
 				});
 				  
 			});
+			
+			function redirect(url) {
+				window.location = url;
+			}
+			
 		</script>
 	</div>
 </body>
