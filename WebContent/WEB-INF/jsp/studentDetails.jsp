@@ -93,43 +93,22 @@
 	</div>
 	</nav>
 	<div class="container">
-		<h2>Welcome ${sessionUser.getFname()}</h2>
-		<br>
+		<div class = "jumbotron"><h1>Welcome ${sessionUser.getFname()}!</h1></div>
+		
 		<center>
-			<!--  <div class="well">
-				<c:if test="${not empty registerMessage }">
-					<div class="bg-danger">${registerMessage }</div>
-					<br>
-				</c:if>
-				<table class="table table-bordered table-condensed">
-					<tr>
-						<td><h3>Your role:</h3></td>
-						<td><h3>Student</h3></td>
-					</tr>
-					<tr>
-						<td><h3>Registered for any course</h3></td>
-						<td><h3>${sessionUser.isRegistered()}</h3></td>
-					</tr>
-				</table>
-				<a class="btn btn-danger"
-					href="${pageContext.request.contextPath}/notes">Write notes</a> <a
-					class="btn btn-danger"
-					href="${pageContext.request.contextPath}/exam">Exams</a> <a
-					class="btn btn-danger"
-					href="${pageContext.request.contextPath}/allexams">Get all
-					exams</a> <a class="btn btn-danger"
-					href="<c:url value= 'j_spring_security_logout'  />"> Logout</a>
-			</div>-->
+			
 		</center>
 
-		<br>
-		<hr></hr>
-		<br>
 
 
 		<center>
-			<h3>Exam Information: <small><i>Hover over for details</i></small></h3>
-			<br> <br>
+			<table>
+				<tr>
+					<td><h2>Here's your Exam information</h2></td>
+					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="The radial indicates the percentage completed." data-placement="right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+				</tr>
+			</table>
+			<br>
 			<div id="loading">
 				<img src="images/loading.gif"/>
 			</div>
@@ -137,35 +116,23 @@
 			<br>
 			<br>
 			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
-			<br>
+			
 			
 		</center>
 		<script>
 			function myFunction(xml) {
 				$("#loading").hide();
 				var xmlDoc = xml;
-				var text = "<table width = '100%' ><tr>";
+				var text = "<div class = 'well'><table width = '100%' ><tr>";
 				x = xmlDoc.getElementsByTagName('exam');
 				xLen = x.length;
 				for (i = 0; i < xLen; i++) {
 					y = xmlDoc.getElementsByTagName('exam')[i]
 							.getElementsByTagName('chapter');
 					yLen = y.length;
-					var str = x[i].getAttribute("number") + "<hr>";
+					var str = "<b>Contents:</b><br><br>";
 					for (j = 0; j < yLen; j++) {
-						str += (j + 1) + ") " + y[j].getAttribute("name")
+						str += "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span>"+y[j].getAttribute("name")
 								+ "<br>";
 
 					}
@@ -191,11 +158,11 @@
 					var find = '\\s';
 					var re = new RegExp(find, 'g');
 					url = url.replace(re, '%20');
-					text += "<h2  align='center'> "+x[i].getAttribute('number')+" </h2> <div align='center' id='circle"+(i+1)+"' onclick=redirect('"+url+"') data-percent='"+percent+"' class='"+circleColor+"' ></div>";
-
-					text += "</td>";
+					text += "<table><tr><td><h2 style = 'text-align:center'>"+x[i].getAttribute('number')+" </h2></td></tr><tr><td align='center'><div style = 'cursor: pointer; display: table; margin-right: auto;margin-left: auto;'  id='circle"+(i+1)+"' onclick=redirect('"+url+"') data-percent='"+percent+"' class='"+circleColor+"' ></div></td></tr>";
+					text += "<tr><td align = 'center'><div class = 'well'>"+str+"</div></tr></td>";
+					text += "</table></td>";
 				}
-				text += "</tr></table>";
+				text += "</tr></table></div>";
 
 				document.getElementById("exams").innerHTML = text;
 				
