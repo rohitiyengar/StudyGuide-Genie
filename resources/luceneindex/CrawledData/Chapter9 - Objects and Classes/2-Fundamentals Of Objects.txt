@@ -1,0 +1,86 @@
+So far, I've been talking mostly in generalities, and I haven't given you much of an idea about what you have to put in a program if you want to work with objects. Let's look at a specific example to see how it works. Consider this extremely simplified version of a Student class, which could be used to store information about students taking a course:
+
+public class Student {
+
+   public String name;  // Student's name.
+   public double test1, test2, test3;   // Grades on three tests.
+   
+   public double getAverage() {  // compute average test grade
+      return (test1 + test2 + test3) / 3;
+   }
+   
+}  // end of class Student
+None of the members of this class are declared to be static, so the class exists only for creating objects. This class definition says that any object that is an instance of the Student class will include instance variables named name, test1, test2, and test3, and it will include an instance method named getAverage(). The names and tests in different objects will generally have different values. When called for a particular student, the method getAverage() will compute an average using that student's test grades. Different students can have different averages. (Again, this is what it means to say that an instance method belongs to an individual object, not to the class.)
+
+In Java, a class is a type, similar to the built-in types such as int and boolean. So, a class name can be used to specify the type of a variable in a declaration statement, or the type of a formal parameter, or the return type of a function. For example, a program could define a variable named std of type Student with the statement
+
+Student std;
+However, declaring a variable does not create an object! This is an important point, which is related to this Very Important Fact:
+
+In Java, no variable can ever hold an object.
+A variable can only hold a reference to an object.
+
+You should think of objects as floating around independently in the computer's memory. In fact, there is a special portion of memory called the heap where objects live. Instead of holding an object itself, a variable holds the information necessary to find the object in memory. This information is called a reference or pointer to the object. In effect, a reference to an object is the address of the memory location where the object is stored. When you use a variable of object type, the computer uses the reference in the variable to find the actual object.
+
+In a program, objects are created using an operator called new, which creates an object and returns a reference to that object. (In fact, the new operator calls a special subroutine called a "constructor" in the class.) For example, assuming that std is a variable of type Student, declared as above, the assignment statement
+
+std = new Student();
+would create a new object which is an instance of the class Student, and it would store a reference to that object in the variable std. The value of the variable is a reference, or pointer, to the object. The object itself is somewhere in the heap. It is not quite true, then, to say that the object is the "value of the variable std" (though sometimes it is hard to avoid using this terminology). It is certainly not at all true to say that the object is "stored in the variable std." The proper terminology is that "the variable std refers to or points to the object," and I will try to stick to that terminology as much as possible. If I ever say something like "std is an object," you should read it as meaning "std is a variable that refers to an object."
+
+So, suppose that the variable std refers to an object that is an instance of class Student. That object contains instance variables name, test1, test2, and test3. These instance variables can be referred to as std.name, std.test1, std.test2, and std.test3. This follows the usual naming convention that when B is part of A, then the full name of B is A.B. For example, a program might include the lines
+
+System.out.println("Hello, "  +  std.name  +  ".  Your test grades are:");
+System.out.println(std.test1);
+System.out.println(std.test2);
+System.out.println(std.test3);
+This would output the name and test grades from the object to which std refers. Similarly, std can be used to call the getAverage() instance method in the object by saying std.getAverage(). To print out the student's average, you could say:
+
+System.out.println( "Your average is "  +  std.getAverage() );
+More generally, you could use std.name any place where a variable of type String is legal. You can use it in expressions. You can assign a value to it. You can even use it to call subroutines from the String class. For example, std.name.length() is the number of characters in the student's name.
+
+It is possible for a variable like std, whose type is given by a class, to refer to no object at all. We say in this case that std holds a null pointer or null reference. The null pointer is written in Java as "null". You can store a null reference in the variable std by saying
+
+std = null;
+null is an actual value that is stored in the variable, not a pointer to something else. It is not correct to say that the variable "points to null"; in fact, the variable is null. For example, you can test whether the value of std is null by testing
+
+if (std == null) . . .
+If the value of a variable is null, then it is, of course, illegal to refer to instance variables or instance methods through that variable -- since there is no object, and hence no instance variables to refer to! For example, if the value of the variable std is null, then it would be illegal to refer to std.test1. If your program attempts to use a null pointer illegally in this way, the result is an error called a null pointer exception. When this happens while the program is running, an exception of type NullPointerException is thrown.
+
+Let's look at a sequence of statements that work with objects:
+
+Student std, std1,       // Declare four variables of
+          std2, std3;    //   type Student.
+
+std = new Student();     // Create a new object belonging
+                         //   to the class Student, and
+                         //   store a reference to that
+                         //   object in the variable std.
+
+std1 = new Student();    // Create a second Student object
+                         //   and store a reference to
+                         //   it in the variable std1.
+
+std2 = std1;             // Copy the reference value in std1
+                         //   into the variable std2.
+
+std3 = null;             // Store a null reference in the
+                         //   variable std3.
+                         
+std.name = "John Smith";  // Set values of some instance variables.
+std1.name = "Mary Jones";
+
+     // (Other instance variables have default
+     //    initial values of zero.)
+After the computer executes these statements, the situation in the computer's memory looks like this:
+
+n this picture, when a variable contains a reference to an object, the value of that variable is shown as an arrow pointing to the object. Note, by the way, that the Strings are objects! The variable std3, with a value of null, doesn't point anywhere. The arrows from std1 and std2 both point to the same object. This illustrates a Very Important Point:
+
+When one object variable is assigned
+to another, only a reference is copied.
+The object referred to is not copied.
+
+When the assignment "std2 = std1;" was executed, no new object was created. Instead, std2 was set to refer to the very same object that std1 refers to. This is to be expected, since the assignment statement just copies the value that is stored in std1 into std2, and that value is a pointer, not an object. But this has some consequences that might be surprising. For example, std1.name and std2.name are two different names for the same variable, namely the instance variable in the object that both std1 and std2 refer to. After the string "Mary Jones" is assigned to the variable std1.name, it is also true that the value of std2.name is "Mary Jones". There is a potential for a lot of confusion here, but you can help protect yourself from it if you keep telling yourself, "The object is not in the variable. The variable just holds a pointer to the object."
+
+You can test objects for equality and inequality using the operators == and !=, but here again, the semantics are different from what you are used to. When you make a test "if (std1 == std2)", you are testing whether the values stored in std1 and std2 are the same. But the values that you are comparing are references to objects; they are not objects. So, you are testing whether std1 and std2 refer to the same object, that is, whether they point to the same location in memory. This is fine, if its what you want to do. But sometimes, what you want to check is whether the instance variables in the objects have the same values. To do that, you would need to ask whether "std1.test1 == std2.test1 && std1.test2 == std2.test2 && std1.test3 == std2.test3 && std1.name.equals(std2.name)".
+
+I've remarked previously that Strings are objects, and I've shown the strings "Mary Jones" and "John Smith" as objects in the above illustration. (Strings are special objects, treated by Java in a special way, and I haven't attempted to show the actual internal structure of the String objects.) Since strings are objects, a variable of type String can only hold a reference to a string, not the string itself. This explains why using the == operator to test strings for equality is not a good idea. Suppose that greeting is a variable of type String, and that it refers to the string "Hello". Then would the test greeting == "Hello" be true? Well, maybe, maybe not. The variable greeting and the String literal "Hello" each refer to a string that contains the characters H-e-l-l-o. But the strings could still be different objects, that just happen to contain the same characters; in that case, greeting == "Hello" would be false. The function greeting.equals("Hello") tests whether greeting and "Hello" contain the same characters, which is almost certainly the question you want to ask. The expression greeting == "Hello" tests whether greeting and "Hello" contain the same characters stored in the same memory location. (Of course, a String variable such as greeting can also contain the special value null, and it would make sense to use the == operator to test whether "greeting == null".)

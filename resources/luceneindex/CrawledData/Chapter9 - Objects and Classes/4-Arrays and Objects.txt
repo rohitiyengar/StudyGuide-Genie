@@ -1,0 +1,28 @@
+As I noted in Subsection 3.8.1, arrays are objects. Like Strings they are special objects, with their own unique syntax. An array type such as int[] or String[] is actually a class, and arrays are created using a special version of the new operator. As in the case for other object variables, an array variable can never hold an actual array -- only a reference to an array object. The array object itself exists in the heap. It is possible for an array variable to hold the value null, which means there is no actual array.
+
+For example, suppose that list is a variable of type int[]. If the value of list is null, then any attempt to access list.length or an array element list[i] would be an error and would cause an exception of type NullPointerException. If newlist is another variable of type int[], then the assignment statement
+
+newlist = list;
+only copies the reference value in list into newlist. If list is null, the result is that newlist will also be null. If list points to an array, the assignment statement does not make a copy of the array. It just sets newlist to refer to the same array as list. For example, the output of the following code segment
+
+list = new int[3];
+list[1] = 17;
+newlist = list; // newlist points to the same array as list!
+newlist[1] = 42;
+System.out.println( list[1] );
+would be 42, not 17, since list[1] and newlist[1] are just different names for the same element in the array. All this is very natural, once you understand that arrays are objects and array variables hold pointers to arrays.
+
+This fact also comes into play when an array is passed as a parameter to a subroutine. The value that is copied into the subroutine is a pointer to the array. The array is not copied. Since the subroutine has a reference to the original array, any changes that it makes to elements of the array are being made to the original and will persist after the subroutine returns.
+
+Arrays are objects. They can also hold objects. The base type of an array can be a class. We have already seen this when we used arrays of type String[], but any class can be used as the base type. For example, suppose Student is the class defined earlier in this section. Then we can have arrays of type Student[]. For an array of type Student[], each element of the array is a variable of type Student. To store information about 30 students, we could use an array
+
+Student[] classlist;  // Declare a variable of type Student[].
+classlist = new Student[30];  // The variable now points to an array.
+The array has 30 elements, classlist[0], classlist[1], ... classlist[29]. When the array is created, it is filled with the default initial value, which for an object type is null. So, although we have 30 array elements of type Student, we don't yet have any actual Student objects! All we have is 30 nulls. If we want student objects, we have to create them:
+
+Student[] classlist;
+classlist = new Student[30];
+for ( int i = 0; i < 30; i++ ) {
+    classlist[i] = new Student();
+}
+Once we have done this, each classlist[i] points to an object of type Student. If we want to talk about the name of student number 3, we can use classlist[3].name. The average for student number i can be computed by calling classlist[i].getAverage(). You can do anything with classlist[i] that you could do with any other variable of type Student.

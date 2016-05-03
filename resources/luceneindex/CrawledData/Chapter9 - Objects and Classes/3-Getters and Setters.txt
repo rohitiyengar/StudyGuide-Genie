@@ -1,0 +1,31 @@
+When writing new classes, it's a good idea to pay attention to the issue of access control. Recall that making a member of a class public makes it accessible from anywhere, including from other classes. On the other hand, a private member can only be used in the class where it is defined.
+
+In the opinion of many programmers, almost all member variables should be declared private. This gives you complete control over what can be done with the variable. Even if the variable itself is private, you can allow other classes to find out what its value is by providing a public accessor method that returns the value of the variable. For example, if your class contains a private member variable, title, of type String, you can provide a method
+
+public String getTitle() {
+    return title;
+}
+that returns the value of title. By convention, the name of an accessor method for a variable is obtained by capitalizing the name of variable and adding "get" in front of the name. So, for the variable title, we get an accessor method named "get" + "Title", or getTitle(). Because of this naming convention, accessor methods are more often referred to as getter methods. A getter method provides "read access" to a variable. (Sometimes for boolean variables, "is" is used in place of "get". For example, a getter for a boolean member variable named done might be called isDone().)
+
+You might also want to allow "write access" to a private variable. That is, you might want to make it possible for other classes to specify a new value for the variable. This is done with a setter method. (If you don't like simple, Anglo-Saxon words, you can use the fancier term mutator method.) The name of a setter method should consist of "set" followed by a capitalized copy of the variable's name, and it should have a parameter with the same type as the variable. A setter method for the variable title could be written
+
+public void setTitle( String newTitle ) {
+   title = newTitle;
+}
+It is actually very common to provide both a getter and a setter method for a private member variable. Since this allows other classes both to see and to change the value of the variable, you might wonder why not just make the variable public? The reason is that getters and setters are not restricted to simply reading and writing the variable's value. In fact, they can take any action at all. For example, a getter method might keep track of the number of times that the variable has been accessed:
+
+public String getTitle() {
+    titleAccessCount++;  // Increment member variable titleAccessCount.
+    return title;
+}
+and a setter method might check that the value that is being assigned to the variable is legal:
+
+public void setTitle( String newTitle ) {
+   if ( newTitle == null )   // Don't allow null strings as titles!
+      title = "(Untitled)";  // Use an appropriate default value instead.
+   else
+      title = newTitle;
+}
+Even if you can't think of any extra chores to do in a getter or setter method, you might change your mind in the future when you redesign and improve your class. If you've used a getter and setter from the beginning, you can make the modification to your class without affecting any of the classes that use your class. The private member variable is not part of the public interface of your class; only the public getter and setter methods are, and you are free to change their implementations without changing the public interface of your class. If you haven't used get and set from the beginning, you'll have to contact everyone who uses your class and tell them, "Sorry people, you'll have to track down every use that you've made of this variable and change your code to use my new get and set methods instead."
+
+A couple of final notes: Some advanced aspects of Java rely on the naming convention for getter and setter methods, so it's a good idea to follow the convention rigorously. And though I've been talking about using getter and setter methods for a variable, you can define get and set methods even if there is no variable. A getter and/or setter method defines a property of the class, that might or might not correspond to a variable. For example, if a class includes a public void instance method with signature setValue(double), then the class has a "property" named value of type double, and it has this property whether or not the class has a member variable named value.

@@ -1,0 +1,73 @@
+As another example, consider a program that deals with shapes drawn on the screen. Let's say that the shapes include rectangles, ovals, and roundrects of various colors. (A "roundrect" is just a rectangle with rounded corners.)
+
+Three classes, Rectangle, Oval, and RoundRect, could be used to represent the three types of shapes. These three classes would have a common superclass, Shape, to represent features that all three shapes have in common. The Shape class could include instance variables to represent the color, position, and size of a shape, and it could include instance methods for changing the values of those properties. Changing the color, for example, might involve changing the value of an instance variable, and then redrawing the shape in its new color:
+
+class Shape {
+
+    Color color; // (must be imported from package java.awt)
+                   
+    void setColor(Color newColor) {
+          // Method to change the color of the shape.
+       color = newColor; // change value of instance variable
+       redraw(); // redraw shape, which will appear in new color
+    }
+    
+    void redraw() {
+          // method for drawing the shape
+       ? ? ?  // what commands should go here?
+    }
+
+    . . .          // more instance variables and methods
+ 
+} // end of class Shape
+Now, you might see a problem here with the method redraw(). The problem is that each different type of shape is drawn differently. The method setColor() can be called for any type of shape. How does the computer know which shape to draw when it executes the redraw()? Informally, we can answer the question like this: The computer executes redraw() by asking the shape to redraw itself. Every shape object knows what it has to do to redraw itself.
+
+In practice, this means that each of the specific shape classes has its own redraw() method:
+
+class Rectangle extends Shape {
+   void redraw() {
+      . . .  // commands for drawing a rectangle
+   }
+   . . . // possibly, more methods and variables
+}
+
+class Oval extends Shape {
+   void redraw() {
+      . . .  // commands for drawing an oval
+   }
+   . . . // possibly, more methods and variables
+}
+
+class RoundRect extends Shape {
+   void redraw() {
+      . . .  // commands for drawing a rounded rectangle
+   }
+   . . . // possibly, more methods and variables
+}
+Suppose that someShape is a variable of type Shape. Then it could refer to an object of any of the types Rectangle, Oval, or RoundRect. As a program executes, and the value of someShape changes, it could even refer to objects of different types at different times! Whenever the statement
+
+someShape.redraw();
+is executed, the redraw method that is actually called is the one appropriate for the type of object to which someShape actually refers. There may be no way of telling, from looking at the text of the program, what shape this statement will draw, since it depends on the value that someShape happens to have when the program is executed. Even more is true. Suppose the statement is in a loop and gets executed many times. If the value of someShape changes as the loop is executed, it is possible that the very same statement "someShape.redraw();" will call different methods and draw different shapes as it is executed over and over. We say that the redraw() method is polymorphic. A method is polymorphic if the action performed by the method depends on the actual type of the object to which the method is applied. Polymorphism is one of the major distinguishing features of object-oriented programming. This can be seen most vividly, perhaps, if we have an array of shapes. Suppose that shapelist is an a variable of type Shape[], and that the array has already been created and filled with data. Some of the elements in the array might be Rectangles, some might be Ovals, and some might be RoundRects. We can draw all the shapes in the array by saying
+
+for (int i = 0; i < shapelist.length; i++ ) {
+    Shape shape = shapelist[i];
+    shape.redraw();
+}
+As the computer goes through this loop, the statement shape.redraw() will sometimes draw a rectangle, sometimes an oval, and sometimes a roundrect, depending on the type of object to which array element number i refers.
+
+Perhaps this becomes more understandable if we change our terminology a bit: In object-oriented programming, calling a method is often referred to as sending a message to an object. The object responds to the message by executing the appropriate method. The statement "someShape.redraw();" is a message to the object referred to by someShape. Since that object knows what type of object it is, it knows how it should respond to the message. From this point of view, the computer always executes "someShape.redraw();" in the same way: by sending a message. The response to the message depends, naturally, on who receives it. From this point of view, objects are active entities that send and receive messages, and polymorphism is a natural, even necessary, part of this view. Polymorphism just means that different objects can respond to the same message in different ways.
+
+One of the most beautiful things about polymorphism is that it lets code that you write do things that you didn't even conceive of, at the time you wrote it. Suppose that I decide to add beveled rectangles to the types of shapes my program can deal with. A beveled rectangle has a triangle cut off each corner:
+
+some examples of beveled rects
+
+To implement beveled rectangles, I can write a new subclass, BeveledRect, of class Shape and give it its own redraw() method. Automatically, code that I wrote previously -- such as the statement someShape.redraw() -- can now suddenly start drawing beveled rectangles, even though the beveled rectangle class didn't exist when I wrote the statement!
+
+In the statement "someShape.redraw();", the redraw message is sent to the object someShape. Look back at the method in the Shape class for changing the color of a shape:
+
+void setColor(Color newColor) {
+   color = newColor; // change value of instance variable
+   redraw(); // redraw shape, which will appear in new color
+}
+A redraw message is sent here, but which object is it sent to? Well, the setColor method is itself a message that was sent to some object. The answer is that the redraw message is sent to that same object, the one that received the setColor message. If that object is a rectangle, then it contains a redraw() method for drawing rectangles, and that is the one that is executed. If the object is an oval, then it is the redraw() method from the Oval class. This is what you should expect, but it means that the "redraw();" statement in the setColor() method does not necessarily call the redraw() method in the Shape class! The redraw() method that is executed could be in any subclass of Shape. This is just another case of polymorphism.
+

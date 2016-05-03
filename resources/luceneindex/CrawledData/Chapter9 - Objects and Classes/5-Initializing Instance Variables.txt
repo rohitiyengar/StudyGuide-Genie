@@ -1,0 +1,31 @@
+An instance variable can be assigned an initial value in its declaration, just like any other variable. For example, consider a class named PairOfDice. An object of this class will represent a pair of dice. It will contain two instance variables to represent the numbers showing on the dice and an instance method for rolling the dice:
+
+public class PairOfDice {
+
+    public int die1 = 3;   // Number showing on the first die.
+    public int die2 = 4;   // Number showing on the second die.
+
+    public void roll() {
+            // Roll the dice by setting each of the dice to be
+            // a random number between 1 and 6.
+         die1 = (int)(Math.random()*6) + 1;
+         die2 = (int)(Math.random()*6) + 1;
+    }
+    
+} // end class PairOfDice
+The instance variables die1 and die2 are initialized to the values 3 and 4 respectively. These initializations are executed whenever a PairOfDice object is constructed. It's important to understand when and how this happens. There can be many PairOfDice objects. Each time one is created, it gets its own instance variables, and the assignments "die1 = 3" and "die2 = 4" are executed to fill in the values of those variables. To make this clearer, consider a variation of the PairOfDice class:
+
+public class PairOfDice {
+
+    public int die1 = (int)(Math.random()*6) + 1;
+    public int die2 = (int)(Math.random()*6) + 1;
+ 
+    public void roll() {
+         die1 = (int)(Math.random()*6) + 1;
+         die2 = (int)(Math.random()*6) + 1;
+    }
+    
+} // end class PairOfDice
+Here, every time a new PairOfDice is created, the dice are initialized to random values, as if a new pair of dice were being thrown onto the gaming table. Since the initialization is executed for each new object, a set of random initial values will be computed for each new pair of dice. Different pairs of dice can have different initial values. For initialization of static member variables, of course, the situation is quite different. There is only one copy of a static variable, and initialization of that variable is executed just once, when the class is first loaded.
+
+If you don't provide any initial value for an instance variable, a default initial value is provided automatically. Instance variables of numerical type (int, double, etc.) are automatically initialized to zero if you provide no other values; boolean variables are initialized to false; and char variables, to the Unicode character with code number zero. An instance variable can also be a variable of object type. For such variables, the default initial value is null. (In particular, since Strings are objects, the default initial value for String variables is null.)

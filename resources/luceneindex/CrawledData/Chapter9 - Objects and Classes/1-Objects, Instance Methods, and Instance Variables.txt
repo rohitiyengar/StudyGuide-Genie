@@ -1,0 +1,23 @@
+Objects are closely related to classes. We have already been working with classes for several chapters, and we have seen that a class can contain variables and methods (that is, subroutines). If an object is also a collection of variables and methods, how do they differ from classes? And why does it require a different type of thinking to understand and use them effectively? In the one section where we worked with objects rather than classes, Section 3.9, it didn't seem to make much difference: We just left the word "static" out of the subroutine definitions!
+
+I have said that classes "describe" objects, or more exactly that the non-static portions of classes describe objects. But it's probably not very clear what this means. The more usual terminology is to say that objects belong to classes, but this might not be much clearer. (There is a real shortage of English words to properly distinguish all the concepts involved. An object certainly doesn't "belong" to a class in the same way that a member variable "belongs" to a class.) From the point of view of programming, it is more exact to say that classes are used to create objects. A class is a kind of factory -- or blueprint -- for constructing objects. The non-static parts of the class specify, or describe, what variables and methods the objects will contain. This is part of the explanation of how objects differ from classes: Objects are created and destroyed as the program runs, and there can be many objects with the same structure, if they are created using the same class.
+
+Consider a simple class whose job is to group together a few static member variables. For example, the following class could be used to store information about the person who is using the program:
+
+class UserData {
+    static String name;
+    static int age;
+}
+In a program that uses this class, there is only one copy of each of the variables UserData.name and UserData.age. When the class is loaded into the computer, there is a section of memory devoted to the class, and that section of memory includes space for the values of the variables name and age. We can picture the class in memory as looking like this:
+
+Objects are closely related to classes. We have already been working with classes for several chapters, and we have seen that a class can contain variables and methods (that is, subroutines). If an object is also a collection of variables and methods, how do they differ from classes? And why does it require a different type of thinking to understand and use them effectively? In the one section where we worked with objects rather than classes, Section 3.9, it didn't seem to make much difference: We just left the word "static" out of the subroutine definitions!
+
+I have said that classes "describe" objects, or more exactly that the non-static portions of classes describe objects. But it's probably not very clear what this means. The more usual terminology is to say that objects belong to classes, but this might not be much clearer. (There is a real shortage of English words to properly distinguish all the concepts involved. An object certainly doesn't "belong" to a class in the same way that a member variable "belongs" to a class.) From the point of view of programming, it is more exact to say that classes are used to create objects. A class is a kind of factory -- or blueprint -- for constructing objects. The non-static parts of the class specify, or describe, what variables and methods the objects will contain. This is part of the explanation of how objects differ from classes: Objects are created and destroyed as the program runs, and there can be many objects with the same structure, if they are created using the same class.
+
+Consider a simple class whose job is to group together a few static member variables. For example, the following class could be used to store information about the person who is using the program:
+
+class UserData {
+    static String name;
+    static int age;
+}
+In a program that uses this class, there is only one copy of each of the variables UserData.name and UserData.age. When the class is loaded into the computer, there is a section of memory devoted to the class, and that section of memory includes space for the values of the variables name and age. We can picture the class in memory as looking like this:

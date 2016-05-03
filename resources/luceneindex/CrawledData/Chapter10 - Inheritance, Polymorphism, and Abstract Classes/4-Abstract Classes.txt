@@ -1,0 +1,46 @@
+Whenever a Rectangle, Oval, or RoundRect object has to draw itself, it is the redraw() method in the appropriate class that is executed. This leaves open the question, What does the redraw() method in the Shape class do? How should it be defined?
+
+The answer may be surprising: We should leave it blank! The fact is that the class Shape represents the abstract idea of a shape, and there is no way to draw such a thing. Only particular, concrete shapes like rectangles and ovals can be drawn. So, why should there even be a redraw() method in the Shape class? Well, it has to be there, or it would be illegal to call it in the setColor() method of the Shape class, and it would be illegal to write "someShape.redraw();". The compiler would complain that someShape is a variable of type Shape and there's no redraw() method in the Shape class.
+
+Nevertheless the version of redraw() in the Shape class itself will never actually be called. In fact, if you think about it, there can never be any reason to construct an actual object of type Shape! You can have variables of type Shape, but the objects they refer to will always belong to one of the subclasses of Shape. We say that Shape is an abstract class. An abstract class is one that is not used to construct objects, but only as a basis for making subclasses. An abstract class exists only to express the common properties of all its subclasses. A class that is not abstract is said to be concrete. You can create objects belonging to a concrete class, but not to an abstract class. A variable whose type is given by an abstract class can only refer to objects that belong to concrete subclasses of the abstract class.
+
+Similarly, we say that the redraw() method in class Shape is an abstract method, since it is never meant to be called. In fact, there is nothing for it to do -- any actual redrawing is done by redraw() methods in the subclasses of Shape. The redraw() method in Shape has to be there. But it is there only to tell the computer that all Shapes understand the redraw message. As an abstract method, it exists merely to specify the common interface of all the actual, concrete versions of redraw() in the subclasses. There is no reason for the abstract redraw() in class Shape to contain any code at all.
+
+Shape and its redraw() method are semantically abstract. You can also tell the computer, syntactically, that they are abstract by adding the modifier "abstract" to their definitions. For an abstract method, the block of code that gives the implementation of an ordinary method is replaced by a semicolon. An implementation must then be provided for the abstract method in any concrete subclass of the abstract class. Here's what the Shape class would look like as an abstract class:
+
+public abstract class Shape {
+
+    Color color;   // color of shape. 
+                              
+    void setColor(Color newColor) {
+          // method to change the color of the shape
+       color = newColor; // change value of instance variable
+       redraw(); // redraw shape, which will appear in new color
+    }
+    
+    abstract void redraw();
+          // abstract method -- must be defined in 
+          // concrete subclasses
+
+    . . .  // more instance variables and methods
+
+} // end of class Shape
+Once you have declared the class to be abstract, it becomes illegal to try to create actual objects of type Shape, and the computer will report a syntax error if you try to do so.
+
+Note, by the way, that the Vehicle class discussed above would probably also be an abstract class. There is no way to own a vehicle as such -- the actual vehicle has to be a car or a truck or a motorcycle, or some other "concrete" type of vehicle.
+
+Recall from Subsection 5.3.2 that a class that is not explicitly declared to be a subclass of some other class is automatically made a subclass of the standard class Object. That is, a class declaration with no "extends" part such as
+
+public class myClass { . . .
+is exactly equivalent to
+
+public class myClass extends Object { . . .
+This means that class Object is at the top of a huge class hierarchy that includes every other class. (Semantically, Object is an abstract class, in fact the most abstract class of all. Curiously, however, it is not declared to be abstract syntactically, which means that you can create objects of type Object. However, there is not much that you can do with them.)
+
+Since every class is a subclass of Object, a variable of type Object can refer to any object whatsoever, of any type. Similarly, an array of type Object[] can hold objects of any type.
+
+The sample source code file ShapeDraw.java uses an abstract Shape class and an array of type Shape[] to hold a list of shapes. You might want to look at this file, even though you won't be able to understand all of it at this time. Even the definitions of the shape classes are somewhat different from those that I have described in this section. (For example, the draw() method has a parameter of type Graphics. This parameter is required because drawing in Java requires a graphics context.) I'll return to similar examples in later chapters when you know more about GUI programming. However, it would still be worthwhile to look at the definition of the Shape class and its subclasses in the source code. You might also check how an array is used to hold the list of shapes. Here is a screenshot from the program:
+If you run the ShapeDraw program, you can click one of the buttons along the bottom to add a shape to the picture. The new shape will appear in the upper left corner of the drawing area. The color of the shape is given by the "pop-up menu" in the lower right. Once a shape is on the screen, you can drag it around with the mouse. A shape will maintain the same front-to-back order with respect to other shapes on the screen, even while you are dragging it. However, you can move a shape out in front of all the other shapes if you hold down the shift key as you click on it.
+
+In the program, the only time when the actual class of a shape is used is when that shape is added to the screen. Once the shape has been created, it is manipulated entirely as an abstract shape. The routine that implements dragging, for example, works with variables of type Shape and makes no reference to any of its subclasses. As the shape is being dragged, the dragging routine just calls the shape's draw method each time the shape has to be drawn, so it doesn't have to know how to draw the shape or even what type of shape it is. The object is responsible for drawing itself. If I wanted to add a new type of shape to the program, I would define a new subclass of Shape, add another button, and program the button to add the correct type of shape to the screen. No other changes in the programming would be necessary.
+
