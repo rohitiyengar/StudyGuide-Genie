@@ -123,7 +123,7 @@
 			function myFunction(xml) {
 				$("#loading").hide();
 				var xmlDoc = xml;
-				var text = "<div class = 'well'><table width = '100%' ><tr>";
+				var text = "<div class = 'well'><table width = '100%' style='table-layout:fixed'><tr>";
 				x = xmlDoc.getElementsByTagName('exam');
 				xLen = x.length;
 				for (i = 0; i < xLen; i++) {
@@ -158,8 +158,8 @@
 					var find = '\\s';
 					var re = new RegExp(find, 'g');
 					url = url.replace(re, '%20');
-					text += "<table><tr><td><h2 style = 'text-align:center'>"+x[i].getAttribute('number')+" </h2></td></tr><tr><td align='center'><div style = 'cursor: pointer; display: table; margin-right: auto;margin-left: auto;'  id='circle"+(i+1)+"' onclick=redirect('"+url+"') data-percent='"+percent+"' class='"+circleColor+"' ></div></td></tr>";
-					text += "<tr><td align = 'center'><div class = 'well'>"+str+"</div></tr></td>";
+					text += "<table><tr><td><h2 style = 'text-align:center'>"+x[i].getAttribute('number')+" </h2></td></tr><tr><td><div style = 'float:none;position:relative;cursor: pointer; display: table; margin-right: auto; margin-left: auto; margin-top:auto'  id='circle"+(i+1)+"' onclick=redirect('"+url+"') data-percent='"+percent+"' class='"+circleColor+"' ></div></td></tr>";
+					text += "<tr><td align = 'center'><div style = 'height:200px' class = 'well'>"+str+"</div></tr></td>";
 					text += "</table></td>";
 				}
 				text += "</tr></table></div>";
