@@ -2,7 +2,10 @@ package controller;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+
+
 
 
 
@@ -277,7 +283,16 @@ public class NotesController {
 		
 		util.Content contentXML = new util.Content();
 		
-		Map<Integer,util.Chapter> mapContentXML = new HashMap<Integer,util.Chapter>();
+		Map<Integer,util.Chapter> mapContentXML = new LinkedHashMap<Integer,util.Chapter>();
+		
+//		Collections.sort(contentList, new Comparator<Content>()
+//				{
+//					@Override
+//					public int compare(Content o1, Content o2) {
+//						// TODO Auto-generated method stub
+//						return new Integer(o1.getTopicId()).compareTo(new Integer(o2.getTopicId()));
+//					}
+//				});
 		
 		for (Content c : contentList) {
 			int topicId = c.getTopicId();
@@ -357,7 +372,7 @@ public class NotesController {
 	public ModelAndView getAllExams(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
 		ModelAndView mv = new ModelAndView("getAllExams");
-		HashMap<Integer, List<Content>> examContentMapWithExamId = new HashMap<Integer, List<Content>>();
+		LinkedHashMap<Integer, List<Content>> examContentMapWithExamId = new LinkedHashMap<Integer, List<Content>>();
 		exam.jaxbclasses.Exams examsXML = new exam.jaxbclasses.Exams();
 		List<model.Exam> list = examBo.findAllExams();
 		request.getSession().setAttribute("listofAllExams", list); //Use this session variable in above method.
@@ -378,7 +393,7 @@ public class NotesController {
 			}
 			if((examContent != null) && !examContent.isEmpty())
 			{
-				HashMap<Integer, exam.jaxbclasses.Chapter> chapterTopicMap = new HashMap<Integer, exam.jaxbclasses.Chapter>();
+				LinkedHashMap<Integer, exam.jaxbclasses.Chapter> chapterTopicMap = new LinkedHashMap<Integer, exam.jaxbclasses.Chapter>();
 				///noContent = true;
 				exam.jaxbclasses.Exam examobj = new exam.jaxbclasses.Exam();
 				examobj.setNumber(exam.getExamValue());
