@@ -412,6 +412,7 @@ h2 .btn-group { display: inline-block; }
 						</c:forEach>
 
 					</c:if>
+					
 				</div>
 				<center>
 					<table>
@@ -422,14 +423,14 @@ h2 .btn-group { display: inline-block; }
 				</tr>
 				</table>
 				</center>
-				<div id="recommendations">
+				<div id="keywords">
 					<br>
 					<c:if test="${not empty recommendedWords}">
 
 						<c:forEach items="${recommendedWords}" var="recoIter">
 							<h4>
 								&nbsp;&nbsp;&nbsp;<span class="label label-success"><span
-									class="glyphicon glyphicon-star" aria-hidden="true"></span>&nbsp;&nbsp;${recoIter}</span>
+									class="glyphicon glyphicon-tag" aria-hidden="true"></span>&nbsp;&nbsp;${recoIter}</span>
 							</h4>
 						</c:forEach>
 						<!--         		<li>Literals <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span></li> -->
@@ -441,6 +442,19 @@ h2 .btn-group { display: inline-block; }
 		</div>
 	</div>
 
+	<script type="text/javascript">
+		
+		if(document.getElementById('keywords').innerHTML.trim() === "<br>") {
+			var keywordStr="<i>There are no keywords recommended since no notes exist for this topic.</i>";
+			$('#keywords').append(keywordStr);
+		}
+		
+		
+		if(document.getElementById('recommendations').innerHTML.trim() === "") {
+			var recStr="<i>You need to include some notes for links to be recommended.</i>";
+			$('#recommendations').append(recStr);
+		}
+	</script>
 	<br>
 	<br>
 </body>
