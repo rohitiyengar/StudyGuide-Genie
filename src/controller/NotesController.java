@@ -437,14 +437,24 @@ public class NotesController {
 		double totalNoOfCompleteTopicsinExams = 0;
 		
 		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		List<Notes> notes = null;
 		
 		List<exam.jaxbclasses.Chapter> listExamChapters = examobj.getChapter();	
 		for(exam.jaxbclasses.Chapter chapter : listExamChapters)
 		{
 			totalNoOfTopicExams =  totalNoOfTopicExams + chapter.getTopic().size();
 		}
-		
-		List<Notes> notes = notesBo.findNotesByStudentId(student.getStudentId());
+		try
+		{
+			notes = notesBo.findNotesByStudentId(student.getStudentId());
+		}
+		catch(IllegalArgumentException e)
+		{
+			if(e.getMessage().equals("Notes List doesnt exists"))
+			{
+				return 0.0;
+			}
+		}
 		
 		for(Notes note : notes)
 		{
