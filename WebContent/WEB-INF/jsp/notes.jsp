@@ -168,16 +168,30 @@ h2 .btn-group {
 																	$("#matchPercentage").val(output);
 																	if(output >=0 & output <=35)
 																	{
-																		$("#plagiarismMessage").text("You may have missed something. We recommend you to revisit the textbook contents");
+																		$("#plagiarismMessage").empty();
+																		$("#plagiarismMessage").append("<div class='alert alert-warning alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Hello!</strong> It looks like you haven't followed the topic. Please read through and write more detailed notes.</div>");
+																		
+																		//$("#plagiarismMessage").css("color","orange");
+																		//$("#plagiarismMessage").css("font-family","rockwell");
+																		//$("#plagiarismMessage").text("It looks like you haven't followed the topic. Please read through and write more detailed notes.");
 																		
 																	}
 																	else if(output > 35 & output <=85)
 																	{
-																		$("#plagiarismMessage").text("Good, Seems like you have understood the topic");
+																		$("#plagiarismMessage").empty();
+																		$("#plagiarismMessage").append("<div class='alert alert-success alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Great going!</strong>  Seems like you have understood the topic well.</div>");
+																		//$("#plagiarismMessage").css("color","green");
+																		//$("#plagiarismMessage").css("font-family","rockwell");
+																		//$("#plagiarismMessage").text("Great going! Seems like you have understood the topic well.");
 																	}
 																	else if(output > 85 & output <=100)
 																	{
-																		$("#plagiarismMessage").text("Please write notes based on your understanding. This looks like copy paste.");
+																		$("#plagiarismMessage").empty();
+																		$("#plagiarismMessage").append("<div class='alert alert-danger alert-dismissible' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Stop!</strong> Please write notes based on your understanding. This looks like a copy paste of content from the textbook.</div>");
+
+																		//$("#plagiarismMessage").css("color","red");
+																		//$("#plagiarismMessage").css("font-family","rockwell");
+																		//$("#plagiarismMessage").text("Please write notes based on your understanding. This looks like a copy paste of content from the textbook.");
 																	}
 																}
 															}
@@ -375,13 +389,13 @@ h2 .btn-group {
 								<br>
 								<form:textarea path="topicText" id="mynotes" class="ta5"
 									rows="10" cols="50"></form:textarea>
-								<br /> <br /> 
+								<br /> 
 								<form:input id="matchPercentage" path="matchPercentage"
 									class="control form-control" type="hidden" />
 							</div>
 							<br />
-							<div>
-								<label id="plagiarismMessage"></label>
+							<div id="plagiarismMessage">
+
 							</div>
 							<br />
 							<div>
