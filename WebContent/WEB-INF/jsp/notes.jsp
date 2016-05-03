@@ -44,9 +44,9 @@ textarea {
 	background-size: 10;
 	background-color: #FFFFFF;
 	font-size: 16px;
-	font-style: italic;
+	
 	color: #1d9269;
-	font-family: 'Times New Roman';
+	font-family: 'Courier';
 	line-height: 30px;
 }
 
