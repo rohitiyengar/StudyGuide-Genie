@@ -103,7 +103,7 @@
 			<table>
 				<tr>
 					<td><h2>Here's your Exam information</h2></td>
-					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="The radial indicates the percentage completed." data-placement="right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
+					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="The radial indicates the percentage of topics completed (notes taken) in each exam." data-placement="right"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></a></td>
 				</tr>
 			</table>
 			<br>

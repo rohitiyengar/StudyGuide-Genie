@@ -436,7 +436,7 @@ h2 .btn-group {
 							<c:set var="displayName"
 								value="${fn:substringAfter(linkIter, '#').replace('_', ' ')}"></c:set>
 							<span class="glyphicon glyphicon-hand-right" aria-hidden="true"></span>&nbsp;&nbsp;<a
-								href="${linkIter }">${displayName}</a>
+								href="${linkIter }" target = "_blank">${displayName}</a>
 							<br>
 							<br>
 						</c:forEach>
