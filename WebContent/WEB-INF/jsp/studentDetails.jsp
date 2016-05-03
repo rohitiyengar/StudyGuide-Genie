@@ -79,9 +79,7 @@
 			</a>
 		</div>
 		<div>
-			<ul class="nav navbar-nav">
-				<li><a href="#">Visualize</a></li>
-			</ul>
+			
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#"> ${sessionUser.getFname()}</a></li>
 				<li><a href="<c:url value= 'j_spring_security_logout' />">

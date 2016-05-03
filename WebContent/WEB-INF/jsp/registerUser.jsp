@@ -25,7 +25,7 @@
 		</div>
 		<div>
 			<ul class="nav navbar-nav">
-				<li><a href="#">About Us</a></li>
+				<li><a href="${pageContext.request.contextPath}/about">About Us</a></li>
 			</ul>
 			<!--  <ul class="nav navbar-nav navbar-right">
 				<li><a href="#"> <span class="glyphicon glyphicon-user"></span>

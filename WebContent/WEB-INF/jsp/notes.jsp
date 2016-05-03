@@ -333,13 +333,11 @@ h2 .btn-group {
 	<nav class="navbar navbar-default">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="#"> <b>Study Guide |</b>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/"> <b>Study Guide |</b>
 			</a>
 		</div>
 		<div>
-			<ul class="nav navbar-nav">
-				<li><a href="#">Visualize</a></li>
-			</ul>
+			
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="${pageContext.request.contextPath}/">
 						${sessionUser.getFname()}</a></li>

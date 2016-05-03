@@ -594,7 +594,11 @@ public class NotesController {
 		return new ModelAndView("cheatsheet");
 	}
 	
-	
+	@RequestMapping(value="/about", method=RequestMethod.GET)
+	public ModelAndView redirectToAbout()
+	{
+		return new ModelAndView("aboutpage");
+	}
 
 
 
