@@ -132,10 +132,12 @@
 	<div class="container">
 		<br>
 		<div>
-			<img src="images/cheatsheet.png" width="30%" height="30%" />
-
+			
+			<a href="${pageContext.request.contextPath}/"><img title ="Dashboard" src="images/cheatsheet.png" width="30%" height="30%"/></a>
+				
 			<div style="float: right; bottom: 0;">
-				<button class="btn btn-success" onclick="generate();" id="generate">Print</button>
+				<button class="btn btn-danger" onclick="javascript:history.back();" id="back"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>&nbsp;Back</button>
+				<button class="btn btn-success" onclick="generate();" id="generate"><span class="glyphicon glyphicon-print" aria-hidden="true"></span>&nbsp;Print</button>
 			</div>
 		</div>
 		<hr></hr>

@@ -81,7 +81,7 @@
 		<div>
 			
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"> ${sessionUser.getFname()}</a></li>
+				<li><a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp; ${sessionUser.getFname()} </a></li>
 				<li><a href="<c:url value= 'j_spring_security_logout' />">
 						<span class="glyphicon glyphicon-log-out"></span> Logout
 				</a></li>

@@ -29,7 +29,7 @@ textarea {
 	background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
 	width: 450px;
 	height: 200px;
-	font-family: 'Handlee', cursive;
+	font-family: Rockwell;
 	font-weight: bold;
 	font-size: 14px;
 	border: 0;
@@ -43,10 +43,10 @@ textarea {
 	background: none;
 	background-size: 10;
 	background-color: #FFFFFF;
-	font-size: 16px;
+	font-size: 14px;
 	color: #1d9269;
-	font-family: 'Courier';
-	line-height: 30px;
+	font-family: 'Andale Mono', AndaleMono, monospace;
+	
 }
 
 h2 .btn-group {
@@ -339,8 +339,7 @@ h2 .btn-group {
 		<div>
 			
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="${pageContext.request.contextPath}/">
-						${sessionUser.getFname()}</a></li>
+				<li><a href="${pageContext.request.contextPath}/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;${sessionUser.getFname()}</a></li>
 				<li><a href="<c:url value= 'j_spring_security_logout' />">
 						<span class="glyphicon glyphicon-log-out"></span> Logout
 				</a></li>
@@ -407,10 +406,10 @@ h2 .btn-group {
 							<label id="compileResult"></label>
 							<br>
 							<br>
-							<button class="btn btn-success" id="btnSave">Save Notes</button>
-							<a class="btn btn-success"
-								href="${pageContext.request.contextPath}/cheatSheetGenerate">Generate
-								CheatSheet</a>
+							<button class="btn btn-success" id="btnSave"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>&nbsp;Save Notes</button>
+							<a class="btn btn-danger"
+								href="${pageContext.request.contextPath}/cheatSheetGenerate"><span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;Generate
+								Cheat Sheet</a>
 						</form:form>
 					</center>
 				</div>
