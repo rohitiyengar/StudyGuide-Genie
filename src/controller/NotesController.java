@@ -32,11 +32,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
 import cheatsheet.jaxbclasses.Chapter;
 import cheatsheet.jaxbclasses.Exams;
 import bo.ContentBO;
 import bo.ExamBO;
 import bo.InstructorBO;
+import bo.InteractionsBO;
 import bo.NotesBO;
 import bo.StudentBO;
 import bo.TopicBO;
@@ -69,6 +71,9 @@ public class NotesController {
 	
 	@Autowired
 	ContentBO contentBo;
+	
+	@Autowired
+	InteractionsBO interactionsBo;
 	
 	private static String MID_TERM_1 = "Mid term 1";
 	private static String MID_TERM_2 = "Mid term 2";
@@ -160,12 +165,16 @@ public class NotesController {
 		}
 		else
 		{
+			WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
+			LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
+			Set<String> recommendedLinks = luceneLinksBean.getLinksRecommendations(topic.getTopicName(), 5);
+			mv.addObject("recommendedLinks", recommendedLinks);
+			request.getSession().setAttribute("listOfRecommendedLinks", recommendedLinks);
 			try
 			{
 				System.out.println(topic.getTopicId());
 				System.out.println(student.getStudentId());
 				notes = notesBo.findNotes(student.getStudentId(), topic.getTopicId());
-				WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
 				LuceneNotesRecommender luceneNotesBean = (LuceneNotesRecommender)webApplicationContext.getBean("luceneNotesBean");
 				luceneNotesBean.updateNotesIndex(topic.getTopicId(), student.getStudentId(), notes.getTopicText());
 				Set<String> recommendedWords = luceneNotesBean.getNotesRecommendations(topic.getTopicId(), student.getStudentId(), notes.getTopicText(), 5);
@@ -175,10 +184,6 @@ public class NotesController {
 					System.out.println("The keyword is "+s);
 				}
 				mv.addObject("recommendedWords", notes.getRecommmendedWords());
-				
-				LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
-				mv.addObject("recommendedLinks", luceneLinksBean.getLinksRecommendations(notes.getTopicName(), 5));
-
 			}
 			catch(IllegalArgumentException exception)
 			{
@@ -246,8 +251,9 @@ public class NotesController {
 			System.out.println("The keyword is "+s);
 		}
 		mv.addObject("recommendedWords", notes.getRecommmendedWords());
-		LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
-		mv.addObject("recommendedLinks", luceneLinksBean.getLinksRecommendations(notes.getTopicName(), 5));
+		Set<String> recommendedLinks = (Set<String>)request.getSession().getAttribute("listOfRecommendedLinks");
+		//LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
+		mv.addObject("recommendedLinks", recommendedLinks);
 		mv.addObject("notes", notes);
 		mv.addObject("notesMessage", "Saved");
 

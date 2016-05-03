@@ -44,13 +44,14 @@ textarea {
 	background-size: 10;
 	background-color: #FFFFFF;
 	font-size: 16px;
-	
 	color: #1d9269;
 	font-family: 'Courier';
 	line-height: 30px;
 }
 
-h2 .btn-group { display: inline-block; }
+h2 .btn-group {
+	display: inline-block;
+}
 
 /* .ta5 {
 	border: 2px solid #765942;
@@ -61,14 +62,14 @@ h2 .btn-group { display: inline-block; }
 	font-size:large;
 }*/
 #chaptertitle {
-          position: relative;
-          background: url('images/greenpage.jpg') no-repeat center center;
-          width:100%;
-          height: 100%;
-          background-size: 100% 100%;
-          color: white;
-          font-family: baskerville;
-        }
+	position: relative;
+	background: url('images/greenpage.jpg') no-repeat center center;
+	width: 100%;
+	height: 100%;
+	background-size: 100% 100%;
+	color: white;
+	font-family: baskerville;
+}
 </style>
 </head>
 <script>
@@ -162,12 +163,22 @@ h2 .btn-group { display: inline-block; }
 																		.text();
 																console
 																		.log(output);
-																if (output
-																		.trim() != "") {
-																	$(
-																			"#matchPercentage")
-																			.val(
-																					output);
+																if (output.trim() != "") 
+																{
+																	$("#matchPercentage").val(output);
+																	if(output >=0 & output <=35)
+																	{
+																		$("#plagiarismMessage").text("You may have missed something. We recommend you to revisit the textbook contents");
+																		
+																	}
+																	else if(output > 35 & output <=85)
+																	{
+																		$("#plagiarismMessage").text("Good, Seems like you have understood the topic");
+																	}
+																	else if(output > 85 & output <=100)
+																	{
+																		$("#plagiarismMessage").text("Please write notes based on your understanding. This looks like copy paste.");
+																	}
 																}
 															}
 														});
@@ -364,10 +375,13 @@ h2 .btn-group { display: inline-block; }
 								<br>
 								<form:textarea path="topicText" id="mynotes" class="ta5"
 									rows="10" cols="50"></form:textarea>
-								<br />
-								<br /> <label for="matchPercentage">Match Percentage:</label>&nbsp;&nbsp;
+								<br /> <br /> 
 								<form:input id="matchPercentage" path="matchPercentage"
-									class="control form-control" />
+									class="control form-control" type="hidden" />
+							</div>
+							<br />
+							<div>
+								<label id="plagiarismMessage"></label>
 							</div>
 							<br />
 							<div>
@@ -382,7 +396,9 @@ h2 .btn-group { display: inline-block; }
 							<br>
 							<br>
 							<button class="btn btn-success" id="btnSave">Save Notes</button>
-							 <a class = "btn btn-success" href="${pageContext.request.contextPath}/cheatSheetGenerate">Generate CheatSheet</a>
+							<a class="btn btn-success"
+								href="${pageContext.request.contextPath}/cheatSheetGenerate">Generate
+								CheatSheet</a>
 						</form:form>
 					</center>
 				</div>
@@ -391,12 +407,14 @@ h2 .btn-group { display: inline-block; }
 			<div class="col-md-3">
 
 				<center>
-				<table>
-				<tr>
-					<td><h2>Recommendations</h2></td>
-					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="Recommendations from Java WikiBooks" data-placement="top"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
-				</tr>
-				</table>
+					<table>
+						<tr>
+							<td><h2>Recommendations</h2></td>
+							<td>&nbsp;<a href="#" data-toggle="tooltip"
+								title="Recommendations from Java WikiBooks" data-placement="top"><span
+									class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
+						</tr>
+					</table>
 				</center>
 				<br>
 				<div id="recommendations">
@@ -412,16 +430,19 @@ h2 .btn-group { display: inline-block; }
 						</c:forEach>
 
 					</c:if>
-					
+
 				</div>
 				<center>
 					<table>
-				<tr>
-					<td><h2>Keywords</h2></td>
-					<td>&nbsp;<a href="#"  data-toggle="tooltip" title="This section contains relevant keywords included by your
-						peers that you may have missed" data-placement="top"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
-				</tr>
-				</table>
+						<tr>
+							<td><h2>Keywords</h2></td>
+							<td>&nbsp;<a href="#" data-toggle="tooltip"
+								title="This section contains relevant keywords included by your
+						peers that you may have missed"
+								data-placement="top"><span
+									class="glyphicon glyphicon-question-sign" aria-hidden="true"></span></a></td>
+						</tr>
+					</table>
 				</center>
 				<div id="keywords">
 					<br>
@@ -443,15 +464,13 @@ h2 .btn-group { display: inline-block; }
 	</div>
 
 	<script type="text/javascript">
-		
-		if(document.getElementById('keywords').innerHTML.trim() === "<br>") {
-			var keywordStr="<i>There are no keywords recommended since no notes exist for this topic.</i>";
+		if (document.getElementById('keywords').innerHTML.trim() === "<br>") {
+			var keywordStr = "<i>There are no keywords recommended since no notes exist for this topic.</i>";
 			$('#keywords').append(keywordStr);
 		}
-		
-		
-		if(document.getElementById('recommendations').innerHTML.trim() === "") {
-			var recStr="<i>You need to include some notes for links to be recommended.</i>";
+
+		if (document.getElementById('recommendations').innerHTML.trim() === "") {
+			var recStr = "<i>You need to include some notes for links to be recommended.</i>";
 			$('#recommendations').append(recStr);
 		}
 	</script>

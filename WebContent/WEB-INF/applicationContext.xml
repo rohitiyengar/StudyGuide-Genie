@@ -64,6 +64,7 @@
 				<value>model.Notes</value>
 				<value>model.Exam</value>
 				<value>model.Content</value>
+				<value>model.Interactions</value>
 			</list>
 		</property>
 	</bean>
