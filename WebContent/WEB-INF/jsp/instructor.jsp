@@ -201,7 +201,7 @@ function loadData(path) {
 
     });
 }
-loadData("/StudyGenie/visualize");
+loadData("${pageContext.request.contextPath}/visualize");
 chart.call(tip);
 </script>
 </body>
