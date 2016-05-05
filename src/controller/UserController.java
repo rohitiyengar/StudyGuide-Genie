@@ -113,16 +113,12 @@ public class UserController {
 						mv.setViewName("studentDetails");
 				
 					}
-					else if(userFound.getRole().equals(User.roles.INSTRUCTOR.toString()))
+					else
 					{
 						Instructor instructor = instructorBo.findInstructor(userFound.getUserName());
 						mv.addObject("sessionUser", instructor);
 						request.getSession().setAttribute("sessionUser", instructor);
 						mv.setViewName("instructor");
-					}
-					else if(userFound.getRole().equals(User.roles.ADMIN))
-					{
-						
 					}
 				}
 				else
@@ -167,15 +163,6 @@ public class UserController {
 					studentBo.save(student);
 				}
 
-				if(user.getRole().equals(User.roles.INSTRUCTOR.toString()))
-				{
-					Instructor instructor = new Instructor();
-					instructor.setInstructorId(user.getUserName());
-					instructor.setFname(user.getFirstName());
-					instructor.setLname(user.getLastName());
-					//Hibernate call to save the instructor object in DB
-					instructorBo.save(instructor);
-				}
 			}
 			catch(ConstraintViolationException cvexception)
 			{
