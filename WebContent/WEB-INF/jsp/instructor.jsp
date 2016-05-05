@@ -1,133 +1,125 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/navbar.css">
-    <title>Welcome!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/navbar.css">
+<title>Welcome!</title>
+<!-- //Reference : http://bl.ocks.org/Caged/6476579  -->
 </head>
 <style>
-
 .bar {
-  fill: steelblue;
+	fill: #1d9269;
 }
 
 .bar:hover {
-  fill: orange;
+	fill: #002800;
 }
 
 .axis text {
-  font: 10px sans-serif;
+	font: 12px sans-serif;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
+.axis path, .axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
 }
 
 .x.axis path {
-  display: none;
+	display: none;
 }
 
-
 .d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
+	line-height: 1;
+	font-weight: bold;
+	padding: 12px;
+	background: rgba(0, 0, 0, 0.8);
+	color: #fff;
+	border-radius: 2px;
 }
 
 /* Creates a small triangle extender for the tooltip */
 .d3-tip:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: center;
+	box-sizing: border-box;
+	display: inline;
+	font-size: 10px;
+	width: 100%;
+	line-height: 1;
+	color: rgba(0, 0, 0, 0.8);
+	content: "\25BC";
+	position: absolute;
+	text-align: center;
 }
 
 /* Style northward tooltips differently */
 .d3-tip.n:after {
-  margin: -1px 0 0 0;
-  top: 100%;
-  left: 0;
+	margin: -1px 0 0 0;
+	top: 100%;
+	left: 0;
 }
 
-
+text {
+	font: 12px sans-serif;
+}
 </style>
 
 
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <b>Study Guide |</b>
-                </a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Visualize</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                	<li><a href="#">
-                	 ${sessionUser.getFname()}</a>
-                	</li>
-                    <li>
-                        <a href="<c:url value= 'j_spring_security_logout' />">
-                            <span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                    </li>
-                </ul>
-            </div>
+	<nav class="navbar navbar-default">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#"> <b>Study Guide |</b>
+			</a>
+		</div>
+		<div>
 
-        </div>
-    </nav>
-    <div class="container">
-        <h2>Welcome ${sessionUser.getFname()}</h2>
-        <br>
-        <center>
-            <div class="well">
-                <table class = "table table-bordered table-condensed">
-                    <th>
-                        <td><h3>Your role:</h3></td>
-                        <td><h3>Instructor</h3></td>
-                    </th>
-                </table><br><br>
-                <a class="btn btn-danger" href="<c:url value= 'j_spring_security_logout' />"> Logout</a>
-            </div>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#"><span class="glyphicon glyphicon-home"
+						aria-hidden="true"></span>&nbsp; ${sessionUser.getFname()} </a></li>
+				<li><a href="<c:url value= 'j_spring_security_logout' />">
+						<span class="glyphicon glyphicon-log-out"></span> Logout
+				</a></li>
+			</ul>
+		</div>
 
-        </center>
+	</div>
+	</nav>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Welcome ${sessionUser.getFname()}</h1>
+		</div>
+		<br>
+		<center>
+			<h1>Originality Report</h1>
 
-    </div>
-    <div>
-<table>
-<tr>
-<td>
-<svg class="chart"></svg>
-</tr>
-</table>
-</div>
-<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
-<script src="scripts/d3.tip.v0.6.3.js"></script>
-<script>
+			<b><i>This chart indicates the originality of content from
+					each student in the class. Hover over for more details.</i></b><br> <br>
+			<div id="loading">
+				<img src="images/loading.gif" />
+			</div>
 
-var margin = {top: 20, right: 0, bottom: 45, left: 30},
-    width = 260 - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom;
+			<svg class="chart"></svg>
+
+
+		</center>
+	</div>
+
+	<script src="scripts/d3.v3.min.js" charset="utf-8"></script>
+	<script src="scripts/d3.tip.v0.6.3.js"></script>
+	<script>
+
+var margin = {top: 10, right: 30, bottom: 60, left: 50},
+    width = 1000 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
     .rangeRoundBands([0, width], .3, .5);
@@ -159,6 +151,7 @@ var tip = d3.tip()
 
 function loadData(path) {
     d3.json(path, function(data) {
+    	$("#loading").hide();
         dataset = data.students.map(function(d) { return [ d.name, +d.originalityscore, d.values ]; });
 
         x.domain(dataset.map(function(d) { return d[0]; }));
@@ -202,7 +195,8 @@ function loadData(path) {
                 .text("Originality Index")
                 .attr("transform", "rotate(-90)")
                 .style("text-anchor", "end")
-                .attr("y", 16);
+                .attr("y", 15)
+                .attr("dy", "1em");
 
 
     });
