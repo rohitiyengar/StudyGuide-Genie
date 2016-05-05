@@ -103,6 +103,18 @@ public class NotesDAOImplementation  extends GenericHibernateDaoSupport implemen
 		}
 		return notes;
 	}
+	
+	@Override
+	public List<Notes> findAllNotes() throws IllegalArgumentException
+	{
+		List<Notes> notes = (List<Notes>) getHibernateTemplate().find("from Notes");
+		if(notes == null || notes.size() == 0)
+		{
+			throw new IllegalArgumentException("Notes list doesnt exists");
+		}
+		return notes;
+		
+	}
 
 
 }

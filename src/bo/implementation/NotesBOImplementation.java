@@ -62,4 +62,9 @@ public class NotesBOImplementation implements NotesBO
 		return notesDao.findNotesByStudentId(studentId);
 	}
 
+	@Override
+	public List<Notes> findAllNotes() throws IllegalArgumentException
+	{
+		return notesDao.findAllNotes();
+	}
 }

@@ -1,5 +1,7 @@
 package bo.implementation;
 
+import java.util.List;
+
 import model.Student;
 
 import org.hibernate.exception.ConstraintViolationException;
@@ -39,6 +41,12 @@ public class StudentBOImplementation implements StudentBO {
 	@Override
 	public Student findUser(String student_id) {
 		return studentDao.findStudent(student_id);
+	}
+
+	@Override
+	public List<Student> findStudents() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		return studentDao.findStudents();
 	}
 
 }

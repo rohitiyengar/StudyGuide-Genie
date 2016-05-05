@@ -2,8 +2,6 @@ package controller;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,11 +12,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import visualization.models.OriginalityForStudents;
+import visualization.models.Student;
+import lucenelinksrecommender.LuceneLinksRecommender;
+import lucenenotesrecommender.LuceneNotesRecommender;
 import model.Content;
 import model.Exam;
 import model.Notes;
-import model.Student;
 import model.Topic;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +37,6 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-
-
-
-
-
-
-
-
-import cheatsheet.jaxbclasses.Chapter;
-import cheatsheet.jaxbclasses.Exams;
 import bo.ContentBO;
 import bo.ExamBO;
 import bo.InstructorBO;
@@ -49,8 +45,8 @@ import bo.NotesBO;
 import bo.StudentBO;
 import bo.TopicBO;
 import bo.UserBO;
-import lucenenotesrecommender.LuceneNotesRecommender;
-import lucenelinksrecommender.LuceneLinksRecommender;
+import cheatsheet.jaxbclasses.Chapter;
+import cheatsheet.jaxbclasses.Exams;
 
 @Controller
 @SessionAttributes({"sessionUser", "topic"})
@@ -93,7 +89,7 @@ public class NotesController {
 	{
 		ModelAndView mv = new ModelAndView("notes");
 		System.out.println("NOTES FROM EXAM");
-		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		if (request.getParameter("topicName") != null)
 		{
 			System.out.println("topicName is:"+request.getParameter("topicName"));
@@ -219,7 +215,7 @@ public class NotesController {
 		ModelAndView mv = new ModelAndView("notes");
 		WebApplicationContext webApplicationContext = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
 		LuceneNotesRecommender luceneNotesBean = (LuceneNotesRecommender)webApplicationContext.getBean("luceneNotesBean");
-		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		model.Topic obj = topicBo.findTopicById(notes.getTopicid());
 		request.getSession().setAttribute("topic", obj);
 		student.setCurrentTopic(notes.getTopicName());
@@ -275,7 +271,7 @@ public class NotesController {
 		ModelAndView mv = new ModelAndView("getExams");
 		mv.addObject("exams", list);
 		
-		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		Topic topic = (Topic)request.getSession().getAttribute("topic");
 		
 		List<Content> contentList = contentBo.findContentList((int)request.getSession().getAttribute("examid"));
@@ -451,7 +447,7 @@ public class NotesController {
 		double totalNoOfTopicExams = 0;
 		double totalNoOfCompleteTopicsinExams = 0;
 		
-		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		List<Notes> notes = null;
 		
 		List<exam.jaxbclasses.Chapter> listExamChapters = examobj.getChapter();	
@@ -510,7 +506,7 @@ public class NotesController {
 			examObj.setNumber(FINAL_EXAM);
 		}
 		
-		Student student = (Student)request.getSession().getAttribute("sessionUser");
+		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		HashMap<String, List<cheatsheet.jaxbclasses.Topic>> chapterTopicMap = new HashMap<>();
 		try
 		{
@@ -598,6 +594,124 @@ public class NotesController {
 	public ModelAndView redirectToAbout()
 	{
 		return new ModelAndView("aboutpage");
+	}
+	
+	
+	
+	@RequestMapping(value="/visualize", method=RequestMethod.GET)
+	public ModelAndView redirectToVisualizationPage(HttpServletRequest request) throws JsonProcessingException
+	{
+		
+		OriginalityForStudents obj = new OriginalityForStudents();
+		ModelAndView mv = new ModelAndView("visualize");
+		
+		List<model.Student> students = studentBo.findStudents();
+		for (model.Student student : students)
+		{
+			HashMap<Integer, Double> examScoreMap = new HashMap<Integer, Double>();
+			HashMap<Integer, Integer> examCountMap = new HashMap<>();
+			try
+			{
+				List<Notes> notes = notesBo.findNotesByStudentId(student.getStudentId());
+				Student vizStudent = new Student();
+				for(Notes note : notes)
+				{
+					int topicId = note.getTopicid();
+					Content c = contentBo.findContentByTopicId(topicId);
+					int examId = c.getExamId();
+					double matchPercentage = 100.0 - Double.valueOf(note.getMatchPercentage());
+					if(examScoreMap.containsKey(examId))
+					{	
+						examScoreMap.put(examId, examScoreMap.get(examId)+matchPercentage);
+						examCountMap.put(examId, examCountMap.get(examId)+1);
+					}
+					else
+					{
+						examScoreMap.put(examId, matchPercentage);
+						examCountMap.put(examId, 1);
+						
+					}
+					
+					
+				}
+				if(!examScoreMap.containsKey(2))
+				{
+					vizStudent.getValues().put(MID_TERM_1, "NA");
+				}
+				if(!examScoreMap.containsKey(3))
+				{
+					vizStudent.getValues().put(MID_TERM_2, "NA");
+				}
+				if(!examScoreMap.containsKey(4))
+				{
+					vizStudent.getValues().put(MID_TERM_3, "NA");
+				}
+				if(!examScoreMap.containsKey(5))
+				{
+					vizStudent.getValues().put(FINAL_EXAM, "NA");
+				}
+				
+				double sumTotalScore = 0.0;
+				for(Map.Entry<Integer, Double> entry : examScoreMap.entrySet())
+				{
+					
+					double avg = 0.0;
+					if(entry.getKey() == 2)
+					{
+						avg = entry.getValue()/examCountMap.get(2);
+						vizStudent.getValues().put(MID_TERM_1, String.format("%.2f", avg));
+					}
+					else if(entry.getKey() == 3)
+					{
+						avg = entry.getValue()/examCountMap.get(3);
+						vizStudent.getValues().put(MID_TERM_2, String.format("%.2f", avg));
+					}
+					else if(entry.getKey() == 4)
+					{
+						avg = entry.getValue()/examCountMap.get(4);
+						vizStudent.getValues().put(MID_TERM_3, String.format("%.2f", avg));
+					}
+					else if(entry.getKey() == 5)
+					{
+						avg = entry.getValue()/examCountMap.get(5);
+						vizStudent.getValues().put(FINAL_EXAM, String.format("%.2f", avg));
+					}
+					sumTotalScore = sumTotalScore + avg;
+
+				}
+				System.out.println("The total score is "+sumTotalScore);
+				System.out.println("The score map size for student is "+examScoreMap.size());
+				vizStudent.setOriginalityscore((int)sumTotalScore/examScoreMap.size());
+				vizStudent.setName(student.getStudentId());
+				obj.getStudents().add(vizStudent);
+				
+
+
+								
+			}
+			catch(IllegalArgumentException e)
+			{
+				if(e.getMessage().equals("Notes List doesnt exists"))
+				{
+					//do nothing
+				}
+				else {
+						e.printStackTrace();
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
+			
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String prettyStaff1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+		System.out.println(prettyStaff1);
+		mv.addObject("visualize", prettyStaff1);	
+		return mv;
 	}
 
 

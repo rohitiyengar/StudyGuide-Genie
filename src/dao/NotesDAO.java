@@ -17,6 +17,7 @@ public interface NotesDAO {
 	Notes findNotes(String studentId, int topicId) throws IllegalArgumentException, Exception;
 	Notes findNotes(String notesId) throws IllegalArgumentException, Exception;
 	List<Notes> findNotesByStudentId(String studentId)throws IllegalArgumentException;
+	List<Notes> findAllNotes() throws IllegalArgumentException;
 	
 
 }

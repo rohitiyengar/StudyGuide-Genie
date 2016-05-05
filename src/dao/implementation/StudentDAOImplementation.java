@@ -73,6 +73,18 @@ public class StudentDAOImplementation extends GenericHibernateDaoSupport impleme
 		}
 		return (Student) studList.get(0);
 	}
+	
+	@Override
+	public List<Student> findStudents() throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		List<Student> studList = (List<Student>) getHibernateTemplate().find("from Student");
+		if (studList == null || studList.size() == 0)
+		{
+			throw new IllegalArgumentException("Student doesnt exists");
+		}
+		return studList;
+	}
+
 
 
 }
