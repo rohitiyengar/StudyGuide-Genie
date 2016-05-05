@@ -22,7 +22,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	public enum roles {ADMIN, STUDENT, INSTRUCTOR};
+	public enum roles {STUDENT};
 	
 	private String userName;
 	private String password;
