@@ -672,8 +672,6 @@ public class NotesController {
 					sumTotalScore = sumTotalScore + avg;
 
 				}
-				//System.out.println("The total score is "+sumTotalScore);
-				//System.out.println("The score map size for student is "+examScoreMap.size());
 				vizStudent.setOriginalityscore((int)sumTotalScore/examScoreMap.size());
 				vizStudent.setName(student.getStudentId());
 				obj.getStudents().add(vizStudent);				

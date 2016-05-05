@@ -5,6 +5,8 @@ import java.util.Map;
 
 public class Student implements Comparable<Student>{
 	
+	
+	//name of Student
 	public String getName() {
 		return name;
 	}
