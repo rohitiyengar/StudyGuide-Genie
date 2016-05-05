@@ -2,6 +2,7 @@ package controller;
 
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -88,14 +89,14 @@ public class NotesController {
 	public ModelAndView loadForm(HttpServletRequest request) throws IllegalArgumentException, Exception
 	{
 		ModelAndView mv = new ModelAndView("notes");
-		System.out.println("NOTES FROM EXAM");
+		//System.out.println("NOTES FROM EXAM");
 		model.Student student = (model.Student)request.getSession().getAttribute("sessionUser");
 		if (request.getParameter("topicName") != null)
 		{
-			System.out.println("topicName is:"+request.getParameter("topicName"));
+			//System.out.println("topicName is:"+request.getParameter("topicName"));
 			student.setCurrentTopic(request.getParameter("topicName"));
 			Topic newtopic = topicBo.findTopicByName(request.getParameter("topicName"));
-			System.out.println("new Topic id, when trying to change it is"+newtopic.getTopicId());
+			//System.out.println("new Topic id, when trying to change it is"+newtopic.getTopicId());
 			request.getSession().setAttribute("topic", newtopic);
 			mv.addObject("topic", newtopic);
 			
@@ -104,7 +105,7 @@ public class NotesController {
 		
 		if (request.getParameter("examName") != null)
 		{
-			System.out.println("Exam name is:"+request.getParameter("examName"));
+			//System.out.println("Exam name is:"+request.getParameter("examName"));
 			int exam_id = 0;
 			if(request.getParameter("examName").equals(MID_TERM_1))
 			{
@@ -124,19 +125,19 @@ public class NotesController {
 			}
 				
 			List<Content> examContent = contentBo.findContentList(exam_id);
-			System.out.println("Setting exam_id to"+exam_id);
+			//System.out.println("Setting exam_id to"+exam_id);
 			request.getSession().setAttribute("examid", exam_id);
 			int examid = 0;
 			if(student.getCurrentTopic() != null)
 			{
 				Topic currentTopic = topicBo.findTopicByName(student.getCurrentTopic());
-				System.out.println("id is "+currentTopic.getTopicId());
-				System.out.println(contentBo.findContentByTopicId(currentTopic.getTopicId()));
+				//System.out.println("id is "+currentTopic.getTopicId());
+				//System.out.println(contentBo.findContentByTopicId(currentTopic.getTopicId()));
 				examid = contentBo.findContentByTopicId(currentTopic.getTopicId()).getExamId();
 				//Check if the exam id last left is the same as the student has clicked on now in a new session.
 				if(examid == exam_id)
 				{
-					System.out.println("Yes, Setting as exam id is the same");
+					//System.out.println("Yes, Setting as exam id is the same");
 					request.getSession().setAttribute("examid", examid);
 					request.getSession().setAttribute("topic", currentTopic);
 					mv.addObject("topic", currentTopic);
@@ -174,17 +175,13 @@ public class NotesController {
 			request.getSession().setAttribute("listOfRecommendedLinks", recommendedLinks);
 			try
 			{
-				System.out.println(topic.getTopicId());
-				System.out.println(student.getStudentId());
+				//System.out.println(topic.getTopicId());
+				//System.out.println(student.getStudentId());
 				notes = notesBo.findNotes(student.getStudentId(), topic.getTopicId());
 				LuceneNotesRecommender luceneNotesBean = (LuceneNotesRecommender)webApplicationContext.getBean("luceneNotesBean");
 				luceneNotesBean.updateNotesIndex(topic.getTopicId(), student.getStudentId(), notes.getTopicText());
 				Set<String> recommendedWords = luceneNotesBean.getNotesRecommendations(topic.getTopicId(), student.getStudentId(), notes.getTopicText(), 5);
 				notes.setRecommmendedWords(recommendedWords);
-				for(String s : recommendedWords)
-				{
-					System.out.println("The keyword is "+s);
-				}
 				mv.addObject("recommendedWords", notes.getRecommmendedWords());
 			}
 			catch(IllegalArgumentException exception)
@@ -248,10 +245,6 @@ public class NotesController {
 		}
 		Set<String> recommendedWords = luceneNotesBean.getNotesRecommendations(notes.getTopicid(), student.getStudentId(), notes.getTopicText(), 5);
 		notes.setRecommmendedWords(recommendedWords);
-		for(String s : recommendedWords)
-		{
-			System.out.println("The keyword is "+s);
-		}
 		mv.addObject("recommendedWords", notes.getRecommmendedWords());
 		Set<String> recommendedLinks = (Set<String>)request.getSession().getAttribute("listOfRecommendedLinks");
 		//LuceneLinksRecommender luceneLinksBean = (LuceneLinksRecommender)webApplicationContext.getBean("luceneLinksBean");
@@ -435,7 +428,7 @@ public class NotesController {
 
 		StringWriter writer = new StringWriter();
 		marshaller.marshal(examsXML, writer);
-		System.out.println("Response xml is "+writer);
+		//System.out.println("Response xml is "+writer);
 		mv.addObject("allExams", writer);
 		return mv;
 	}
@@ -679,14 +672,11 @@ public class NotesController {
 					sumTotalScore = sumTotalScore + avg;
 
 				}
-				System.out.println("The total score is "+sumTotalScore);
-				System.out.println("The score map size for student is "+examScoreMap.size());
+				//System.out.println("The total score is "+sumTotalScore);
+				//System.out.println("The score map size for student is "+examScoreMap.size());
 				vizStudent.setOriginalityscore((int)sumTotalScore/examScoreMap.size());
 				vizStudent.setName(student.getStudentId());
-				obj.getStudents().add(vizStudent);
-				
-
-
+				obj.getStudents().add(vizStudent);				
 								
 			}
 			catch(IllegalArgumentException e)
@@ -706,10 +696,10 @@ public class NotesController {
 
 			
 		}
-		
+		Collections.sort(obj.getStudents());
 		ObjectMapper mapper = new ObjectMapper();
 		String prettyStaff1 = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
-		System.out.println(prettyStaff1);
+		//System.out.println(prettyStaff1);
 		mv.addObject("visualize", prettyStaff1);	
 		return mv;
 	}

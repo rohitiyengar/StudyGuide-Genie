@@ -3,7 +3,7 @@ package visualization.models;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class Student {
+public class Student implements Comparable<Student>{
 	
 	public String getName() {
 		return name;
@@ -31,5 +31,11 @@ public class Student {
 	private String name;
 	int originalityscore;
 	private Map<String, String> values;
+	
+	
+	@Override
+	public int compareTo(Student o) {
+		return new Integer(this.getOriginalityscore()).compareTo(new Integer(o.getOriginalityscore()));
+	}
 
 }
