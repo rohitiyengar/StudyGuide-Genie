@@ -1,0 +1,48 @@
+The arrays that we have considered so far are "one-dimensional." This means that the array consists of a sequence of elements that can be thought of as being laid out along a line. It is also possible to have two-dimensional arrays, where the elements can be laid out in a rectangular grid. We consider them only briefly here, but will return to the topic in Section 7.5.
+
+In a two-dimensional, or "2D," array, the elements can be arranged in rows and columns. Here, for example, is a 2D array of int that has five rows and seven columns:
+
+an array of its with 5 rows and 7 columns
+
+This 5-by-7 grid contains a total of 35 elements. The rows in a 2D array are numbered 0, 1, 2, ..., up to the number of rows minus one. Similarly, the columns are numbered from zero up to the number of columns minus one. Each individual element in the array can be picked out by specifying its row number and its column number. (The illustration shown here is not what the array actually looks like in the computer's memory, but it does show the logical structure of the array.)
+
+In Java, the syntax for two-dimensional arrays is similar to the syntax for one-dimensional arrays, except that an extra index is involved, since picking out an element requires both a row number and a column number. For example, if A is a 2D array of int, then A[3][2] would be the element in row 3, column 2. That would pick out the number 17 in the array shown above. The type for A would be given as int[][], with two pairs of empty brackets. To declare the array variable and create the array, you could say,
+
+int[][]  A;
+A  =  new int[5][7];
+The second line creates a 2D array with 5 rows and 7 columns. Two-dimensional arrays are often processed using nested for loops. For example, the following code segment will print out the elements of A in neat columns:
+
+int row, col;  // loop-control-variables for accessing rows and columns in A
+for ( row = 0; row < 5; row++ ) {
+    for ( col = 0; col < 7; col++ ) {
+        System.out.printf( "%7d",  A[row][col] );
+    }
+    System.out.println();
+}
+The base type of a 2D array can be anything, so you can have arrays of type double[][], String[][], and so on.
+
+There are some natural uses for 2D arrays. For example, a 2D array can be used to store the contents of the board in a game such as chess or checkers. And an example in Subsection 4.6.3 uses a 2D array to hold the colors of a grid of colored squares. But sometimes two-dimensional arrays are used in problems in which the grid is not so visually obvious. Consider a company that owns 25 stores. Suppose that the company has data about the profit earned at each store for each month in the year 2014. If the stores are numbered from 0 to 24, and if the twelve months from January 2014 through December 2014 are numbered from 0 to 11, then the profit data could be stored in an array, profit, created as follows:
+
+double[][]  profit;
+profit  =  new double[25][12];
+profit[3][2] would be the amount of profit earned at store number 3 in March, and more generally, profit[storeNum][monthNum] would be the amount of profit earned in store number storeNum in month number monthNum (where the numbering, remember, starts from zero).
+
+Let's assume that the profit array has already been filled with data. This data can be processed in a lot of interesting ways. For example, the total profit for the company -- for the whole year from all its stores -- can be calculated by adding up all the entries in the array:
+
+double totalProfit;  // Company's total profit in 2014.
+int store, month;  // variables for looping through the stores and the months
+totalProfit = 0;
+for ( store = 0; store < 25; store++ ) {
+   for ( month = 0; month < 12; month++ )
+      totalProfit += profit[store][month];
+}
+Sometimes it is necessary to process a single row or a single column of an array, not the entire array. For example, to compute the total profit earned by the company in December, that is, in month number 11, you could use the loop:
+
+double decemberProfit;
+int storeNum;
+decemberProfit = 0.0;
+for ( storeNum = 0; storeNum < 25; storeNum++ ) {
+   decemberProfit += profit[storeNum][11];
+}
+Two-dimensional arrays are sometimes useful, but they are much less common than one-dimensional arrays. Java actually allows arrays of even higher dimension, but they are only rarely encountered in practice.
+
